@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="display:inline-flex;align-items:center;justify-content:center;background:#1C1A17;padding:{{ pad }};border-radius:2px" onMouseEnter="{{ onEnter }}" aria-hidden="true">
+  <div ref="{{ gridRef }}" style="display:grid;grid-template-columns:repeat({{ n }},{{ cellPx }});grid-auto-rows:{{ cellPx }};gap:{{ gapPx }}"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:240,&quot;height&quot;:200},&quot;pattern&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;face&quot;,&quot;neutral&quot;,&quot;asleep&quot;,&quot;lattice&quot;,&quot;scatter&quot;,&quot;ring&quot;,&quot;staircase&quot;,&quot;iris&quot;],&quot;default&quot;:&quot;face&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;n&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:11,&quot;min&quot;:5,&quot;max&quot;:24,&quot;tsType&quot;:&quot;number&quot;},&quot;cell&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:2,&quot;max&quot;:24,&quot;tsType&quot;:&quot;number&quot;},&quot;gap&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:6,&quot;tsType&quot;:&quot;number&quot;},&quot;pad&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;live&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const AMBER = '#F5C86B', AMBER_DIM = '#8A7043';
+const EASE = 'cubic-bezier(0.37,0,0.63,1)';
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.gridRef = React.createRef();
+    this.grid = null;
+    this.blink = 0;
+    this.blinkAt = 0;
+    this.blinking = 0;
+    this.glance = 0;
+    this.mouse = { cx: 0, cy: 0 };
+  }
+
+  makeGrid(el, n, glow) {
+    if (!el || el.dataset.built) return null;
+    el.dataset.built = '1';
+    const cells = [];
+    for (let i = 0; i < n * n; i++) {
+      const d = document.createElement('span');
+      d.style.cssText = 'display:block;width:100%;height:100%;border-radius:1px;background:' + AMBER_DIM + ';opacity:.12;transition:opacity .22s ' + EASE + ',background-color .22s ' + EASE;
+      el.appendChild(d);
+      cells.push(d);
+    }
+    return { el, n, cells, prev: new Float32Array(n * n), buf: new Float32Array(n * n), glow: glow !== false };
+  }
+
+  paint(g, buf, bright) {
+    if (!g) return;
+    const cells = g.cells, prev = g.prev;
+    for (let i = 0; i < cells.length; i++) {
+      const v = clamp(buf[i] * bright, 0, 1);
+      if (Math.abs(v - prev[i]) < 0.015) continue;
+      prev[i] = v;
+      const c = cells[i];
+      if (v > 0.05) {
+        c.style.backgroundColor = AMBER;
+        c.style.opacity = v.toFixed(2);
+        c.style.boxShadow = g.glow ? '0 0 ' + (7 * v).toFixed(1) + 'px rgba(245,200,107,' + (0.5 * v).toFixed(2) + ')' : 'none';
+      } else {
+        c.style.backgroundColor = AMBER_DIM;
+        c.style.opacity = '0.12';
+        c.style.boxShadow = 'none';
+      }
+    }
+  }
+
+  face(g, opts) {
+    const n = g.n, buf = g.buf;
+    buf.fill(0);
+    const set = (x, y, v) => {
+      x = Math.round(x); y = Math.round(y);
+      if (x < 0 || y < 0 || x >= n || y >= n) return;
+      const i = y * n + x;
+      if (v > buf[i]) buf[i] = v;
+    };
+    const s = n / 24;
+    const eyeR = Math.max(1, Math.round(1 * s));
+    const cy = 8 * s + (opts.dy || 0) * s;
+    const flat = opts.flat || 0;
+    const blink = clamp(opts.blink || 0, 0, 1);
+    const open = Math.round(eyeR * (1 - blink));
+
+    for (const cxBase of [7 * s, 16 * s]) {
+      const cx = cxBase + (opts.dx || 0) * s;
+      for (let ex = -eyeR; ex <= eyeR; ex++)
+        for (let ey = -open; ey <= open; ey++)
+          set(cx + ex, cy + ey, 1);
+    }
+
+    const x0 = 6 * s, x1 = 17 * s, span = x1 - x0;
+    for (let x = x0; x <= x1; x += 1) {
+      const t = span === 0 ? 0 : (x - x0) / span;
+      const ySmile = 14 * s + 2.4 * s * Math.sin(Math.PI * t);
+      const yFlat = 15.2 * s;
+      const y = lerp(ySmile, yFlat, flat);
+      const yf = Math.floor(y), fr = y - yf;
+      set(x, yf, 1 - fr * 0.55);
+      if (fr > 0.15) set(x, yf + 1, fr);
+    }
+  }
+
+  // 5x5 wordmark face — hand-plotted, too small for face()
+  tinyFace(g, blinkClosed, dx, dy) {
+    const buf = g.buf;
+    buf.fill(0);
+    const set = (x, y, v) => { x = Math.round(x); y = Math.round(y); if (x >= 0 && y >= 0 && x < 5 && y < 5) buf[y * 5 + x] = v; };
+    if (!blinkClosed) { set(1 + dx, 1 + dy, 1); set(3 + dx, 1 + dy, 1); }
+    else { set(1, 1, 0.5); set(3, 1, 0.5); }
+    set(1, 3, 1); set(2, 3.4, 1); set(3, 3, 1);
+  }
+
+  // mirrored pseudo-random bitmap, used for avatar/category motifs
+  staticPattern(g, seed) {
+    const n = g.n, buf = g.buf;
+    buf.fill(0);
+    let s = seed;
+    const rnd = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+    for (let y = 0; y < n; y++) {
+      for (let x = 0; x < Math.ceil(n / 2); x++) {
+        const v = rnd() > 0.52 ? 0.55 + rnd() * 0.45 : 0;
+        buf[y * n + x] = v;
+        buf[y * n + (n - 1 - x)] = v;
+      }
+    }
+  }
+
+  geometric(g, p) {
+    const n = g.n, buf = g.buf;
+    buf.fill(0);
+    const put = (x, y, v) => { if (x >= 0 && y >= 0 && x < n && y < n) buf[y * n + x] = v === undefined ? 1 : v; };
+    const c = (n - 1) / 2;
+    if (p === 'lattice') {
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (x % 3 === 0 || y % 3 === 0) put(x, y);
+    } else if (p === 'ring') {
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+        const d = Math.abs(Math.hypot(x - c, y - c) - n * 0.36);
+        if (d < 1) put(x, y, 1 - d * 0.5);
+      }
+    } else if (p === 'staircase') {
+      for (let i = 0; i < n; i++) { put(i, n - 1 - i); put(i, n - i); }
+    } else if (p === 'iris') {
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+        const d = Math.hypot(x - c, y - c);
+        if (d < n * 0.16) put(x, y);
+        else { const e = Math.abs(d - n * 0.42); if (e < 1) put(x, y, 1 - e * 0.5); }
+      }
+    } else {
+      this.staticPattern(g, p === 'scatter' ? 8321 : 4177);
+    }
+  }
+
+  render(bright) {
+    const g = this.grid;
+    if (!g) return;
+    const p = this.props.pattern || 'face';
+    if (p === 'face' || p === 'neutral' || p === 'asleep') {
+      const closed = p === 'asleep' ? 1 : this.blink;
+      if (g.n <= 5) {
+        if (this.track) {
+          const tx = clamp((this.mouse.cx / window.innerWidth - 0.5) * 2.4, -1, 1);
+          const ty = clamp((this.mouse.cy / window.innerHeight - 0.5) * 1.4, -1, 1);
+          this.mdx = lerp(this.mdx || 0, tx, 0.35);
+          this.mdy = lerp(this.mdy || 0, ty, 0.35);
+        }
+        this.tinyFace(g, closed > 0.55, Math.round(this.mdx || 0), Math.round(this.mdy || 0));
+      }
+      else this.face(g, { dx: this.glance, dy: 0, blink: closed, flat: p === 'neutral' ? 1 : 0 });
+    } else {
+      this.geometric(g, p);
+    }
+    this.paint(g, g.buf, bright);
+  }
+
+  componentDidMount() {
+    const el = this.gridRef.current;
+    if (!el) return;
+    const n = Number(this.props.n || 11);
+    this.grid = this.makeGrid(el, n, true);
+    this.rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.render(1);
+    if (this.rm || !this.props.live) return;
+    this.track = n <= 5;
+    if (this.track) {
+      this.onMove = e => { this.mouse.cx = e.clientX; this.mouse.cy = e.clientY; };
+      window.addEventListener('pointermove', this.onMove, { passive: true });
+    }
+    this.blinkAt = Date.now() + 4000 + Math.random() * 4000;
+    this.loop = () => {
+      const now = Date.now();
+      if (now > this.blinkAt) { this.blinking = 1; this.blinkAt = now + 4000 + Math.random() * 4000; }
+      if (this.blinking > 0) { this.blinking -= 1 / 14; if (this.blinking < 0) this.blinking = 0; }
+      this.blink = lerp(this.blink, Math.sin(clamp(this.blinking, 0, 1) * Math.PI), 0.35);
+      this.render(1);
+      this.raf = requestAnimationFrame(this.loop);
+    };
+    this.raf = requestAnimationFrame(this.loop);
+  }
+
+  componentDidUpdate() { this.render(1); }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf); clearTimeout(this.gt);
+    if (this.onMove) window.removeEventListener('pointermove', this.onMove);
+  }
+
+  onGlance() {
+    if (this.rm || !this.props.live || this.grid && this.grid.n <= 5) return;
+    clearTimeout(this.gt);
+    this.glance = Math.random() > 0.5 ? 1 : -1;
+    this.gt = setTimeout(() => { this.glance = 0; }, 900);
+  }
+
+  renderVals() {
+    return {
+      n: Number(this.props.n || 11),
+      cellPx: Number(this.props.cell || 6) + 'px',
+      gapPx: Number(this.props.gap === undefined ? 2 : this.props.gap) + 'px',
+      pad: this.props.pad || Math.max(4, Math.round(Number(this.props.cell || 6) * 1.2)) + 'px',
+      gridRef: this.gridRef,
+      onEnter: () => this.onGlance()
+    };
+  }
+}
+</script>
+</body>
+</html>

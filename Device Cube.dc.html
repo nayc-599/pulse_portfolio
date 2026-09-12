@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div ref="{{ rootRef }}" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;padding:28px 0;perspective:900px;perspective-origin:50% 45%">
+  <div ref="{{ cubeRef }}" style="position:relative;width:200px;height:200px;transform-style:preserve-3d;transform:rotateX(-14deg) rotateY(-60deg)">
+    <div style="position:absolute;inset:0;background:#EDE7DA;border:1px solid rgba(28,26,23,0.22);transform:translateZ(100px);display:flex;align-items:center;justify-content:center">
+      <div style="width:132px;height:132px;border-radius:50%;overflow:hidden;background:#1C1A17;border:6px solid #E2DACA;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 22px rgba(0,0,0,0.6)">
+        <dc-import name="Pixel Grid" pattern="face" n="{{ n18 }}" cell="{{ c6 }}" gap="{{ g1 }}" pad="0px" hint-size="126px,126px"></dc-import>
+      </div>
+      <span style="position:absolute;top:16px;right:18px;width:16px;height:16px;border-radius:999px;background:#25221F;border:3px solid #D8CFBD"></span>
+    </div>
+    <div style="position:absolute;inset:0;background:#D9D1C0;border:1px solid rgba(28,26,23,0.22);transform:rotateY(90deg) translateZ(100px)"></div>
+    <div style="position:absolute;inset:0;background:#D9D1C0;border:1px solid rgba(28,26,23,0.22);transform:rotateY(-90deg) translateZ(100px)"></div>
+    <div style="position:absolute;inset:0;background:#F2ECE0;border:1px solid rgba(28,26,23,0.18);transform:rotateX(90deg) translateZ(100px)"></div>
+    <div style="position:absolute;inset:0;background:#C8C0AF;border:1px solid rgba(28,26,23,0.22);transform:rotateX(-90deg) translateZ(100px)"></div>
+    <div style="position:absolute;inset:0;background:#CFC7B6;border:1px solid rgba(28,26,23,0.22);transform:rotateY(180deg) translateZ(100px)"></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:300}}">
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.rootRef = React.createRef();
+    this.cubeRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this.onScroll = () => {
+      const el = this.rootRef.current, cube = this.cubeRef.current;
+      if (!el || !cube) return;
+      const r = el.getBoundingClientRect();
+      const span = window.innerHeight + r.height;
+      const t = Math.max(0, Math.min(1, (window.innerHeight - r.top) / span));
+      cube.style.transform = 'rotateX(-14deg) rotateY(' + (-60 + t * 110).toFixed(2) + 'deg)';
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+  }
+
+  renderVals() {
+    return { n18: 18, c6: 6, g1: 1, rootRef: this.rootRef, cubeRef: this.cubeRef };
+  }
+}
+</script>
+</body>
+</html>

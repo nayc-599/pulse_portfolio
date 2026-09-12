@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Three models, not one: how we split the pipeline — Pulse Journal</title>
+  <meta name="description" content="One end-to-end network would have been simpler to draw and much harder to debug. We chose debuggable." />
+  <meta property="og:title" content="Three models, not one: how we split the pipeline" />
+  <meta property="og:description" content="Pulse journal · Engineering · 19 August 2026 · Aaron" />
+  <meta property="og:type" content="article" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<div role="presentation" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent">
+  <span style="display:block;height:100%;width:{{ progress }};background:#F5C86B;box-shadow:0 0 10px rgba(245,200,107,0.6)"></span>
+</div>
+
+<dc-import name="Site Header" active="journal" hint-size="100%,90px"></dc-import>
+
+<main style="max-width:760px;margin:0 auto;padding:64px 24px 96px">
+  <article>
+    <header style="display:flex;flex-direction:column;gap:20px;margin-bottom:44px">
+      <span style="display:flex;align-items:center;gap:9px">
+        <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">ENGINEERING · 19 AUG 2026 · 6 MIN READ</span>
+      </span>
+      <h1 style="margin:0;font:500 clamp(32px,5vw,48px)/1.1 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Three models, not one: how we split the pipeline</h1>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:20px">
+        <dc-import name="Pixel Grid" pattern="lattice" n="{{ n7 }}" cell="{{ c4 }}" gap="{{ g1 }}" pad="6px" hint-size="44px,44px"></dc-import>
+        <span style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 16px/1.3 'General Sans',system-ui,sans-serif">Aaron</span>
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">COMPUTER VISION · ALERTS</span>
+        </span>
+      </div>
+    </header>
+
+    <p style="margin:0 0 22px;font:400 19px/1.7 'General Sans',system-ui,sans-serif;color:#1C1A17">The obvious architecture is one network: video in, pain confidence out, trained end to end. We did not build that, and the reason is not accuracy.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">We built three models — a face detector, a CNN feature extractor, and an LSTM over a rolling window — trained separately and frozen at inference. Here is the argument, including the part where it costs us something.</p>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Why split</h2>
+    <ul style="margin:0 0 26px;padding-left:22px;display:flex;flex-direction:column;gap:12px">
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Each piece is testable alone.</strong> I can check the CNN on single frames without any temporal data, and Nay Chi can check the LSTM on synthetic vectors without any video.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Three people can work at once.</strong> With twelve weeks and five students, parallel work is not a nicety.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Failures are attributable.</strong> When the output is wrong we can ask which stage was wrong. In an end-to-end model, the answer is always "the model".</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">The data suits it.</strong> We have a modestly sized clinic dataset. Training one large network end to end on that is a good way to memorise it.</li>
+    </ul>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">What it costs</h2>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Two things, and I want them written down rather than discovered by a judge in week nine.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">First, <strong style="font-weight:500;color:#1C1A17">the CNN cannot learn temporal cues.</strong> It sees one frame at a time, so anything that only exists as motion — the speed a brow tightens, a wince that resolves in 200ms — has to survive being compressed into a per-frame description before the LSTM ever sees it. An end-to-end model could learn features specifically because they are useful over time. Ours cannot.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Second, <strong style="font-weight:500;color:#1C1A17">two interfaces nobody owns.</strong> A split pipeline has seams, and seams are where two reasonable people quietly disagree about normalisation for three weeks. That happened. It cost us an afternoon and produced a written contract, which is the fix.</p>
+    <figure style="margin:0 0 28px;padding:0"><pre style="margin:0;padding:22px;background:#1C1A17;color:#F4F1EA;overflow-x:auto;font:400 13px/1.75 'Space Mono',monospace"><code><span style="color:#8A7043"># what "frozen at inference" actually means</span>
+detector.eval();  <span style="color:#8A7043"># no gradients, no updates, ever</span>
+cnn.eval();
+lstm.eval();
+
+<span style="color:#A996FE">with</span> torch.no_grad():          <span style="color:#8A7043"># the device cannot learn the patient</span>
+    conf = lstm(window)</code></pre><figcaption style="margin-top:12px;font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">FIGURE 1 · THREE MODELS, NO GRADIENTS. NOTHING ADAPTS AFTER DEPLOYMENT.</figcaption></figure>
+    <blockquote style="margin:0 0 26px;padding:4px 0 4px 24px;border-left:2px solid #6B5528"><p style="margin:0;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:#1C1A17">People assume the device learns the patient over time. It does not. The weights are fixed before it is switched on.</p></blockquote>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">This is worth stating loudly because it changes what the device is. A system that adapts to an individual would need their data, a training loop on or near the device, and a much longer conversation about consent. Ours does none of that: a face flows through three frozen models and a number comes out. That is a smaller claim, and it is the true one.</p>
+    <h3 style="margin:36px 0 14px;font:500 22px/1.3 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">Would I do it differently with more time</h3>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Probably not for this project. If we had a year and a dataset ten times the size, an end-to-end model trained with a temporal objective is very likely the better answer. At twelve weeks, with five students learning as we go, debuggable beats optimal.</p>
+
+  </article>
+
+  <nav aria-label="More entries" style="display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap;margin-top:64px;border-top:1px solid rgba(28,26,23,0.18);padding-top:24px">
+    <a href="Journal Face.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">← NEWER</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Why the device has a face</span></a>
+    <a href="Journal Week One.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch;text-align:right"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">OLDER →</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Week one: we argued our way from falls to pain</span></a>
+  </nav>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { p: 0 };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      this.setState({ p: max > 0 ? Math.min(1, h.scrollTop / max) : 0 });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+
+  renderVals() {
+    return { n7: 7, c4: 4, g1: 1, progress: (this.state.p * 100).toFixed(1) + '%' };
+  }
+}
+</script>
+</body>
+</html>

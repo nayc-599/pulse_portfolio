@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Skeletons before data: writing code we cannot run yet — Pulse Journal</title>
+  <meta name="description" content="We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed." />
+  <meta property="og:title" content="Skeletons before data: writing code we cannot run yet" />
+  <meta property="og:description" content="Pulse journal · Build log · 27 August 2026 · Christopher" />
+  <meta property="og:type" content="article" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<div role="presentation" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent">
+  <span style="display:block;height:100%;width:{{ progress }};background:#F5C86B;box-shadow:0 0 10px rgba(245,200,107,0.6)"></span>
+</div>
+
+<dc-import name="Site Header" active="journal" hint-size="100%,90px"></dc-import>
+
+<main style="max-width:760px;margin:0 auto;padding:64px 24px 96px">
+  <article>
+    <header style="display:flex;flex-direction:column;gap:20px;margin-bottom:44px">
+      <span style="display:flex;align-items:center;gap:9px">
+        <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">BUILD LOG · 27 AUG 2026 · 5 MIN READ</span>
+      </span>
+      <h1 style="margin:0;font:500 clamp(32px,5vw,48px)/1.1 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Skeletons before data: writing code we cannot run yet</h1>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:20px">
+        <dc-import name="Pixel Grid" pattern="staircase" n="{{ n7 }}" cell="{{ c4 }}" gap="{{ g1 }}" pad="6px" hint-size="44px,44px"></dc-import>
+        <span style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 16px/1.3 'General Sans',system-ui,sans-serif">Christopher</span>
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">COMPUTER VISION · DATA</span>
+        </span>
+      </div>
+    </header>
+
+    <p style="margin:0 0 22px;font:400 19px/1.7 'General Sans',system-ui,sans-serif;color:#1C1A17">For about ten days in week six, none of our models worked. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">It felt like procrastination. It was the most useful ten days of the project so far.</p>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">The stubs</h2>
+    <figure style="margin:0 0 28px;padding:0"><pre style="margin:0;padding:22px;background:#1C1A17;color:#F4F1EA;overflow-x:auto;font:400 13px/1.75 'Space Mono',monospace"><code><span style="color:#8A7043"># pulse/stubs.py — stand-ins with the right shapes and nothing else</span>
+<span style="color:#A996FE">def</span> detect_face(frame):
+    <span style="color:#8A7043"># 1 in 8 frames has no face, like a real room</span>
+    <span style="color:#A996FE">if</span> random.random() &lt; <span style="color:#F5C86B">0.125</span>: <span style="color:#A996FE">return</span> <span style="color:#F5C86B">None</span>
+    <span style="color:#A996FE">return</span> np.zeros((<span style="color:#F5C86B">224</span>, <span style="color:#F5C86B">224</span>, <span style="color:#F5C86B">3</span>), np.uint8)
+
+<span style="color:#A996FE">def</span> features(crop):
+    <span style="color:#A996FE">return</span> np.random.randn(<span style="color:#F5C86B">256</span>).astype(np.float32)
+
+<span style="color:#A996FE">def</span> confidence(window):
+    <span style="color:#A996FE">return</span> float(np.clip(np.random.normal(<span style="color:#F5C86B">0.4</span>, <span style="color:#F5C86B">0.2</span>), <span style="color:#F5C86B">0</span>, <span style="color:#F5C86B">1</span>))</code></pre><figcaption style="margin-top:12px;font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">FIGURE 1 · THREE FUNCTIONS THAT KNOW NOTHING AND STILL FOUND FOUR BUGS.</figcaption></figure>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The one decision worth copying is the <strong style="font-weight:500;color:#1C1A17">1 in 8 frames has no face</strong> line. A stub that always succeeds tests nothing. A stub that fails at a realistic rate turns the missing-face path from a hypothetical into something you trip over on the first run.</p>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">What it caught</h2>
+    <ul style="margin:0 0 26px;padding-left:22px;display:flex;flex-direction:column;gap:12px">
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">The buffer never drained.</strong> On a missing face we skipped the frame but also skipped the buffer eviction, so the window silently held frames from ten seconds earlier.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Alerts fired every frame.</strong> Above threshold, we sent a notification per frame — thirty per second. We now debounce to one alert per 30-second window unless confidence rises materially.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Timestamps came from the wrong clock.</strong> The alert carried the time the notification was built, not the time of the frame that triggered it. Off by up to 400ms, which sounds small until a carer asks what happened when.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Startup lied.</strong> For the first 32 frames the window is not full, and we were happily returning a confidence for a partial window. It now reports <code style="font:400 15px/1.4 'Space Mono',monospace;background:#E8E3D8;padding:2px 6px">warming_up</code> instead.</li>
+    </ul>
+    <blockquote style="margin:0 0 26px;padding:4px 0 4px 24px;border-left:2px solid #6B5528"><p style="margin:0;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:#1C1A17">None of these are model bugs. All four would have looked like model bugs if we had found them a week later, with real weights in the loop.</p></blockquote>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">The cost</h2>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Two evenings of writing code that did nothing, and a habit of trusting the loop enough to believe the numbers coming out of it. When Aaron's CNN landed, we replaced one function and it ran. When the LSTM landed, we replaced another and it also ran — and then produced a flat 0.5 for eleven minutes, which turned out to be a contract problem rather than a plumbing problem. Nay Chi wrote that one up.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">I would do it again, and earlier. Writing the loop first forced us to decide what a frame, a window and an alert actually are while the decisions were still cheap.</p>
+
+  </article>
+
+  <nav aria-label="More entries" style="display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap;margin-top:64px;border-top:1px solid rgba(28,26,23,0.18);padding-top:24px">
+    <a href="Journal Contract.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">← NEWER</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Writing down the contract between our CNN and our LSTM</span></a>
+    <a href="Journal Face.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch;text-align:right"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">OLDER →</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Why the device has a face</span></a>
+  </nav>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { p: 0 };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      this.setState({ p: max > 0 ? Math.min(1, h.scrollTop / max) : 0 });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+
+  renderVals() {
+    return { n7: 7, c4: 4, g1: 1, progress: (this.state.p * 100).toFixed(1) + '%' };
+  }
+}
+</script>
+</body>
+</html>

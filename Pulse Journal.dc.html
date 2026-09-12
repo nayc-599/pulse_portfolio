@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Journal — Pulse</title>
+  <meta name="description" content="We're building Pulse in public — the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited." />
+  <meta property="og:title" content="Journal — Pulse" />
+  <meta property="og:description" content="Build log from a student team at Monash DeepNeuron: engineering, research, design and the things we got wrong the first time." />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+    html { scroll-behavior: smooth; }
+  </style>
+</helmet>
+
+<dc-import name="Site Header" active="journal" hint-size="100%,90px"></dc-import>
+
+<div style="background:#1C1A17;color:#F4F1EA;position:relative;overflow:hidden">
+  <img src="assets/wf-net1-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-60px;top:-40px;width:460px;opacity:0.1;pointer-events:none" />
+  <section aria-labelledby="j-title" style="max-width:1160px;margin:0 auto;padding:80px 24px 40px;position:relative">
+    <span style="display:flex;align-items:center;gap:9px;margin-bottom:20px">
+      <img src="assets/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+      <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#A996FE">BUILD LOG · MONASH DEEPNEURON</span>
+    </span>
+    <h1 id="j-title" style="margin:0 0 22px;font:500 clamp(40px,6vw,60px)/1.06 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Journal</h1>
+    <p style="margin:0;max-width:52ch;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:rgba(244,241,234,0.86)">We're building Pulse in public — the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited.</p>
+  </section>
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px 34px;position:relative">
+    <div role="group" aria-label="Filter by category" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid rgba(244,241,234,0.16);padding-top:26px">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+        <button type="button" onClick="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="display:inline-flex;align-items:center;gap:10px;background:none;border:0;padding:4px 0;cursor:pointer;font:400 14px/1.2 'General Sans',system-ui,sans-serif;color:{{ c.ink }};transition:color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#F4F1EA">
+          <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;flex:0 0 auto;background:{{ c.dot }};box-shadow:{{ c.glow }};transition:background 900ms cubic-bezier(0.37,0,0.63,1),box-shadow 900ms cubic-bezier(0.37,0,0.63,1)"></span>
+          <span>{{ c.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<main>
+  <sc-if value="{{ showFeatured }}" hint-placeholder-val="{{ true }}">
+    <section aria-label="Featured entry" style="background:#E8E3D8;border-bottom:1px solid rgba(28,26,23,0.14)">
+      <div style="max-width:1160px;margin:0 auto;padding:56px 24px">
+        <a href="Journal Contract.dc.html" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:#1C1A17">
+          <dc-import name="Pixel Grid" pattern="lattice" n="{{ n14 }}" cell="{{ c9 }}" gap="{{ g3 }}" pad="18px" hint-size="190px,190px"></dc-import>
+          <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
+            <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#6B5528">FEATURED · ENGINEERING · 28 AUG 2026</span>
+            <span style="font:500 clamp(28px,3.6vw,38px)/1.15 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Writing down the contract between our CNN and our LSTM</span>
+            <span style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D;max-width:62ch">Two people trained two models against two different ideas of what a feature vector is. One expected 256 numbers per frame, the other expected them normalised. Here is the one-page document that fixed it, and why we should have written it in week five.</span>
+            <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">NAY CHI · 11 MIN READ</span>
+            <span style="display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-top:6px;font:400 15px/1.4 'General Sans',system-ui,sans-serif;color:#1C1A17;border-bottom:1px solid rgba(28,26,23,0.3);padding-bottom:5px;transition:color 900ms cubic-bezier(0.37,0,0.63,1),border-color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#6845F0;border-bottom-color:#6845F0">
+              <span>Read the entry</span>
+              <span aria-hidden="true" style="display:inline-block;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">→</span>
+            </span>
+          </span>
+        </a>
+      </div>
+    </section>
+  </sc-if>
+
+  <section aria-label="All entries" style="max-width:1160px;margin:0 auto;padding:56px 24px 24px">
+    <span style="display:block;font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;margin-bottom:26px">{{ countLabel }}</span>
+    <ul style="list-style:none;margin:0;padding:0">
+      <sc-for list="{{ entries }}" as="e" hint-placeholder-count="6">
+        <li style="border-top:1px solid rgba(28,26,23,0.18)">
+          <a href="{{ e.href }}" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:28px;row-gap:12px;align-items:center;padding:28px 0;text-decoration:none;color:#1C1A17;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">
+            <dc-import name="Pixel Grid" pattern="{{ e.motif }}" n="{{ n7 }}" cell="{{ c6 }}" gap="{{ g2 }}" pad="9px" hint-size="72px,72px"></dc-import>
+            <span style="display:flex;flex-direction:column;gap:9px;min-width:0">
+              <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">{{ e.meta }}</span>
+              <span style="font:500 23px/1.28 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">{{ e.title }}</span>
+              <span style="font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#4A453D;max-width:70ch">{{ e.excerpt }}</span>
+            </span>
+            <span style="font:400 10px/1.7 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;text-align:right">{{ e.by }}</span>
+          </a>
+        </li>
+      </sc-for>
+    </ul>
+    <div style="border-top:1px solid rgba(28,26,23,0.18)"></div>
+  </section>
+
+  <nav aria-label="Pagination" style="max-width:1160px;margin:0 auto;padding:12px 24px 88px;display:flex;gap:10px;align-items:center">
+    <span aria-current="page" style="display:inline-flex;align-items:center;gap:9px;font:400 14px/1.2 'General Sans',system-ui,sans-serif;color:#1C1A17">
+      <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:#F5C86B;box-shadow:0 0 7px rgba(245,200,107,0.5)"></span>
+      <span>1</span>
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:9px;margin-left:20px;font:400 14px/1.2 'General Sans',system-ui,sans-serif;color:#5C574D">
+      <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:rgba(138,112,67,0.55)"></span>
+      <span>2</span>
+    </span>
+    <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;margin-left:24px">SIX ENTRIES SO FAR · WE POST MOST WEDNESDAYS</span>
+  </nav>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { cat: 'ALL' };
+
+  renderVals() {
+    const all = [
+      ['Journal Contract.dc.html', 'lattice', 'ENGINEERING', '28 AUG 2026', 'Writing down the contract between our CNN and our LSTM', 'Two people trained two models against two different ideas of what a feature vector is. Here is the document that fixed it.', 'NAY CHI · 11 MIN'],
+      ['Journal Domain Gap.dc.html', 'scatter', 'RESEARCH', '27 AUG 2026', 'Our dataset is a physio clinic. Our room is a bedroom at 3am.', 'What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at.', 'AMELIE · 7 MIN'],
+      ['Journal Skeletons.dc.html', 'staircase', 'BUILD LOG', '27 AUG 2026', 'Skeletons before data: writing code we cannot run yet', 'We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed.', 'CHRISTOPHER · 5 MIN'],
+      ['Journal Face.dc.html', 'ring', 'DESIGN', '22 AUG 2026', 'Why the device has a face', 'A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason.', 'AI LIN · 6 MIN'],
+      ['Journal Three Models.dc.html', 'lattice', 'ENGINEERING', '19 AUG 2026', 'Three models, not one: how we split the pipeline', 'One end-to-end network would have been simpler to draw and much harder to debug. We chose debuggable.', 'AARON · 6 MIN'],
+      ['Journal Week One.dc.html', 'staircase', 'BUILD LOG', '12 AUG 2026', 'Week one: we argued our way from falls to pain', 'Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful.', 'NAY CHI · 5 MIN']
+    ];
+    const cat = this.state.cat;
+    const list = cat === 'ALL' ? all : all.filter(e => e[2] === cat);
+    const cats = ['ALL', 'ENGINEERING', 'RESEARCH', 'DESIGN', 'BUILD LOG'];
+    return {
+      n14: 14, c9: 9, g3: 3, n7: 7, c6: 6, g2: 2,
+      showFeatured: cat === 'ALL' || cat === 'ENGINEERING',
+      countLabel: cat === 'ALL' ? 'ALL ENTRIES · ' + all.length : cat + ' · ' + list.length + (list.length === 1 ? ' ENTRY' : ' ENTRIES'),
+      chips: cats.map(key => {
+        const on = key === cat;
+        const label = key === 'ALL' ? 'All entries' : key.charAt(0) + key.slice(1).toLowerCase();
+        return {
+          label, pressed: on ? 'true' : 'false',
+          ink: on ? '#F4F1EA' : 'rgba(244,241,234,0.6)',
+          dot: on ? '#F5C86B' : 'rgba(138,112,67,0.55)',
+          glow: on ? '0 0 7px rgba(245,200,107,0.5)' : 'none',
+          pick: () => this.setState({ cat: key })
+        };
+      }),
+      entries: list.map(([href, motif, category, date, title, excerpt, by]) => ({
+        href, motif, title, excerpt, by, meta: category + ' · ' + date
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

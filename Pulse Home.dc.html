@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Pulse — a camera that watches when no one else can</title>
+  <meta name="description" content="Pulse is a camera-based patient monitoring concept by a student team at Monash DeepNeuron. It watches a bedridden patient and alerts a carer when it detects pain, abnormal breathing, or reduced consciousness." />
+  <meta property="og:title" content="Pulse — a camera that watches when no one else can" />
+  <meta property="og:description" content="A camera-based patient monitoring concept, built in public by five students at Monash DeepNeuron." />
+  <meta property="og:type" content="website" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+    html { scroll-behavior: smooth; }
+  </style>
+</helmet>
+
+<dc-import name="Site Header" active="" hint-size="100%,90px"></dc-import>
+
+<main>
+  <dc-import name="Hero Face" hint-size="100%,100vh"></dc-import>
+
+  <section aria-label="Project status" style="background:#E8E3D8;border-bottom:1px solid rgba(28,26,23,0.1)">
+    <div style="max-width:1160px;margin:0 auto;padding:18px 24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center">
+      <span style="font:400 11px/1.6 'Space Mono',monospace;letter-spacing:0.2em;color:#1C1A17">WEEK 8</span>
+      <span style="font:400 11px/1.6 'Space Mono',monospace;color:#8A7043">·</span>
+      <span style="font:400 11px/1.6 'Space Mono',monospace;letter-spacing:0.2em;color:#1C1A17">INTEGRATION</span>
+      <span style="font:400 11px/1.6 'Space Mono',monospace;color:#8A7043">·</span>
+      <span style="font:400 11px/1.6 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">SHOWCASE IN 4 WEEKS</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="where-title" style="padding:88px 24px;position:relative;overflow:hidden">
+    <img src="assets/wf-torus-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-180px;bottom:-160px;width:560px;opacity:0.07;pointer-events:none" />
+    <div style="max-width:1160px;margin:0 auto;position:relative">
+      <span style="display:flex;align-items:center;gap:9px;margin-bottom:18px">
+        <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">WHERE THINGS STAND</span>
+      </span>
+      <h2 id="where-title" style="margin:0 0 56px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:40px;row-gap:36px">
+        <div style="border-top:1px solid rgba(28,26,23,0.16);padding-top:24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">01 · THE PROBLEM</span>
+          <h3 style="margin:0;font:500 22px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
+          <p style="margin:0;font:400 16px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Bedridden patients who cannot call for help rely on scheduled rounds. Between rounds, pain goes unreported. Forty-one seconds, not four hours, is the difference we care about.</p>
+        </div>
+        <div style="border-top:1px solid rgba(28,26,23,0.16);padding-top:24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">02 · THE APPROACH</span>
+          <h3 style="margin:0;font:500 22px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">One camera, three frozen models.</h3>
+          <p style="margin:0;font:400 16px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">A face is detected, described as 256 numbers, and read over a rolling second of video. Above a threshold, a carer's phone rings. The device does not learn the patient.</p>
+        </div>
+        <div style="border-top:1px solid rgba(28,26,23,0.16);padding-top:24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">03 · WHERE IT IS NOW</span>
+          <h3 style="margin:0;font:500 22px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
+          <p style="margin:0;font:400 16px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The models are trained separately and being wired together this week. The 8cm cube exists as geometry, not plastic. Week 9 is a software demo. We're not pretending otherwise.</p>
+        </div>
+        <div style="border-top:1px solid rgba(28,26,23,0.16);padding-top:24px;display:flex;flex-direction:column;gap:12px;min-width:0">
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">04 · WHAT'S NEXT</span>
+          <h3 style="margin:0;font:500 22px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">Live video in, alerts out.</h3>
+          <p style="margin:0;font:400 16px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Four weeks to the showcase: threshold tuning against recorded sessions, alert latency, and an honest account of where the dataset stops resembling a bedroom.</p>
+        </div>
+      </div>
+      <a href="Pulse Project.dc.html" style="display:inline-flex;align-items:center;gap:10px;align-self:flex-start;text-decoration:none;font:400 15px/1.4 'General Sans',system-ui,sans-serif;color:#1C1A17;border-bottom:1px solid rgba(28,26,23,0.3);padding-bottom:5px;margin-top:44px;transition:color 900ms cubic-bezier(0.37,0,0.63,1),border-color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#6845F0;border-bottom-color:#6845F0">
+        <span>Read the full project</span>
+        <span aria-hidden="true" style="display:inline-block;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="journal-title" style="background:#E8E3D8;padding:88px 24px">
+    <div style="max-width:1160px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+        <div>
+          <span style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
+            <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+            <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">THE RECORD</span>
+          </span>
+          <h2 id="journal-title" style="margin:0;font:500 clamp(30px,4vw,38px)/1.15 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">We're building Pulse in public.</h2>
+        </div>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0">
+        <sc-for list="{{ latest }}" as="e" hint-placeholder-count="3">
+          <li style="border-top:1px solid rgba(28,26,23,0.18)">
+            <a href="{{ e.href }}" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:#1C1A17;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">
+              <dc-import name="Pixel Grid" pattern="{{ e.motif }}" n="{{ n7 }}" cell="{{ c5 }}" gap="{{ g2 }}" pad="8px" hint-size="62px,62px"></dc-import>
+              <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+                <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">{{ e.meta }}</span>
+                <span style="font:500 22px/1.28 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">{{ e.title }}</span>
+                <span style="font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#4A453D">{{ e.excerpt }}</span>
+              </span>
+              <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;text-align:right">{{ e.by }}</span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+      <div style="border-top:1px solid rgba(28,26,23,0.18)"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:56px;margin-top:40px">
+      <a href="Pulse Journal.dc.html" style="display:inline-flex;align-items:center;gap:10px;align-self:flex-start;text-decoration:none;font:400 15px/1.4 'General Sans',system-ui,sans-serif;color:#1C1A17;border-bottom:1px solid rgba(28,26,23,0.3);padding-bottom:5px;transition:color 900ms cubic-bezier(0.37,0,0.63,1),border-color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#6845F0;border-bottom-color:#6845F0">
+        <span>All entries</span>
+        <span aria-hidden="true" style="display:inline-block;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">→</span>
+      </a>
+      <a href="Pulse Media.dc.html" style="display:inline-flex;align-items:center;gap:10px;align-self:flex-start;text-decoration:none;font:400 15px/1.4 'General Sans',system-ui,sans-serif;color:#1C1A17;border-bottom:1px solid rgba(28,26,23,0.3);padding-bottom:5px;transition:color 900ms cubic-bezier(0.37,0,0.63,1),border-color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#6845F0;border-bottom-color:#6845F0">
+        <span>Photos and video</span>
+        <span aria-hidden="true" style="display:inline-block;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateX(4px)">→</span>
+      </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      n14: 14, c14: 14, g3: 3, yes: true, n7: 7, c5: 5, g2: 2,
+      latest: [
+        {
+          href: 'Journal Contract.dc.html', motif: 'lattice',
+          meta: 'ENGINEERING · 28 AUG 2026',
+          title: 'Writing down the contract between our CNN and our LSTM',
+          excerpt: 'Two people trained two models against two different ideas of what a feature vector is. Here is the document that fixed it.',
+          by: 'NAY CHI · 11 MIN'
+        },
+        {
+          href: 'Journal Domain Gap.dc.html', motif: 'scatter',
+          meta: 'RESEARCH · 27 AUG 2026',
+          title: 'Our dataset is a physio clinic. Our room is a bedroom at 3am.',
+          excerpt: 'What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at.',
+          by: 'AMELIE · 7 MIN'
+        },
+        {
+          href: 'Journal Skeletons.dc.html', motif: 'staircase',
+          meta: 'BUILD LOG · 27 AUG 2026',
+          title: 'Skeletons before data: writing code we cannot run yet',
+          excerpt: 'We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed.',
+          by: 'CHRISTOPHER · 5 MIN'
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<footer style="background:#1C1A17;color:#F4F1EA;padding:72px 24px 40px;position:relative;overflow:hidden">
+  <img src="assets/wf-net2-white.png" alt="" aria-hidden="true" style="position:absolute;right:-120px;bottom:-140px;width:520px;opacity:0.06;pointer-events:none" />
+  <div style="max-width:1160px;margin:0 auto;position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:48px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <span style="display:flex;align-items:center;gap:12px">
+        <dc-import name="Pixel Grid" pattern="face" n="{{ n5 }}" cell="{{ c3 }}" gap="{{ g1 }}" pad="5px" live="{{ yes }}" hint-size="34px,34px"></dc-import>
+        <span style="font:500 20px/1 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Pulse</span>
+      </span>
+      <p style="margin:0;max-width:30ch;font:400 15px/1.7 'General Sans',system-ui,sans-serif;color:rgba(244,241,234,0.62);text-wrap:pretty">A camera-based patient monitoring concept. A student research project, not a certified medical device.</p>
+      <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">WEEK 8 · INTEGRATION</span>
+    </div>
+
+    <nav aria-label="Site" style="display:flex;flex-direction:column;gap:10px">
+      <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">PAGES</span>
+      <a href="Pulse Home.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">Home</a>
+      <a href="Pulse Project.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">The Project</a>
+      <a href="Pulse Journal.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">Journal</a>
+      <a href="Pulse Media.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">Media</a>
+      <a href="Pulse Team.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">Team</a>
+      <a href="Pulse Contact.dc.html" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none" style-hover="color:#F5C86B">Contact</a>
+    </nav>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">GET IN TOUCH</span>
+      <a href="mailto:pulse@deepneuron.org" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none;border-bottom:1px solid rgba(244,241,234,0.3);align-self:flex-start" style-hover="color:#F5C86B;border-bottom-color:#F5C86B">pulse@deepneuron.org</a>
+      <a href="https://github.com/MonashDeepNeuron" style="font:400 15px/1.5 'General Sans',system-ui,sans-serif;color:#F4F1EA;text-decoration:none;border-bottom:1px solid rgba(244,241,234,0.3);align-self:flex-start" style-hover="color:#F5C86B;border-bottom-color:#F5C86B">github.com/MonashDeepNeuron</a>
+      <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55);margin-top:8px">CLAYTON · MONASH UNIVERSITY</span>
+    </div>
+
+    <a href="https://deepneuron.org" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;text-decoration:none;padding:22px;border:1px solid #7854FC;border-radius:3px;background:transparent;box-shadow:0 0 28px rgba(120,84,252,0.28),inset 0 0 22px rgba(120,84,252,0.16);transition:box-shadow 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="box-shadow:0 0 40px rgba(120,84,252,0.42),inset 0 0 30px rgba(120,84,252,0.24)">
+      <img src="assets/mdn-lockup-purple.png" alt="Monash DeepNeuron — Artificial Intelligence" style="width:100%;max-width:190px;height:auto;display:block" />
+      <span style="font:400 12px/1.7 'Space Mono',monospace;letter-spacing:0.08em;color:#A996FE">Built inside Monash DeepNeuron, the university's AI and high-performance computing team.</span>
+    </a>
+  </div>
+
+  <div style="max-width:1160px;margin:56px auto 0;padding-top:20px;border-top:1px solid rgba(244,241,234,0.14);display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap">
+    <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">PULSE · 2026 · MONASH DEEPNEURON</span>
+    <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">NOT A MEDICAL DEVICE · NOT CLINICALLY VALIDATED</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:420}}">
+class Component extends DCLogic {
+  renderVals() { return { n5: 5, c3: 3, g1: 1, yes: true }; }
+}
+</script>
+</body>
+</html>

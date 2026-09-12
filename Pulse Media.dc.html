@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Media — Pulse</title>
+  <meta name="description" content="Photos, video, renders and diagrams from the build of Pulse, grouped by milestone." />
+  <meta property="og:title" content="Media — Pulse" />
+  <meta property="og:description" content="The library of what we have built so far, in chronological order." />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+    @keyframes om-fade { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</helmet>
+
+<dc-import name="Site Header" active="media" hint-size="100%,90px"></dc-import>
+
+<section aria-labelledby="m-title" style="background:#1C1A17;color:#F4F1EA;padding:76px 24px 40px;position:relative;overflow:hidden">
+  <img src="assets/wf-orb-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-100px;top:-80px;width:480px;opacity:0.1;pointer-events:none" />
+  <div style="max-width:1160px;margin:0 auto;position:relative">
+    <span style="display:flex;align-items:center;gap:9px;margin-bottom:20px">
+      <img src="assets/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+      <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#A996FE">MEDIA</span>
+    </span>
+    <h1 id="m-title" style="margin:0 0 20px;font:500 clamp(38px,5.4vw,56px)/1.07 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">What we have built, in order.</h1>
+    <p style="margin:0 0 30px;max-width:52ch;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:rgba(244,241,234,0.86)">Bench photos, screen recordings of the model running, CAD renders of a cube that does not exist yet, and the diagrams we drew to argue with each other.</p>
+    <div role="group" aria-label="Filter by type" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid rgba(244,241,234,0.16);padding-top:24px">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5">
+        <button type="button" onClick="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="display:inline-flex;align-items:center;gap:10px;background:none;border:0;padding:4px 0;cursor:pointer;font:400 14px/1.2 'General Sans',system-ui,sans-serif;color:{{ c.ink }};transition:color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#F4F1EA">
+          <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;flex:0 0 auto;background:{{ c.dot }};box-shadow:{{ c.glow }};transition:background 900ms cubic-bezier(0.37,0,0.63,1),box-shadow 900ms cubic-bezier(0.37,0,0.63,1)"></span>
+          <span>{{ c.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<main style="max-width:1160px;margin:0 auto;padding:56px 24px 96px;display:flex;flex-direction:column;gap:64px">
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+    <section aria-label="{{ g.heading }}" style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid rgba(28,26,23,0.18);padding-bottom:14px">
+        <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">{{ g.stamp }}</span>
+        <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">{{ g.heading }}</h2>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:28px">
+        <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+          <li style="min-width:0">
+            <button type="button" onClick="{{ it.open }}" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:#1C1A17">
+              <span style="display:block;width:100%;aspect-ratio:{{ it.ratio }};background:{{ it.tile }};border:1px solid rgba(28,26,23,0.16);position:relative;display:flex;align-items:center;justify-content:center;transition:transform 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="transform:translateY(-3px)">
+                <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;text-align:center;padding:0 16px">{{ it.slot }}</span>
+                <sc-if value="{{ it.isVideo }}" hint-placeholder-val="{{ false }}">
+                  <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid #1C1A17;border-radius:999px;background:rgba(244,241,234,0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 'Space Mono',monospace;color:#1C1A17">▶</span>
+                </sc-if>
+              </span>
+              <span style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#6B5528">{{ it.type }}</span>
+                <span style="font:400 14px/1.6 'Space Mono',monospace;color:#1C1A17">{{ it.caption }}</span>
+                <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">{{ it.date }}</span>
+              </span>
+            </button>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+  </sc-for>
+  <p style="margin:0;max-width:60ch;font:400 15px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Every tile above is a placeholder waiting for a real file. Captions, dates and grouping are final; the imagery is not.</p>
+</main>
+
+<sc-if value="{{ lightbox }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ current.caption }}" style="position:fixed;inset:0;z-index:80;background:rgba(28,26,23,0.94);display:flex;flex-direction:column;animation:om-fade 260ms cubic-bezier(0.37,0,0.63,1)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid rgba(244,241,234,0.16)">
+      <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55)">{{ current.type }} · {{ current.date }}</span>
+      <button type="button" onClick="{{ close }}" aria-label="Close" style="font:400 12px/1 'Space Mono',monospace;letter-spacing:0.14em;background:none;border:0;border-bottom:1px solid rgba(244,241,234,0.3);color:#F4F1EA;padding:8px 0;cursor:pointer;transition:color 900ms cubic-bezier(0.37,0,0.63,1),border-color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#F5C86B;border-bottom-color:#F5C86B">CLOSE ESC</button>
+    </div>
+    <div style="flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:20px;padding:28px 24px;min-height:0">
+      <button type="button" onClick="{{ prev }}" aria-label="Previous" style="font:400 20px/1 'Space Mono',monospace;background:none;border:0;color:rgba(244,241,234,0.7);padding:14px 10px;cursor:pointer;flex:0 0 auto;transition:color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#F5C86B">←</button>
+      <span style="flex:1 1 auto;max-width:900px;aspect-ratio:{{ current.ratio }};background:{{ current.tileDark }};border:1px solid rgba(244,241,234,0.2);display:flex;align-items:center;justify-content:center;padding:24px">
+        <span style="font:400 11px/1.7 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.62);text-align:center">{{ current.slot }}</span>
+      </span>
+      <button type="button" onClick="{{ next }}" aria-label="Next" style="font:400 20px/1 'Space Mono',monospace;background:none;border:0;color:rgba(244,241,234,0.7);padding:14px 10px;cursor:pointer;flex:0 0 auto;transition:color 900ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#F5C86B">→</button>
+    </div>
+    <div style="padding:0 24px 28px;display:flex;justify-content:center">
+      <span style="font:400 14px/1.6 'Space Mono',monospace;color:#F4F1EA;text-align:center;max-width:60ch">{{ current.caption }}</span>
+    </div>
+  </div>
+</sc-if>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { type: 'ALL', i: -1 };
+
+  componentDidMount() {
+    this.onKey = e => {
+      if (this.state.i < 0) return;
+      if (e.key === 'Escape') this.setState({ i: -1 });
+      if (e.key === 'ArrowLeft') this.step(-1);
+      if (e.key === 'ArrowRight') this.step(1);
+    };
+    window.addEventListener('keydown', this.onKey);
+  }
+
+  componentWillUnmount() { window.removeEventListener('keydown', this.onKey); }
+
+  step(d) {
+    const n = this.visible().length;
+    if (!n) return;
+    this.setState(s => ({ i: (s.i + d + n) % n }));
+  }
+
+  all() {
+    return [
+      ['PHOTOS', 'Week 6 — first model runs', 'WEEK 6 · 14 AUG 2026', 'Bench setup: laptop, webcam on a tripod, one very patient volunteer', '14 AUG 2026', '4 / 3', 'PHOTO · BENCH SETUP'],
+      ['VIDEO', 'Week 6 — first model runs', 'WEEK 6 · 14 AUG 2026', 'Screen recording: CNN features streaming at 30fps, no LSTM yet', '15 AUG 2026', '16 / 9', 'SCREEN RECORDING · FEATURE STREAM'],
+      ['DIAGRAMS', 'Week 6 — first model runs', 'WEEK 6 · 14 AUG 2026', 'Whiteboard: the three-model split, before we knew about the seams', '13 AUG 2026', '4 / 3', 'PHOTO · WHITEBOARD'],
+      ['RENDERS', 'Week 6 — first model runs', 'WEEK 6 · 14 AUG 2026', 'CAD render: the 8cm cube, first pass, corner radius too tight', '16 AUG 2026', '1 / 1', 'RENDER · CUBE V1'],
+      ['VIDEO', 'Week 8 — integration testing', 'WEEK 8 · 28 AUG 2026', 'Full loop running: confidence trace and one alert firing at 0.71', '28 AUG 2026', '16 / 9', 'SCREEN RECORDING · FULL LOOP'],
+      ['PHOTOS', 'Week 8 — integration testing', 'WEEK 8 · 28 AUG 2026', 'Wednesday meeting: five laptops and the threshold argument', '27 AUG 2026', '3 / 2', 'PHOTO · TEAM MEETING'],
+      ['RENDERS', 'Week 8 — integration testing', 'WEEK 8 · 28 AUG 2026', 'CAD render: display aperture and lens, off-white shell', '26 AUG 2026', '1 / 1', 'RENDER · CUBE V3'],
+      ['DIAGRAMS', 'Week 8 — integration testing', 'WEEK 8 · 28 AUG 2026', 'Alert debounce logic, drawn after the thirty-alerts-per-second bug', '25 AUG 2026', '4 / 3', 'DIAGRAM · DEBOUNCE'],
+      ['PHOTOS', 'Week 8 — integration testing', 'WEEK 8 · 28 AUG 2026', 'The face on a spare round display, running at 240 × 240', '28 AUG 2026', '4 / 3', 'PHOTO · DISPLAY TEST']
+    ].map(([type, heading, stamp, caption, date, ratio, slot]) => ({ type, heading, stamp, caption, date, ratio, slot }));
+  }
+
+  visible() {
+    const t = this.state.type;
+    return t === 'ALL' ? this.all() : this.all().filter(i => i.type === t);
+  }
+
+  renderVals() {
+    const tile = 'repeating-linear-gradient(135deg,#E8E3D8 0 8px,#DFD9CC 8px 16px)';
+    const tileDark = 'repeating-linear-gradient(135deg,#232120 0 10px,#2B2825 10px 20px)';
+    const vis = this.visible().map((it, idx) => Object.assign({}, it, {
+      tile, tileDark,
+      isVideo: it.type === 'VIDEO',
+      open: () => this.setState({ i: idx })
+    }));
+    const order = ['Week 6 — first model runs', 'Week 8 — integration testing'];
+    const groups = order.map(heading => ({
+      heading,
+      stamp: heading.indexOf('Week 6') === 0 ? 'MILESTONE · WEEK 6' : 'MILESTONE · WEEK 8',
+      items: vis.filter(i => i.heading === heading)
+    })).filter(g => g.items.length);
+    const cats = ['ALL', 'PHOTOS', 'VIDEO', 'RENDERS', 'DIAGRAMS'];
+    const i = this.state.i;
+    return {
+      groups,
+      lightbox: i >= 0 && !!vis[i],
+      current: vis[i] || { caption: '', type: '', date: '', ratio: '16 / 9', slot: '', tileDark },
+      close: () => this.setState({ i: -1 }),
+      prev: () => this.step(-1),
+      next: () => this.step(1),
+      chips: cats.map(key => {
+        const on = key === this.state.type;
+        const label = key === 'ALL' ? 'Everything' : key.charAt(0) + key.slice(1).toLowerCase();
+        return {
+          label, pressed: on ? 'true' : 'false',
+          ink: on ? '#F4F1EA' : 'rgba(244,241,234,0.6)',
+          dot: on ? '#F5C86B' : 'rgba(138,112,67,0.55)',
+          glow: on ? '0 0 7px rgba(245,200,107,0.5)' : 'none',
+          pick: () => this.setState({ type: key, i: -1 })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

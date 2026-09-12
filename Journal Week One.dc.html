@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Week one: we argued our way from falls to pain — Pulse Journal</title>
+  <meta name="description" content="Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful." />
+  <meta property="og:title" content="Week one: we argued our way from falls to pain" />
+  <meta property="og:description" content="Pulse journal · Build log · 12 August 2026 · Nay Chi" />
+  <meta property="og:type" content="article" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<div role="presentation" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent">
+  <span style="display:block;height:100%;width:{{ progress }};background:#F5C86B;box-shadow:0 0 10px rgba(245,200,107,0.6)"></span>
+</div>
+
+<dc-import name="Site Header" active="journal" hint-size="100%,90px"></dc-import>
+
+<main style="max-width:760px;margin:0 auto;padding:64px 24px 96px">
+  <article>
+    <header style="display:flex;flex-direction:column;gap:20px;margin-bottom:44px">
+      <span style="display:flex;align-items:center;gap:9px">
+        <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">BUILD LOG · 12 AUG 2026 · 5 MIN READ</span>
+      </span>
+      <h1 style="margin:0;font:500 clamp(32px,5vw,48px)/1.1 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Week one: we argued our way from falls to pain</h1>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:20px">
+        <dc-import name="Pixel Grid" pattern="scatter" n="{{ n7 }}" cell="{{ c4 }}" gap="{{ g1 }}" pad="6px" hint-size="44px,44px"></dc-import>
+        <span style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 16px/1.3 'General Sans',system-ui,sans-serif">Nay Chi</span>
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">PROJECT LEAD · DEEP LEARNING · WEB</span>
+        </span>
+      </div>
+    </header>
+
+    <p style="margin:0 0 22px;font:400 19px/1.7 'General Sans',system-ui,sans-serif;color:#1C1A17">We walked into the first Wednesday meeting intending to build falls detection. We walked out with pain detection, two hours later, mostly because of one question nobody could answer.</p>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The question was: who is the alert for, and what do they do differently because of it?</p>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Falls, and why we dropped it</h2>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Falls detection is the obvious camera-in-a-bedroom project. It is also, we found within an hour of reading, extremely well covered — by commercial products, by published work, and by cheap accelerometers that do not need a camera at all. And a fall is a loud event. Someone in the house usually knows.</p>
+    <ul style="margin:0 0 26px;padding-left:22px;display:flex;flex-direction:column;gap:12px">
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Crowded.</strong> We would be a worse version of something you can buy.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Already solved without cameras.</strong> A wrist accelerometer detects a fall more reliably than we could from video.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">The wrong gap.</strong> A fall is detectable by other means. Silent pain is not.</li>
+    </ul>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">What we chose instead</h2>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">A bedridden patient who cannot reach a call button has no channel at all. Not a weak channel — none. Between scheduled rounds, pain simply goes unreported. That is a gap a camera is unusually well suited to, because the face is where the signal already is.</p>
+    <blockquote style="margin:0 0 26px;padding:4px 0 4px 24px;border-left:2px solid #6B5528"><p style="margin:0;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:#1C1A17">Not "improves response times". Forty-one seconds, not four hours.</p></blockquote>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">We also liked that the claim is small and checkable. Pulse does not diagnose, does not treat, does not replace a carer. It says: this face looks like pain, at this confidence, right now. A person decides what that means. Every hard question that follows — thresholds, false alarms, trust — sits inside that one sentence, which is a good sign that the sentence is the right size.</p>
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">What we agreed in that first meeting</h2>
+    <ul style="margin:0 0 26px;padding-left:22px;display:flex;flex-direction:column;gap:12px">
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The output is one notification to one carer, with a still frame and a confidence.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">No video leaves the device, and nothing is stored.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The dataset would be UNBC-McMaster, with the domain gap stated up front rather than buried.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">We would write the journal as we went, including the parts we got wrong.</li>
+    </ul>
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Three of those four have held. The fourth — writing as we go — slipped by about two weeks, which is why this entry is being published after the ones that follow it chronologically. We are catching up, unedited.</p>
+
+  </article>
+
+  <nav aria-label="More entries" style="display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap;margin-top:64px;border-top:1px solid rgba(28,26,23,0.18);padding-top:24px">
+    <a href="Journal Three Models.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">← NEWER</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Three models, not one: how we split the pipeline</span></a>
+    <a href="Pulse Journal.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch;text-align:right"><span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">INDEX →</span><span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">All journal entries</span></a>
+  </nav>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { p: 0 };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      this.setState({ p: max > 0 ? Math.min(1, h.scrollTop / max) : 0 });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+
+  renderVals() {
+    return { n7: 7, c4: 4, g1: 1, progress: (this.state.p * 100).toFixed(1) + '%' };
+  }
+}
+</script>
+</body>
+</html>

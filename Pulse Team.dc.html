@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Team — Pulse</title>
+  <meta name="description" content="Five students at Monash DeepNeuron, meeting one evening a week, building Pulse." />
+  <meta property="og:title" content="Team — Pulse" />
+  <meta property="og:description" content="Five students, one evening a week, inside Monash DeepNeuron." />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<dc-import name="Site Header" active="team" hint-size="100%,90px"></dc-import>
+
+<main style="max-width:1160px;margin:0 auto;padding:72px 24px 96px;display:flex;flex-direction:column;gap:56px">
+  <section aria-labelledby="t-title" style="display:flex;flex-direction:column;gap:20px">
+    <span style="display:flex;align-items:center;gap:9px">
+      <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+      <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">TEAM</span>
+    </span>
+    <h1 id="t-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,56px)/1.07 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Five of us, one evening a week.</h1>
+    <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;max-width:70ch">
+      <img src="assets/mdn-mark-purple.png" alt="Monash DeepNeuron" style="height:34px;width:auto;display:block;margin-top:4px" />
+      <p style="margin:0;flex:1 1 380px;min-width:0;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">We meet one evening a week on Zoom, inside <span style="color:#6845F0">Monash DeepNeuron</span> — the university's AI and high-performance computing team. Nobody here has built a medical device before, which is roughly the point: this is a place to learn in public, and Pulse is what we chose to learn on.</p>
+    </div>
+  </section>
+
+  <section aria-label="Team members">
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));column-gap:40px;row-gap:44px">
+      <sc-for list="{{ people }}" as="p" hint-placeholder-count="6">
+        <li style="display:flex;flex-direction:column;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:22px;min-width:0">
+          <dc-import name="Pixel Grid" pattern="{{ p.motif }}" n="{{ n7 }}" cell="{{ c6 }}" gap="{{ g2 }}" pad="9px" hint-size="72px,72px"></dc-import>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span style="font:500 21px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">{{ p.name }}</span>
+            <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#6B5528">{{ p.role }}</span>
+          </span>
+          <p style="margin:0;font:400 15px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">{{ p.bio }}</p>
+          <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:2px">
+            <sc-for list="{{ p.links }}" as="l" hint-placeholder-count="5">
+              <sc-if value="{{ l.sep }}" hint-placeholder-val="{{ false }}">
+                <span aria-hidden="true" style="font:400 10px/1 'Space Mono',monospace;color:#8A7043">·</span>
+              </sc-if>
+              <sc-if value="{{ l.live }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ l.href }}" style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:#5C574D" style-hover="color:#6845F0">{{ l.label }}</a>
+              </sc-if>
+              <sc-if value="{{ l.placeholder }}" hint-placeholder-val="{{ false }}">
+                <span aria-hidden="true" style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;text-transform:uppercase;color:#5C574D;opacity:0.42">{{ l.label }}</span>
+              </sc-if>
+            </sc-for>
+          </span>
+        </li>
+      </sc-for>
+      <li style="display:flex;flex-direction:column;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:22px;min-width:0">
+        <span style="display:flex;align-items:center;justify-content:center;width:72px;height:72px;border:1px dashed #8A7043;border-radius:2px">
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#6B5528">OPEN</span>
+        </span>
+        <span style="display:flex;flex-direction:column;gap:6px">
+          <span style="font:500 21px/1.25 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em;color:#5C574D">Sixth seat</span>
+          <span style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#6B5528">RESERVED · SEMESTER TWO</span>
+        </span>
+        <p style="margin:0;font:400 15px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">One seat is held open for a student joining next intake — most usefully someone on embedded or hardware. <a href="Pulse Contact.dc.html">Get in touch</a>.</p>
+      </li>
+    </ul>
+  </section>
+
+  <p style="margin:0;max-width:60ch;font:400 13px/1.7 'Space Mono',monospace;color:#5C574D">Bios above are placeholder text. Real ones and photographs are pending.</p>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    const lorem = [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.',
+      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.',
+      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla.',
+      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.',
+      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.'
+    ];
+    // To activate a placeholder: replace null with the URL.
+    const defs = [
+      ['Nay Chi', 'PROJECT LEAD · DEEP LEARNING · WEB', 'scatter',
+        'https://www.linkedin.com/in/naychi', 'https://github.com/naychi', 'mailto:naychi@deepneuron.org'],
+      ['Amelie', 'DEEP LEARNING · HARDWARE', 'ring', null, null, null],
+      ['Aaron', 'COMPUTER VISION · ALERTS', 'lattice', null, null, null],
+      ['Christopher', 'COMPUTER VISION · DATA', 'staircase', null, null, null],
+      ['Ai Lin', 'PRODUCT DESIGN', 'iris', null, null, null]
+    ];
+    const build = (li, gh, em) => {
+      const out = [];
+      [['LINKEDIN', li], ['GITHUB', gh], ['EMAIL', em]].forEach(([label, href], i) => {
+        if (i > 0) out.push({ sep: true, live: false, placeholder: false, label: '', href: '' });
+        if (href) out.push({ sep: false, live: true, placeholder: false, label, href });
+        else out.push({ sep: false, live: false, placeholder: true, label: label + ' —', href: '' });
+      });
+      return out;
+    };
+    return {
+      n7: 7, c6: 6, g2: 2,
+      people: defs.map(([name, role, motif, li, gh, em], i) => ({
+        name, role, motif, bio: lorem[i], links: build(li, gh, em)
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

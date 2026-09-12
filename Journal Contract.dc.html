@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>Writing down the contract between our CNN and our LSTM — Pulse Journal</title>
+  <meta name="description" content="Two people trained two models against two different ideas of what a feature vector is. Here is the one-page contract that fixed it, and why we should have written it in week five." />
+  <meta property="og:title" content="Writing down the contract between our CNN and our LSTM" />
+  <meta property="og:description" content="Pulse journal · Engineering · 28 August 2026 · Nay Chi" />
+  <meta property="og:type" content="article" />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #F4F1EA; color: #1C1A17; font-family: 'General Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    p { text-wrap: pretty; }
+    a { color: #6845F0; }
+    a:hover { color: #5433DB; }
+    :focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }
+  </style>
+</helmet>
+
+<div role="presentation" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent">
+  <span style="display:block;height:100%;width:{{ progress }};background:#F5C86B;box-shadow:0 0 10px rgba(245,200,107,0.6)"></span>
+</div>
+
+<dc-import name="Site Header" active="journal" hint-size="100%,90px"></dc-import>
+
+<main style="max-width:760px;margin:0 auto;padding:64px 24px 96px">
+  <article>
+    <header style="display:flex;flex-direction:column;gap:20px;margin-bottom:44px">
+      <span style="display:flex;align-items:center;gap:9px">
+        <img src="assets/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">ENGINEERING · 28 AUG 2026 · 11 MIN READ</span>
+      </span>
+      <h1 style="margin:0;font:500 clamp(32px,5vw,48px)/1.1 'General Sans',system-ui,sans-serif;letter-spacing:-0.03em">Writing down the contract between our CNN and our LSTM</h1>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid rgba(28,26,23,0.16);padding-top:20px">
+        <dc-import name="Pixel Grid" pattern="scatter" n="{{ n7 }}" cell="{{ c4 }}" gap="{{ g1 }}" pad="6px" hint-size="44px,44px"></dc-import>
+        <span style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 16px/1.3 'General Sans',system-ui,sans-serif">Nay Chi</span>
+          <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">PROJECT LEAD · DEEP LEARNING · WEB</span>
+        </span>
+      </div>
+    </header>
+
+    <p style="margin:0 0 22px;font:400 19px/1.7 'General Sans',system-ui,sans-serif;color:#1C1A17">Aaron trained a CNN that outputs 256 numbers per frame. I trained an LSTM that reads 256 numbers per frame. We plugged them together on Tuesday and the confidence output sat at 0.5 for eleven minutes of video, regardless of what the person in the video did.</p>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Nothing was broken. Both models did exactly what they were trained to do. They just disagreed about what a feature vector <em>is</em>, and neither of us had written that down anywhere.</p>
+
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Four disagreements we found in one afternoon</h2>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">We sat down with both training scripts open side by side. Within an hour we had four separate mismatches, none of which would ever have thrown an exception:</p>
+
+    <ol style="margin:0 0 26px;padding-left:24px;display:flex;flex-direction:column;gap:12px">
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Normalisation.</strong> His CNN emitted raw activations from a layer with no bound. My LSTM was trained on vectors scaled to zero mean and unit variance. Everything I fed it looked like an outlier.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Ordering.</strong> My rolling buffer was oldest-first. His extraction script wrote newest-first. The LSTM was reading the last 1.1 seconds backwards.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Missing frames.</strong> When the face detector finds nothing, his code returned a zero vector. Mine expected the frame to be skipped entirely. A patient turning over became, to the LSTM, a sustained and very confident nothing.</li>
+      <li style="font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D"><strong style="font-weight:500;color:#1C1A17">Dtype.</strong> <code style="font:400 15px/1.4 'Space Mono',monospace;background:#E8E3D8;padding:2px 6px">float64</code> out, <code style="font:400 15px/1.4 'Space Mono',monospace;background:#E8E3D8;padding:2px 6px">float32</code> in. Harmless, but it cost us twenty minutes of suspicion.</li>
+    </ol>
+
+    <blockquote style="margin:0 0 26px;padding:4px 0 4px 24px;border-left:2px solid #6B5528">
+      <p style="margin:0;font:400 19px/1.65 'General Sans',system-ui,sans-serif;color:#1C1A17">Every one of these is a decision someone made deliberately, alone, at 11pm, and never told anyone about.</p>
+    </blockquote>
+
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">The contract</h2>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">So we wrote one page. Not a design document — a contract, in the sense that either side can be tested against it independently. It lives in the repo next to the models and it is the first thing either of us changes now.</p>
+
+    <figure style="margin:0 0 28px;padding:0">
+      <pre style="margin:0;padding:22px;background:#1C1A17;color:#F4F1EA;overflow-x:auto;font:400 13px/1.75 'Space Mono',monospace"><code><span style="color:#8A7043"># pulse/contract.py — the interface between stage 3 and stage 5</span>
+<span style="color:#A996FE">FEATURE_DIM</span>   = 256          <span style="color:#8A7043"># fixed. never inferred at runtime</span>
+<span style="color:#A996FE">WINDOW</span>        = 32           <span style="color:#8A7043"># frames ≈ 1.1s at 30fps</span>
+<span style="color:#A996FE">DTYPE</span>         = np.float32
+<span style="color:#A996FE">ORDER</span>         = <span style="color:#F5C86B">"oldest_first"</span>
+<span style="color:#A996FE">NORMALISED</span>    = <span style="color:#F5C86B">True</span>         <span style="color:#8A7043"># zero mean, unit variance, per-dim</span>
+<span style="color:#A996FE">ON_NO_FACE</span>    = <span style="color:#F5C86B">"skip"</span>        <span style="color:#8A7043"># never a zero vector. skip the frame.</span>
+
+<span style="color:#A996FE">def</span> validate(window):
+    assert window.dtype == DTYPE
+    assert window.shape == (WINDOW, FEATURE_DIM)
+    assert abs(window.mean()) &lt; 0.5      <span style="color:#8A7043"># catches un-normalised input</span>
+    return window</code></pre>
+      <figcaption style="margin-top:12px;font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">FIGURE 1 · THE WHOLE CONTRACT. IT IS DELIBERATELY SHORT ENOUGH TO READ.</figcaption>
+    </figure>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">The assertion on the mean is the useful one. It is crude — a normalised window can legitimately drift — but it has caught the un-normalised case twice since, both times within seconds rather than after an afternoon of staring at a flat line.</p>
+
+    <h3 style="margin:36px 0 14px;font:500 22px/1.3 'General Sans',system-ui,sans-serif;letter-spacing:-0.015em">What changed on both sides</h3>
+
+    <div style="overflow-x:auto;margin:0 0 28px">
+      <table style="width:100%;border-collapse:collapse;min-width:460px">
+        <thead>
+          <tr>
+            <th scope="col" style="text-align:left;font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;padding:0 16px 12px 0;border-bottom:1px solid rgba(28,26,23,0.3)">DECISION</th>
+            <th scope="col" style="text-align:left;font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;padding:0 16px 12px 0;border-bottom:1px solid rgba(28,26,23,0.3)">BEFORE</th>
+            <th scope="col" style="text-align:left;font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D;padding:0 0 12px;border-bottom:1px solid rgba(28,26,23,0.3)">NOW</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#1C1A17">Normalisation</td>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">wherever</td>
+            <td style="padding:14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">CNN side, always</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#1C1A17">Window order</td>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">newest first</td>
+            <td style="padding:14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">oldest first</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#1C1A17">No face in frame</td>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">zero vector</td>
+            <td style="padding:14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">skip frame</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 15px/1.6 'General Sans',system-ui,sans-serif;color:#1C1A17">Validation</td>
+            <td style="padding:14px 16px 14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">none</td>
+            <td style="padding:14px 0;border-bottom:1px solid rgba(28,26,23,0.14);font:400 13px/1.6 'Space Mono',monospace;color:#5C574D">on every window</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 style="margin:44px 0 16px;font:500 clamp(24px,3vw,30px)/1.2 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Why this took until week eight</h2>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Because splitting the pipeline into three models was the right call and we let it hide a cost. Three models mean three people can work at once, and each piece is debuggable on its own — that was the whole argument, and it held. But it also means two interfaces nobody owns, and an interface nobody owns is a place where two reasonable people quietly disagree for three weeks.</p>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">This is the part I am least sure about, so I am writing it down rather than pretending it is settled: I do not know whether the right fix is more documents like this one, or fewer seams. For a twelve-week project, the document is cheaper. For anything that lived longer, I suspect we would want the contract to be executable — a shared type, not a page of constants two people have to remember to read.</p>
+
+    <p style="margin:0 0 22px;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">For now: eleven minutes of video, and the confidence output moves.</p>
+  </article>
+
+  <nav aria-label="More entries" style="display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap;margin-top:64px;border-top:1px solid rgba(28,26,23,0.18);padding-top:24px">
+    <a href="Journal Domain Gap.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch">
+      <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">← NEWER</span>
+      <span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Our dataset is a physio clinic. Our room is a bedroom at 3am.</span>
+    </a>
+    <a href="Journal Skeletons.dc.html" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1C1A17;max-width:32ch;text-align:right">
+      <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">OLDER →</span>
+      <span style="font:500 16px/1.4 'General Sans',system-ui,sans-serif">Skeletons before data: writing code we cannot run yet</span>
+    </a>
+  </nav>
+</main>
+
+<dc-import name="Site Footer" hint-size="100%,420px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { p: 0 };
+
+  componentDidMount() {
+    this.onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      this.setState({ p: max > 0 ? Math.min(1, h.scrollTop / max) : 0 });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onScroll();
+  }
+
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); }
+
+  renderVals() {
+    return { n7: 7, c4: 4, g1: 1, progress: (this.state.p * 100).toFixed(1) + '%' };
+  }
+}
+</script>
+</body>
+</html>

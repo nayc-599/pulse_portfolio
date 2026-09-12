@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<header style="position:sticky;top:0;z-index:50;background:rgba(244,241,234,0.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(28,26,23,0.12)">
+  <div style="max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <a href="Pulse Home.dc.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;color:#1C1A17">
+      <img src="assets/mdn-mark-purple.png" alt="Monash DeepNeuron" style="height:26px;width:auto;display:block" />
+      <span style="width:1px;height:28px;background:rgba(28,26,23,0.18);display:block"></span>
+      <dc-import name="Pixel Grid" pattern="face" n="{{ five }}" cell="{{ three }}" gap="{{ one }}" pad="4px" live="{{ yes }}" hint-size="26px,26px"></dc-import>
+      <span style="display:flex;flex-direction:column;gap:2px">
+        <span style="font:500 19px/1 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">Pulse</span>
+        <span style="font:400 10px/1 'Space Mono',monospace;letter-spacing:0.14em;color:#5C574D">A DEEPNEURON PROJECT</span>
+      </span>
+    </a>
+    <nav aria-label="Primary" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+      <sc-for list="{{ links }}" as="l" hint-placeholder-count="5">
+        <a href="{{ l.href }}" style="font:400 13px/1 'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;padding:9px 12px;border-bottom:2px solid {{ l.rule }};color:{{ l.color }};transition:color 400ms cubic-bezier(0.37,0,0.63,1),border-color 400ms cubic-bezier(0.37,0,0.63,1)" style-hover="color:#1C1A17;border-bottom-color:rgba(28,26,23,0.35)">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1160,&quot;height&quot;:90},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;project&quot;,&quot;journal&quot;,&quot;media&quot;,&quot;team&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const active = (this.props.active || '').toLowerCase();
+    const defs = [
+      ['Project', 'Pulse Project.dc.html'],
+      ['Journal', 'Pulse Journal.dc.html'],
+      ['Media', 'Pulse Media.dc.html'],
+      ['Team', 'Pulse Team.dc.html'],
+      ['Contact', 'Pulse Contact.dc.html']
+    ];
+    return {
+      five: 5, three: 3, one: 1, yes: true,
+      links: defs.map(([label, href]) => {
+        const on = label.toLowerCase() === active;
+        return { label, href, color: on ? '#1C1A17' : '#4A453D', rule: on ? '#6B5528' : 'transparent' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>
