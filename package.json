@@ -1,0 +1,19 @@
+{
+  "name": "pulse-portfolio",
+  "version": "1.0.0",
+  "description": "Pulse — Monash DeepNeuron project site",
+  "main": "support.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": "true",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}

@@ -1,0 +1,32 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+p { text-wrap: pretty; }
+
+a { color: var(--purple-500); }
+a:hover { color: var(--purple-700); }
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+
+html { scroll-behavior: smooth; }
+
+input[type=range] { accent-color: var(--amber); }
+
+input, textarea { font-family: var(--font-sans); }
+
+.wrap {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+@keyframes om-fade { from { opacity: 0; } to { opacity: 1; } }

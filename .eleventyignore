@@ -1,0 +1,10 @@
+design-source
+uploads
+scraps
+node_modules
+_site
+.thumbnail
+Pulse Brand Kit.md
+README.md
+*.dc.html
+support.js

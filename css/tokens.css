@@ -1,0 +1,79 @@
+/*
+  Design tokens - source of truth is Pulse Brand Kit.md.
+  Base colours are also exposed as "-rgb" triplets so any alpha variant
+  can be built with rgba(var(--x-rgb), N) instead of a new hardcoded
+  hex/rgb literal. That is the only sanctioned way to introduce an
+  alpha-blended colour anywhere in this project.
+*/
+
+:root {
+  /* Core palette (Brand Kit §1) */
+  --bone: #F4F1EA;
+  --bone-rgb: 244, 241, 234;
+  --bone-2: #E8E3D8;
+  --bone-2-rgb: 232, 227, 216;
+  --charcoal: #1C1A17;
+  --charcoal-rgb: 28, 26, 23;
+  --amber: #F5C86B;
+  --amber-rgb: 245, 200, 107;
+  --amber-dim: #8A7043;
+  --amber-dim-rgb: 138, 112, 67;
+  --amber-deep: #6B5528;
+  --amber-deep-rgb: 107, 85, 40;
+  --signal: #A03A1E;
+  --signal-rgb: 160, 58, 30;
+
+  /* Text on bone */
+  --ink-primary: #1C1A17;
+  --ink-body: #4A453D;
+  --ink-body-rgb: 74, 69, 61;
+  --ink-muted: #5C574D;
+  --ink-eyebrow: #6B5528;
+  --ink-signal: #A03A1E;
+
+  /* Text on charcoal (alpha over --charcoal) */
+  --ink-on-charcoal: #F4F1EA;
+  --ink-on-charcoal-86: rgba(var(--bone-rgb), 0.86);
+  --ink-on-charcoal-62: rgba(var(--bone-rgb), 0.62);
+  --ink-on-charcoal-55: rgba(var(--bone-rgb), 0.55);
+  --amber-on-charcoal: #F5C86B;
+
+  /* MDN purple ramp */
+  --purple-700: #5433DB;
+  --purple-500: #6845F0;
+  --purple-400: #7854FC;
+  --purple-400-rgb: 120, 84, 252;
+  --purple-300: #A996FE;
+  --purple-300-rgb: 169, 150, 254;
+
+  /* Hairlines and dividers (Brand Kit §4) */
+  --rule-bone-16: rgba(var(--charcoal-rgb), 0.16);
+  --rule-bone-18: rgba(var(--charcoal-rgb), 0.18);
+  --rule-bone-14: rgba(var(--charcoal-rgb), 0.14);
+  --rule-bone-30: rgba(var(--charcoal-rgb), 0.3);
+  --rule-bone-12: rgba(var(--charcoal-rgb), 0.12);
+  --rule-charcoal-14: rgba(var(--bone-rgb), 0.14);
+  --rule-charcoal-18: rgba(var(--bone-rgb), 0.18);
+
+  /* Typography (Brand Kit §2) */
+  --font-sans: 'General Sans', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Spacing and layout (Brand Kit §3) */
+  --content-max: 1160px;
+  --article-max: 760px;
+  --gutter: 24px;
+  --header-pad: 12px 24px;
+  --sticky-offset: 96px;
+  --grid-col-gap: 40px;
+  --grid-row-gap: 40px;
+  --card-grid-gap: 28px;
+
+  /* Motion (Brand Kit §5) - single easing curve, site-wide */
+  --ease: cubic-bezier(0.37, 0, 0.63, 1);
+  --dur-lightbox: 260ms;
+  --dur-nav: 400ms;
+  --dur-hover: 900ms;
+  --dur-copy: 2400ms;
+  --dur-breath: 10s;
+}

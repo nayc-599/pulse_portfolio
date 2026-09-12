@@ -1,0 +1,141 @@
+---
+layout: layout.njk
+title: "Pulse — a camera that watches when no one else can"
+description: "Pulse is a camera-based patient monitoring concept by a student team at Monash DeepNeuron. It watches a bedridden patient and alerts a carer when it detects pain, abnormal breathing, or reduced consciousness."
+ogTitle: "Pulse — a camera that watches when no one else can"
+ogDescription: "A camera-based patient monitoring concept, built in public by five students at Monash DeepNeuron."
+ogType: website
+extraScripts:
+  - /js/hero.js
+---
+<main>
+  <section class="hero" aria-labelledby="hero-title" style="position:relative;min-height:100vh;background:var(--charcoal);color:var(--ink-on-charcoal);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px 132px;overflow:hidden">
+    <h1 id="hero-title" style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">Pulse — a camera that watches when no one else can</h1>
+
+    <span class="hero__glow" aria-hidden="true" style="position:absolute;left:50%;top:46%;width:460px;height:460px;transform:translate(-50%,-50%);border-radius:999px;background:radial-gradient(circle,rgba(var(--amber-rgb),0.22) 0%,rgba(var(--amber-rgb),0.10) 38%,rgba(var(--amber-rgb),0) 70%);opacity:0.3;pointer-events:none"></span>
+
+    <div class="hero__grid" aria-hidden="true" style="position:relative;display:grid;grid-template-columns:repeat(24,11px);grid-auto-rows:11px;gap:2px"></div>
+
+    <div class="hero__copy" style="position:relative;margin-top:56px;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;transition:opacity var(--dur-copy) var(--ease)">
+      <p style="margin:0;max-width:26ch;text-align:center;font:500 clamp(24px,3.4vw,34px)/1.25 var(--font-sans);letter-spacing:-0.025em">A camera that watches when no one else can.</p>
+    </div>
+
+    <span class="hero__cue" aria-hidden="true" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0.3">
+      <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.24em;color:rgba(var(--bone-rgb),0.7)">SCROLL</span>
+      <span style="display:block;width:1px;height:46px;background:linear-gradient(180deg,rgba(var(--bone-rgb),0.55),rgba(var(--bone-rgb),0))"></span>
+    </span>
+  </section>
+
+  <section aria-label="Project status" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
+    <div class="wrap" style="padding:18px 24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center">
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">WEEK 8</span>
+      <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">INTEGRATION</span>
+      <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-eyebrow)">SHOWCASE IN 4 WEEKS</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="where-title" style="padding:88px 24px;position:relative;overflow:hidden">
+    <img src="/assets/wireframes/wf-torus-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-180px;bottom:-160px;width:560px;opacity:0.07;pointer-events:none" />
+    <div class="wrap" style="position:relative">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span class="eyebrow__label">WHERE THINGS STAND</span>
+      </span>
+      <h2 id="where-title" style="margin:0 0 56px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:var(--grid-col-gap);row-gap:36px">
+        <div class="stat-block">
+          <span class="metadata">01 · THE PROBLEM</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Bedridden patients who cannot call for help rely on scheduled rounds. Between rounds, pain goes unreported. Forty-one seconds, not four hours, is the difference we care about.</p>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">02 · THE APPROACH</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">One camera, three frozen models.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A face is detected, described as 256 numbers, and read over a rolling second of video. Above a threshold, a carer's phone rings. The device does not learn the patient.</p>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">03 · WHERE IT IS NOW</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The models are trained separately and being wired together this week. The 8cm cube exists as geometry, not plastic. Week 9 is a software demo. We're not pretending otherwise.</p>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">04 · WHAT'S NEXT</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Live video in, alerts out.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Four weeks to the showcase: threshold tuning against recorded sessions, alert latency, and an honest account of where the dataset stops resembling a bedroom.</p>
+        </div>
+      </div>
+      <a href="/project.html" class="link-action" style="margin-top:44px">
+        <span>Read the full project</span>
+        <span aria-hidden="true" class="link-action__arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="journal-title" style="background:var(--bone-2);padding:88px 24px">
+    <div class="wrap">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+        <div>
+          <span class="eyebrow" style="margin-bottom:16px">
+            <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+            <span class="eyebrow__label">THE RECORD</span>
+          </span>
+          <h2 id="journal-title" style="margin:0;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We're building Pulse in public.</h2>
+        </div>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0">
+        <li class="rule-top--list">
+          <a href="/journal/posts/contract.html" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
+            <span class="pixel-grid" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:8px">
+              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+              <span class="metadata">ENGINEERING · 28 AUG 2026</span>
+              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Writing down the contract between our CNN and our LSTM</span>
+              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Two people trained two models against two different ideas of what a feature vector is. Here is the document that fixed it.</span>
+            </span>
+            <span class="metadata" style="text-align:right">NAY CHI · 11 MIN</span>
+          </a>
+        </li>
+        <li class="rule-top--list">
+          <a href="/journal/posts/domain-gap.html" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
+            <span class="pixel-grid" data-pixel-grid data-pattern="scatter" data-n="7" style="padding:8px">
+              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+              <span class="metadata">RESEARCH · 27 AUG 2026</span>
+              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Our dataset is a physio clinic. Our room is a bedroom at 3am.</span>
+              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at.</span>
+            </span>
+            <span class="metadata" style="text-align:right">AMELIE · 7 MIN</span>
+          </a>
+        </li>
+        <li class="rule-top--list">
+          <a href="/journal/posts/skeletons.html" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
+            <span class="pixel-grid" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:8px">
+              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+              <span class="metadata">BUILD LOG · 27 AUG 2026</span>
+              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Skeletons before data: writing code we cannot run yet</span>
+              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed.</span>
+            </span>
+            <span class="metadata" style="text-align:right">CHRISTOPHER · 5 MIN</span>
+          </a>
+        </li>
+      </ul>
+      <div class="rule-top--list"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:56px;margin-top:40px">
+        <a href="/journal/" class="link-action">
+          <span>All entries</span>
+          <span aria-hidden="true" class="link-action__arrow">→</span>
+        </a>
+        <a href="/media.html" class="link-action">
+          <span>Photos and video</span>
+          <span aria-hidden="true" class="link-action__arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
