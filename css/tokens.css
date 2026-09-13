@@ -75,6 +75,19 @@
   --grid-row-gap: 40px;
   --card-grid-gap: 28px;
 
+  /* Device cube illustration (project page) - shell/panel colours are
+     not part of the core palette but are real colours in shipped
+     markup, so they get tokens too rather than sitting as literals. */
+  --cube-front: #EDE7DA;
+  --cube-lens-bezel: #E2DACA;
+  --cube-button: #25221F;
+  --cube-button-ring: #D8CFBD;
+  --cube-side: #D9D1C0;
+  --cube-top: #F2ECE0;
+  --cube-bottom: #C8C0AF;
+  --cube-back: #CFC7B6;
+  --black-rgb: 0, 0, 0;
+
   /* Motion (Brand Kit §5) - single easing curve, site-wide */
   --ease: cubic-bezier(0.37, 0, 0.63, 1);
   --dur-lightbox: 260ms;

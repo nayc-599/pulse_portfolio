@@ -3,9 +3,18 @@
 // avatars). This is the ONE copy: every page imports from here instead
 // of re-implementing makeGrid/paint/face.
 
-export const AMBER = '#F5C86B';
-export const AMBER_DIM = '#8A7043';
-export const EASE = 'cubic-bezier(0.37,0,0.63,1)';
+// Read straight from tokens.css rather than duplicating the values here,
+// so the LED colours stay defined in exactly one place.
+function cssVar(name, fallback) {
+  if (typeof document === 'undefined') return fallback;
+  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return value || fallback;
+}
+
+export const AMBER = cssVar('--amber', '#F5C86B');
+export const AMBER_DIM = cssVar('--amber-dim', '#8A7043');
+export const AMBER_RGB = cssVar('--amber-rgb', '245, 200, 107');
+export const EASE = cssVar('--ease', 'cubic-bezier(0.37,0,0.63,1)');
 
 export const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 export const lerp = (a, b, t) => a + (b - a) * t;
@@ -45,7 +54,7 @@ export function paint(g, buf, bright) {
     if (v > 0.05) {
       c.style.backgroundColor = AMBER;
       c.style.opacity = v.toFixed(2);
-      c.style.boxShadow = g.glow ? '0 0 ' + (7 * v).toFixed(1) + 'px rgba(245,200,107,' + (0.5 * v).toFixed(2) + ')' : 'none';
+      c.style.boxShadow = g.glow ? '0 0 ' + (7 * v).toFixed(1) + 'px rgba(' + AMBER_RGB + ',' + (0.5 * v).toFixed(2) + ')' : 'none';
     } else {
       c.style.backgroundColor = AMBER_DIM;
       c.style.opacity = '0.12';
