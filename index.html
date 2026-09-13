@@ -85,45 +85,21 @@ extraScripts:
         </div>
       </div>
       <ul style="list-style:none;margin:0;padding:0">
+        {% for post in collections.posts | limit(3) %}
         <li class="rule-top--list">
-          <a href="/journal/posts/contract.html" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
-            <span class="pixel-grid" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:8px">
+          <a href="{{ post.url }}" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
+            <span class="pixel-grid" data-pixel-grid data-pattern="{{ post.data.listMotif }}" data-n="7" style="padding:8px">
               <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
             </span>
             <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-              <span class="metadata">ENGINEERING · 28 AUG 2026</span>
-              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Writing down the contract between our CNN and our LSTM</span>
-              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Two people trained two models against two different ideas of what a feature vector is. Here is the document that fixed it.</span>
+              <span class="metadata">{{ post.data.category }} · {{ post.data.date | dateDisplay }}</span>
+              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
+              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">{{ post.data.excerpt }}</span>
             </span>
-            <span class="metadata" style="text-align:right">NAY CHI · 11 MIN</span>
+            <span class="metadata" style="text-align:right">{{ post.data.author | upper }} · {{ post.data.readTime }} MIN</span>
           </a>
         </li>
-        <li class="rule-top--list">
-          <a href="/journal/posts/domain-gap.html" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
-            <span class="pixel-grid" data-pixel-grid data-pattern="scatter" data-n="7" style="padding:8px">
-              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
-            </span>
-            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-              <span class="metadata">RESEARCH · 27 AUG 2026</span>
-              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Our dataset is a physio clinic. Our room is a bedroom at 3am.</span>
-              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at.</span>
-            </span>
-            <span class="metadata" style="text-align:right">AMELIE · 7 MIN</span>
-          </a>
-        </li>
-        <li class="rule-top--list">
-          <a href="/journal/posts/skeletons.html" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
-            <span class="pixel-grid" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:8px">
-              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
-            </span>
-            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-              <span class="metadata">BUILD LOG · 27 AUG 2026</span>
-              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">Skeletons before data: writing code we cannot run yet</span>
-              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed.</span>
-            </span>
-            <span class="metadata" style="text-align:right">CHRISTOPHER · 5 MIN</span>
-          </a>
-        </li>
+        {% endfor %}
       </ul>
       <div class="rule-top--list"></div>
       <div style="display:flex;flex-wrap:wrap;gap:56px;margin-top:40px">

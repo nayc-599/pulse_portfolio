@@ -1,0 +1,60 @@
+---
+layout: layout.njk
+---
+<div role="presentation" style="position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent">
+  <span data-reading-progress style="display:block;height:100%;width:0%;background:var(--amber);box-shadow:0 0 10px rgba(var(--amber-rgb),0.6)"></span>
+</div>
+
+<main class="wrap" style="max-width:var(--article-max);padding:64px 24px 96px">
+  <article>
+    <header style="display:flex;flex-direction:column;gap:20px;margin-bottom:44px">
+      <span class="eyebrow">
+        <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span class="eyebrow__label">{{ category }} · {{ date | dateDisplay }} · {{ readTime }} MIN READ</span>
+      </span>
+      <h1 style="margin:0;font:500 clamp(32px,5vw,48px)/1.1 var(--font-sans);letter-spacing:-0.03em">{{ title }}</h1>
+      <div style="display:flex;align-items:center;gap:14px;border-top:1px solid var(--rule-bone-16);padding-top:20px">
+        <span class="pixel-grid" data-pixel-grid data-pattern="{{ motif }}" data-n="7" style="padding:6px">
+          <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,4px);grid-auto-rows:4px;gap:1px"></span>
+        </span>
+        <span style="display:flex;flex-direction:column;gap:4px">
+          <span style="font:500 16px/1.3 var(--font-sans)">{{ author }}</span>
+          <span class="metadata">{{ authorRole }}</span>
+        </span>
+      </div>
+    </header>
+
+    <div class="article-body">
+      {{ content | safe }}
+    </div>
+  </article>
+
+  {% set chain = collections.postsChain %}
+  {% set idx = chain | findIndexByUrl(page.url) %}
+  {% set newer = chain[idx - 1] %}
+  {% set older = chain[idx + 1] %}
+  <nav aria-label="More entries" style="display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap;margin-top:64px;border-top:1px solid var(--rule-bone-18);padding-top:24px">
+    {% if newer %}
+    <a href="{{ newer.url }}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink-primary);max-width:32ch">
+      <span class="metadata">← NEWER</span>
+      <span style="font:500 16px/1.4 var(--font-sans)">{{ newer.data.title }}</span>
+    </a>
+    {% else %}
+    <a href="/journal/" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink-primary);max-width:32ch">
+      <span class="metadata">← BACK</span>
+      <span style="font:500 16px/1.4 var(--font-sans)">All journal entries</span>
+    </a>
+    {% endif %}
+    {% if older %}
+    <a href="{{ older.url }}" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink-primary);max-width:32ch;text-align:right">
+      <span class="metadata">OLDER →</span>
+      <span style="font:500 16px/1.4 var(--font-sans)">{{ older.data.title }}</span>
+    </a>
+    {% else %}
+    <a href="/journal/" style="display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink-primary);max-width:32ch;text-align:right">
+      <span class="metadata">INDEX →</span>
+      <span style="font:500 16px/1.4 var(--font-sans)">All journal entries</span>
+    </a>
+    {% endif %}
+  </nav>
+</main>
