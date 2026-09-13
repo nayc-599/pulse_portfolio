@@ -1,0 +1,22 @@
+---
+layout: layout.njk
+permalink: "404.html"
+title: "Not found — Pulse"
+description: "That page does not exist. The device is asleep."
+ogTitle: "Not found — Pulse"
+---
+<main style="background:var(--charcoal);color:var(--ink-on-charcoal);min-height:64vh;display:flex;align-items:center;justify-content:center;padding:96px 24px;position:relative;overflow:hidden">
+  <img src="/assets/wireframes/wf-melt-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-140px;bottom:-160px;width:520px;opacity:0.09;pointer-events:none" />
+  <div style="max-width:560px;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center;position:relative">
+    <span class="pixel-grid" data-pixel-grid data-pattern="asleep" data-n="11" style="padding:20px">
+      <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(11,12px);grid-auto-rows:12px;gap:3px"></span>
+    </span>
+    <span style="font:400 11px/1 var(--font-mono);letter-spacing:0.2em;color:var(--purple-300)">ERROR 404 · EYES CLOSED</span>
+    <h1 style="margin:0;font:500 clamp(32px,5vw,46px)/1.1 var(--font-sans);letter-spacing:-0.03em">There is nothing at this address.</h1>
+    <p style="margin:0;font:400 17px/1.7 var(--font-sans);color:rgba(var(--bone-rgb),0.72)">Either we moved something without leaving a note, or the link was wrong. Both are plausible.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+      <a href="/" class="btn-primary">Back home</a>
+      <a href="/journal/" class="btn-secondary">Read the journal</a>
+    </div>
+  </div>
+</main>
