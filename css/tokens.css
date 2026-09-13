@@ -23,6 +23,11 @@
   --signal: #A03A1E;
   --signal-rgb: 160, 58, 30;
 
+  /* Placeholder texture (Brand Kit §6, image placeholders) */
+  --placeholder-bone-alt: #DFD9CC;
+  --placeholder-charcoal: #232120;
+  --placeholder-charcoal-alt: #2B2825;
+
   /* Text on bone */
   --ink-primary: #1C1A17;
   --ink-body: #4A453D;

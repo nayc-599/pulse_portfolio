@@ -1,0 +1,177 @@
+---
+layout: layout.njk
+permalink: "media.html"
+title: "Media — Pulse"
+description: "Photos, video, renders and diagrams from the build of Pulse, grouped by milestone."
+ogTitle: "Media — Pulse"
+ogDescription: "The library of what we have built so far, in chronological order."
+extraScripts:
+  - /js/media.js
+---
+<section aria-labelledby="m-title" style="background:var(--charcoal);color:var(--ink-on-charcoal);padding:76px 24px 40px;position:relative;overflow:hidden">
+  <img src="/assets/wireframes/wf-orb-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-100px;top:-80px;width:480px;opacity:0.1;pointer-events:none" />
+  <div class="wrap" style="position:relative">
+    <span class="eyebrow" style="margin-bottom:20px">
+      <img src="/assets/brand/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+      <span class="eyebrow__label eyebrow__label--on-charcoal">MEDIA</span>
+    </span>
+    <h1 id="m-title" style="margin:0 0 20px;font:500 clamp(38px,5.4vw,56px)/1.07 var(--font-sans);letter-spacing:-0.03em">What we have built, in order.</h1>
+    <p style="margin:0 0 30px;max-width:52ch;font:400 19px/1.65 var(--font-sans);color:var(--ink-on-charcoal-86)">Bench photos, screen recordings of the model running, CAD renders of a cube that does not exist yet, and the diagrams we drew to argue with each other.</p>
+    <div role="group" aria-label="Filter by type" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:24px">
+      <button type="button" class="filter-chip" data-filter="ALL" aria-pressed="true"><span class="filter-chip__dot"></span><span>Everything</span></button>
+      <button type="button" class="filter-chip" data-filter="PHOTOS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Photos</span></button>
+      <button type="button" class="filter-chip" data-filter="VIDEO" aria-pressed="false"><span class="filter-chip__dot"></span><span>Video</span></button>
+      <button type="button" class="filter-chip" data-filter="RENDERS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Renders</span></button>
+      <button type="button" class="filter-chip" data-filter="DIAGRAMS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Diagrams</span></button>
+    </div>
+  </div>
+</section>
+
+<main class="wrap" style="padding:56px 24px 96px;display:flex;flex-direction:column;gap:64px">
+  <section class="media-group" aria-label="Week 6 — first model runs" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
+      <span class="metadata">MILESTONE · WEEK 6</span>
+      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 6 — first model runs</h2>
+    </div>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:var(--card-grid-gap)">
+      <li class="media-item" data-type="PHOTOS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="14 AUG 2026" data-ratio="4 / 3" data-slot="PHOTO · BENCH SETUP" data-caption="Bench setup: laptop, webcam on a tripod, one very patient volunteer" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:4 / 3;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO · BENCH SETUP</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Bench setup: laptop, webcam on a tripod, one very patient volunteer</span>
+            <span class="metadata">14 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="VIDEO" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="15 AUG 2026" data-ratio="16 / 9" data-slot="SCREEN RECORDING · FEATURE STREAM" data-caption="Screen recording: CNN features streaming at 30fps, no LSTM yet" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:16 / 9;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">SCREEN RECORDING · FEATURE STREAM</span>
+            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">▶</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Screen recording: CNN features streaming at 30fps, no LSTM yet</span>
+            <span class="metadata">15 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="DIAGRAMS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="13 AUG 2026" data-ratio="4 / 3" data-slot="PHOTO · WHITEBOARD" data-caption="Whiteboard: the three-model split, before we knew about the seams" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:4 / 3;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO · WHITEBOARD</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">DIAGRAMS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Whiteboard: the three-model split, before we knew about the seams</span>
+            <span class="metadata">13 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="RENDERS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="RENDER" data-date="16 AUG 2026" data-ratio="1 / 1" data-slot="RENDER · CUBE V1" data-caption="CAD render: the 8cm cube, first pass, corner radius too tight" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:1 / 1;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">RENDER · CUBE V1</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">RENDERS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">CAD render: the 8cm cube, first pass, corner radius too tight</span>
+            <span class="metadata">16 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <section class="media-group" aria-label="Week 8 — integration testing" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
+      <span class="metadata">MILESTONE · WEEK 8</span>
+      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 8 — integration testing</h2>
+    </div>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:var(--card-grid-gap)">
+      <li class="media-item" data-type="VIDEO" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="28 AUG 2026" data-ratio="16 / 9" data-slot="SCREEN RECORDING · FULL LOOP" data-caption="Full loop running: confidence trace and one alert firing at 0.71" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:16 / 9;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">SCREEN RECORDING · FULL LOOP</span>
+            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">▶</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Full loop running: confidence trace and one alert firing at 0.71</span>
+            <span class="metadata">28 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="PHOTOS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="27 AUG 2026" data-ratio="3 / 2" data-slot="PHOTO · TEAM MEETING" data-caption="Wednesday meeting: five laptops and the threshold argument" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:3 / 2;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO · TEAM MEETING</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Wednesday meeting: five laptops and the threshold argument</span>
+            <span class="metadata">27 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="RENDERS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="RENDER" data-date="26 AUG 2026" data-ratio="1 / 1" data-slot="RENDER · CUBE V3" data-caption="CAD render: display aperture and lens, off-white shell" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:1 / 1;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">RENDER · CUBE V3</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">RENDERS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">CAD render: display aperture and lens, off-white shell</span>
+            <span class="metadata">26 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="DIAGRAMS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="DIAGRAM" data-date="25 AUG 2026" data-ratio="4 / 3" data-slot="DIAGRAM · DEBOUNCE" data-caption="Alert debounce logic, drawn after the thirty-alerts-per-second bug" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:4 / 3;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">DIAGRAM · DEBOUNCE</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">DIAGRAMS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Alert debounce logic, drawn after the thirty-alerts-per-second bug</span>
+            <span class="metadata">25 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="PHOTOS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="28 AUG 2026" data-ratio="4 / 3" data-slot="PHOTO · DISPLAY TEST" data-caption="The face on a spare round display, running at 240 × 240" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="placeholder-tile hover-lift" style="display:flex;width:100%;aspect-ratio:4 / 3;border:1px solid var(--rule-bone-16);position:relative;align-items:center;justify-content:center;transition:transform var(--dur-hover) var(--ease)">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO · DISPLAY TEST</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The face on a spare round display, running at 240 × 240</span>
+            <span class="metadata">28 AUG 2026</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Every tile above is a placeholder waiting for a real file. Captions, dates and grouping are final; the imagery is not.</p>
+</main>
+
+<div class="lightbox" role="dialog" aria-modal="true" aria-label="" hidden style="position:fixed;inset:0;z-index:80;background:rgba(var(--charcoal-rgb),0.94);display:flex;flex-direction:column;animation:om-fade var(--dur-lightbox) var(--ease)">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid var(--rule-charcoal-18)">
+    <span data-lightbox-type class="metadata metadata--on-charcoal"></span>
+    <button type="button" data-lightbox-close aria-label="Close" class="link-on-dark link-on-dark--underline" style="font:400 12px/1 var(--font-mono);letter-spacing:0.14em;background:none;border:0;padding:8px 0;cursor:pointer">CLOSE ESC</button>
+  </div>
+  <div style="flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:20px;padding:28px 24px;min-height:0">
+    <button type="button" data-lightbox-prev aria-label="Previous" class="lightbox-nav" style="font:400 20px/1 var(--font-mono);background:none;border:0;padding:14px 10px;cursor:pointer;flex:0 0 auto">←</button>
+    <span data-lightbox-stage class="placeholder-tile--dark" style="flex:1 1 auto;max-width:900px;border:1px solid var(--rule-charcoal-18);display:flex;align-items:center;justify-content:center;padding:24px">
+      <span data-lightbox-slot style="font:400 11px/1.7 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62);text-align:center"></span>
+    </span>
+    <button type="button" data-lightbox-next aria-label="Next" class="lightbox-nav" style="font:400 20px/1 var(--font-mono);background:none;border:0;padding:14px 10px;cursor:pointer;flex:0 0 auto">→</button>
+  </div>
+  <div style="padding:0 24px 28px;display:flex;justify-content:center">
+    <span data-lightbox-caption style="font:400 14px/1.6 var(--font-mono);color:var(--ink-on-charcoal);text-align:center;max-width:60ch"></span>
+  </div>
+</div>

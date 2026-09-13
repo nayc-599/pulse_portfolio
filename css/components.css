@@ -190,6 +190,22 @@ blockquote.pull-quote {
   box-shadow: 0 0 7px rgba(var(--amber-rgb), 0.5);
 }
 
+/* Hover utilities for elements whose hover effect can't live in an inline style */
+.hover-shift:hover { transform: translateX(4px); }
+.hover-lift:hover { transform: translateY(-3px); }
+
+.lightbox-nav {
+  color: rgba(var(--bone-rgb), 0.7);
+  transition: color var(--dur-hover) var(--ease);
+}
+.lightbox-nav:hover { color: var(--amber); }
+
+.social-link {
+  color: var(--ink-muted);
+  transition: color var(--dur-hover) var(--ease);
+}
+.social-link:hover { color: var(--purple-500); }
+
 /* Stat block: recurring bordered content block used across page grids */
 .stat-block {
   display: flex;
@@ -236,6 +252,14 @@ blockquote.pull-quote {
   font: 400 10px/1 var(--font-mono);
   letter-spacing: 0.14em;
   color: var(--ink-muted);
+}
+
+/* Image placeholder texture (Brand Kit §6) */
+.placeholder-tile {
+  background: repeating-linear-gradient(135deg, var(--bone-2) 0 8px, var(--placeholder-bone-alt) 8px 16px);
+}
+.placeholder-tile--dark {
+  background: repeating-linear-gradient(135deg, var(--placeholder-charcoal) 0 10px, var(--placeholder-charcoal-alt) 10px 20px);
 }
 
 /* Footer attribution card */
