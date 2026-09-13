@@ -190,6 +190,23 @@ blockquote.pull-quote {
   box-shadow: 0 0 7px rgba(var(--amber-rgb), 0.5);
 }
 
+/* Elements toggled via the `hidden` attribute that also need a non-block
+   display when shown. Author-origin `display` rules always beat the UA
+   stylesheet's `[hidden]{display:none}` regardless of specificity (origin
+   is checked before specificity in the cascade), inline styles included -
+   so anything shown with flex/grid must restate `display:none` itself
+   scoped to [hidden], or the element never actually hides. */
+.lightbox { display: flex; flex-direction: column; }
+.lightbox[hidden] { display: none; }
+.pipeline-panel { display: flex; flex-direction: column; gap: 10px; }
+.pipeline-panel[hidden] { display: none; }
+.contact-success { display: flex; flex-direction: column; gap: 12px; padding: 22px 0; }
+.contact-success[hidden] { display: none; }
+.contact-form { display: flex; flex-direction: column; gap: 18px; }
+.contact-form[hidden] { display: none; }
+.media-group { display: flex; }
+.media-group[hidden] { display: none; }
+
 /* Hover utilities for elements whose hover effect can't live in an inline style */
 .hover-shift:hover { transform: translateX(4px); }
 .hover-lift:hover { transform: translateY(-3px); }

@@ -136,7 +136,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Camera frame</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-1" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-1" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A wide-angle frame every 33 milliseconds. Nothing leaves the device: frames are processed and discarded, and no video is stored or streamed.</p>
               <span class="metadata">RGB FRAME · 30 FPS</span>
             </div>
@@ -147,7 +147,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Face detection</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-2" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. If there is no face — the patient is turned away, or the room is empty — the pipeline stops here and no decision is made.</p>
               <span class="metadata">FRAME → FACE CROP</span>
             </div>
@@ -158,7 +158,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">CNN</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-3" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A convolutional network turns each crop into 256 numbers describing the shape of the expression. Not a picture — a description. Brow tension, eye closure, mouth shape, all compressed into a vector.</p>
               <span class="metadata">CROP → 256 NUMBERS</span>
             </div>
@@ -169,7 +169,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Feature vector</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-4" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">One vector per frame, pushed into a rolling buffer. A single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
               <span class="metadata">256-D · PER FRAME</span>
             </div>
@@ -180,7 +180,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">LSTM</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-5" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A recurrent model reads the last 32 vectors — about 1.1 seconds — and returns one confidence value between 0 and 1. It is reading change over time, not a snapshot.</p>
               <span class="metadata">32 FRAMES → CONFIDENCE</span>
             </div>
@@ -191,7 +191,7 @@ extraScripts:
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Alert decision</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
-            <div id="stage-6" hidden style="padding:0 4px 24px 44px;display:flex;flex-direction:column;gap:10px">
+            <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The confidence is compared against a threshold, currently 0.65. Above it, an alert goes out. Below it, nothing happens and the room stays quiet.</p>
               <span class="metadata">CONFIDENCE → ALERT</span>
             </div>
