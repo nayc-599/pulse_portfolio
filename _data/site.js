@@ -1,4 +1,6 @@
 export default {
+  // Single source for the header status line - edit here, it updates everywhere.
+  headerStatus: 'WEEK 8 · INTEGRATION · SHOWCASE IN 4 WEEKS',
   nav: [
     { label: 'Project', href: '/project.html' },
     { label: 'Journal', href: '/journal/' },

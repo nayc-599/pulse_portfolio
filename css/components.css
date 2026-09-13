@@ -260,6 +260,28 @@ blockquote.pull-quote {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  /* The lockup is centered on the header row as a bounding box, but its
+     visual weight sits higher: "Pulse" (19px/500) reads as the anchor,
+     with the lighter 10px mono sub-line hanging below it. Nudge the
+     stack up so the nav's single-line optical center lines up with
+     "Pulse" itself rather than the two-line block's geometric middle. */
+  transform: translateY(-2px);
+}
+
+.header-status-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+.header-status {
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 899px) {
+  /* !important: an inline display on this element would otherwise always
+     win over this media query, regardless of viewport width. */
+  .header-status-wrap { display: none !important; }
 }
 .lockup__title {
   font: 500 19px/1 var(--font-sans);

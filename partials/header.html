@@ -1,6 +1,6 @@
 <header style="position:sticky;top:0;z-index:50;background:rgba(var(--bone-rgb),0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule-bone-12)">
-  <div class="wrap" style="padding:var(--header-pad);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
-    <a href="/" class="lockup">
+  <div class="wrap" style="padding:var(--header-pad);display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+    <a href="/" class="lockup" style="flex:0 0 auto">
       <img src="/assets/brand/mdn-mark-purple.png" alt="Monash DeepNeuron" style="height:26px;width:auto;display:block" />
       <span class="lockup__divider"></span>
       <span class="pixel-grid" data-pixel-grid data-pattern="face" data-n="5" data-live="true" style="padding:4px">
@@ -11,7 +11,10 @@
         <span class="lockup__sub">A DEEPNEURON PROJECT</span>
       </span>
     </a>
-    <nav aria-label="Primary" style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+    <div class="header-status-wrap">
+      <span class="metadata header-status">{{ site.headerStatus }}</span>
+    </div>
+    <nav aria-label="Primary" style="flex:0 0 auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
       {% for l in site.nav %}
       <a href="{{ l.href }}" class="nav-link"{% if page.url.startsWith(l.href) %} aria-current="page"{% endif %}>{{ l.label }}</a>
       {% endfor %}
