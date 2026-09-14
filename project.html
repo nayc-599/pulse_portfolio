@@ -1,13 +1,14 @@
 ---
 layout: layout.njk
 permalink: "project.html"
-title: "The Project — Pulse"
-description: "How Pulse works: face detection, a CNN, an LSTM over a rolling window, and a threshold. The device, the dataset, its limits, and the roadmap to the Week 12 showcase."
-ogTitle: "The Project — Pulse"
-ogDescription: "Three frozen models, one threshold, and an honest account of what a Week 8 student project can and cannot do."
+title: "The Project: Pulse"
+description: "How Pulse works: two branches for in bed and out of bed, a CNN and an LSTM planned for the face branch, pose detection planned for the other. The device, the dataset, its limits, and the roadmap to the showcase."
+ogTitle: "The Project: Pulse"
+ogDescription: "Two branches, one threshold, and an honest account of what a five-person student project can and cannot do."
 extraScripts:
   - /js/device-cube.js
   - /js/project.js
+  - /js/roadmap-timeline.js
 ---
 <section style="background:var(--charcoal);color:var(--ink-on-charcoal);padding:80px 24px 72px;position:relative;overflow:hidden">
   <img src="/assets/wireframes/wf-net1-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-80px;top:-60px;width:520px;opacity:0.1;pointer-events:none" />
@@ -42,7 +43,7 @@ extraScripts:
           <span class="eyebrow__label">01 · THE PROBLEM</span>
         </span>
         <h2 id="problem-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A carer cannot be in the room twenty-four hours a day.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Bedridden patients in home and residential care are checked on a schedule. Between those checks, a patient who cannot reach a call button — because of paralysis, sedation, dementia, or simple exhaustion — has no way to report pain. A patient in pain at 2am may wait until the morning round.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Bedridden patients in home and residential care are checked on a schedule. Between those checks, a patient who cannot reach a call button, whether from paralysis, sedation, dementia, or simple exhaustion, has no way to report pain. A patient in pain at 2am may wait until the morning round.</p>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse does not replace a carer. It tells a carer when to come. That is the whole ambition, and it is deliberately small: the gap we are trying to close is measured in minutes, not in staffing budgets. Forty-one seconds, not four hours.</p>
       </section>
 
@@ -73,12 +74,12 @@ extraScripts:
           <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
           <span class="eyebrow__label">03 · HOW IT WORKS</span>
         </span>
-        <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A face flows through three frozen models and a number comes out.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Three separately trained models, wired in sequence. At inference nothing learns. Observers repeatedly assume the device learns the patient over time — it does not. The weights are fixed before the device is ever switched on.</p>
+        <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Two branches, because in bed and out of bed aren't the same problem.</h2>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN and an LSTM, planned for weeks five and six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so the plan is to read posture: 17 body keypoints tracked over time for falls, limping, or other unusual movement. Face detection itself runs today. The CNN, the LSTM, and the pose branch are all still ahead of us.</p>
 
         <figure style="margin:24px 0 0;padding:28px;background:var(--charcoal);color:var(--ink-on-charcoal);overflow-x:auto">
-          <figcaption class="metadata metadata--on-charcoal" style="margin-bottom:20px">FIGURE 1 · INFERENCE PIPELINE · 32-FRAME WINDOW ≈ 1.1S</figcaption>
-          <div style="display:flex;align-items:stretch;gap:12px;min-width:max-content">
+          <figcaption class="metadata metadata--on-charcoal" style="margin-bottom:20px">FIGURE 1 · TWO BRANCHES · ONLY FACE DETECTION RUNS TODAY</figcaption>
+          <div style="display:flex;flex-direction:column;gap:20px;min-width:max-content">
             <div style="display:flex;align-items:center;gap:12px">
               <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
                 <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">01</span>
@@ -86,44 +87,38 @@ extraScripts:
                 <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">RGB FRAME · 30 FPS</span>
               </div>
               <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
               <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
                 <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">02</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Face detection</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">FRAME → FACE CROP</span>
+                <span style="font:500 15px/1.3 var(--font-sans)">Face found?</span>
+                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">SPLITS THE TWO BRANCHES</span>
               </div>
-              <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
             </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">03</span>
+            <div style="display:flex;align-items:center;gap:12px;padding-left:40px;opacity:0.55">
+              <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62);min-width:150px">YES · IN BED →</span>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
+                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">03</span>
                 <span style="font:500 15px/1.3 var(--font-sans)">CNN</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">CROP → 256 NUMBERS</span>
+                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 5</span>
               </div>
               <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">04</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Feature vector</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">256-D · PER FRAME</span>
-              </div>
-              <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">05</span>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
+                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">04</span>
                 <span style="font:500 15px/1.3 var(--font-sans)">LSTM</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">32 FRAMES → CONFIDENCE</span>
+                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 6</span>
               </div>
               <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">06</span>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
+                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">05</span>
                 <span style="font:500 15px/1.3 var(--font-sans)">Alert decision</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">CONFIDENCE → ALERT</span>
+                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 7</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding-left:40px;opacity:0.55">
+              <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62);min-width:150px">NO · OUT OF BED →</span>
+              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:200px">
+                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">06</span>
+                <span style="font:500 15px/1.3 var(--font-sans)">Patient detection (pose)</span>
+                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">17 KEYPOINTS · DESIGNED, NOT BUILT</span>
               </div>
             </div>
           </div>
@@ -148,7 +143,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. If there is no face — the patient is turned away, or the room is empty — the pipeline stops here and no decision is made.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part runs today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are meant to handle once they exist. If there is no face, that usually means the patient is out of bed, which is the case the pose branch is meant to handle. Neither of those branches is built yet, so right now a detected face (or the lack of one) is logged and nothing downstream happens with it.</p>
               <span class="metadata">FRAME → FACE CROP</span>
             </div>
           </li>
@@ -159,8 +154,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A convolutional network turns each crop into 256 numbers describing the shape of the expression. Not a picture — a description. Brow tension, eye closure, mouth shape, all compressed into a vector.</p>
-              <span class="metadata">CROP → 256 NUMBERS</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week five, not trained yet. The idea is a convolutional network that turns each crop into 256 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector.</p>
+              <span class="metadata">PLANNED · WEEK 5</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -170,8 +165,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">One vector per frame, pushed into a rolling buffer. A single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
-              <span class="metadata">256-D · PER FRAME</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Depends on the CNN existing, so also not built. The plan is one vector per frame, pushed into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
+              <span class="metadata">PLANNED · WEEK 5</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -181,19 +176,30 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A recurrent model reads the last 32 vectors — about 1.1 seconds — and returns one confidence value between 0 and 1. It is reading change over time, not a snapshot.</p>
-              <span class="metadata">32 FRAMES → CONFIDENCE</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week six, not trained yet. The idea is a recurrent model that reads the last 32 vectors, about 1.1 seconds of video, and returns one confidence value between 0 and 1: change over time, not a snapshot.</p>
+              <span class="metadata">PLANNED · WEEK 6</span>
             </div>
           </li>
-          <li>
+          <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-6" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
               <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">06</span>
-              <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Alert decision</span>
+              <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Patient detection (pose)</span>
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The confidence is compared against a threshold, currently 0.65. Above it, an alert goes out. Below it, nothing happens and the room stays quiet.</p>
-              <span class="metadata">CONFIDENCE → ALERT</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The plan for the out-of-bed case: map the body to 17 COCO keypoints and read the joint positions over time to catch falls, limping, and other unusual movement. This is designed, not built. No code runs this today, the same way the cube is a CAD file and not yet plastic.</p>
+              <span class="metadata">17 KEYPOINTS · DESIGNED, NOT BUILT</span>
+            </div>
+          </li>
+          <li>
+            <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-7" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">07</span>
+              <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Alert decision</span>
+              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+            </button>
+            <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. Nothing feeds it yet. The face branch doesn't produce a confidence until the CNN and LSTM exist, and the pose branch doesn't exist at all.</p>
+              <span class="metadata">PLANNED · WEEK 7</span>
             </div>
           </li>
         </ul>
@@ -205,11 +211,11 @@ extraScripts:
           <span class="eyebrow__label">04 · DECIDING WHEN TO ALERT</span>
         </span>
         <h2 id="thr-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Above threshold, and only above threshold, an alert goes out.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below it, the room stays quiet — false alarms cost trust. A carer who is woken three times a night by a sneeze stops trusting the fourth alert, and the fourth alert is the one that matters. Everything about this decision is a trade.</p>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty confidence values from a recorded session — seven of them from moments a clinician labelled as genuine pain. Move the threshold and watch what you gain and what you give up.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below it, the room stays quiet. False alarms cost trust. A carer who is woken three times a night by a sneeze stops trusting the fourth alert, and the fourth alert is the one that matters. Everything about this decision is a trade.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones: the LSTM that would produce real numbers here is not built yet. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up.</p>
 
         <figure style="margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:24px">
-          <figcaption class="metadata">FIGURE 2 · THRESHOLD DEMO · 20 RECORDED CONFIDENCE VALUES</figcaption>
+          <figcaption class="metadata">FIGURE 2 · THRESHOLD DEMO · 20 ILLUSTRATIVE CONFIDENCE VALUES</figcaption>
           <div style="background:var(--charcoal);padding:26px 24px 20px;display:flex;flex-direction:column;gap:18px">
             <div class="threshold-bars" style="display:flex;align-items:flex-end;gap:6px;height:150px">
               <span class="threshold-bar" data-v="0.12" data-pain="0" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><span class="threshold-bar__fill" style="display:block;width:100%"></span></span>
@@ -273,7 +279,7 @@ extraScripts:
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));column-gap:32px;row-gap:26px;margin-top:12px">
             <div class="stat-block" style="padding-top:18px">
               <span class="metadata">CAMERA</span>
-              <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Camera Module 3 Wide — the only sensor the demo needs.</p>
+              <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Camera Module 3 Wide, the only sensor the demo needs.</p>
             </div>
             <div class="stat-block" style="padding-top:18px">
               <span class="metadata">DISPLAY</span>
@@ -331,7 +337,7 @@ extraScripts:
                 <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">PHONE · 14.7 CM</span>
               </span>
             </div>
-            <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.1em;color:var(--ink-muted)">SHARED BASELINE — THE CUBE IS SHORTER THAN A COFFEE MUG</span>
+            <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.1em;color:var(--ink-muted)">SHARED BASELINE: THE CUBE IS SHORTER THAN A COFFEE MUG</span>
           </figure>
         </div>
       </section>
@@ -355,7 +361,7 @@ extraScripts:
           </div>
           <div class="stat-block" style="padding-top:16px">
             <span class="metadata">MITIGATIONS</span>
-            <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Face alignment, angle augmentation — partial, not sufficient</span>
+            <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Face alignment, angle augmentation: partial, not sufficient</span>
           </div>
         </div>
       </section>
@@ -371,7 +377,8 @@ extraScripts:
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not clinically validated. Our numbers come from a research dataset, not from patients in a bedroom.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a diagnosis. Pulse says a face looks like pain, at a confidence. A carer decides what that means.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a replacement for a carer, and never a reason to check on someone less often.</li>
-          <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built. Week 9 is a software demo. We're not pretending otherwise.</li>
+          <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not tracking posture yet. The pose branch that handles a patient out of bed is designed, not built.</li>
+          <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built. Week 8 is a software demo. We're not pretending otherwise.</li>
         </ul>
       </section>
 
@@ -380,65 +387,98 @@ extraScripts:
           <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
           <span class="eyebrow__label">08 · ROADMAP</span>
         </span>
-        <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Twelve weeks, and we are eight of them in.</h2>
-        <div style="overflow-x:auto;margin-top:8px">
-          <table style="width:100%;border-collapse:collapse;min-width:520px">
-            <caption class="metadata" style="text-align:left;padding-bottom:14px">SEMESTER PLAN · CURRENT POSITION MARKED</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="metadata rule-bottom--table-head" style="text-align:left;padding:0 16px 12px 0">WEEK</th>
-                <th scope="col" class="metadata rule-bottom--table-head" style="text-align:left;padding:0 16px 12px 0">FOCUS</th>
-                <th scope="col" class="metadata rule-bottom--table-head" style="text-align:left;padding:0 0 12px">STATUS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 1–2</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Scope: falls, breathing, or pain</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">DONE</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 3–4</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Dataset access and literature review</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">DONE</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 5</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection and alignment</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">DONE</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 6</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">CNN feature extractor trained</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">DONE</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 7</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">LSTM trained on rolling windows</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">DONE</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-primary);white-space:nowrap">▸ WEEK 8</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Integration: one live inference loop</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--purple-500);white-space:nowrap">IN PROGRESS</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 9</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Showcase: live video in, alerts out</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">NEXT</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 10–11</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Threshold tuning, latency, failure cases</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">PLANNED</td>
-              </tr>
-              <tr>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 13px/1.5 var(--font-mono);letter-spacing:0.06em;color:var(--ink-body);white-space:nowrap">WEEK 12</td>
-                <td class="rule-bottom--table-row" style="padding:15px 16px 15px 0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Write-up, handover, CAD refinement</td>
-                <td class="rule-bottom--table-row" style="padding:15px 0;font:400 11px/1.5 var(--font-mono);letter-spacing:0.12em;color:var(--ink-muted);white-space:nowrap">PLANNED</td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started. We're four of them in.</h2>
+        <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week four" style="margin-top:8px">
+          <svg class="roadmap-timeline__svg" data-roadmap-svg aria-hidden="true" focusable="false">
+            <path class="roadmap-timeline__path--upcoming" data-path-upcoming />
+            <path class="roadmap-timeline__path--done" data-path-done />
+          </svg>
+          <ol class="roadmap-timeline__list">
+            <li class="roadmap-timeline__row" data-status="done" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 1</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Scope: falls, breathing, or pain</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 2</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection working; patient detection (pose) designed</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 3</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Dashboard prototype</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="current" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span style="display:inline-flex;align-items:center;gap:6px">
+                  <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:10px;height:10px;display:block" />
+                  <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--purple-500)">WE ARE HERE</span>
+                </span>
+                <span class="metadata">WEEK 4</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Dataset access came through; reading the data</p>
+                <span class="metadata" style="color:var(--purple-500)">IN PROGRESS</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 5</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">CNN feature extractor</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 6</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">LSTM on rolling windows</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 7</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Integration: one live inference loop</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 8</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Showcase: live video in, alerts out</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 9</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Threshold tuning, latency, failure cases</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="planned" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 10</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Write-up, handover, CAD refinement</p>
+                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
     </div>

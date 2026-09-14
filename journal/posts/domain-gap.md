@@ -16,7 +16,7 @@ chainOrder: 1
 ---
 Every number we report at the showcase will have been measured on video of seated adults in a physiotherapy clinic, in good light, facing the camera, in acute pain that a clinician provoked on purpose. Our target is a person lying down, in the dark, at an oblique angle, possibly in pain that has lasted for weeks.
 
-That distance has a name — domain gap — and naming it is not the same as fixing it. This entry is the honest version of what we have, what we did about it, and what we are still going to be wrong about.
+That distance has a name, domain gap, and naming it is not the same as fixing it. This entry lays out what we have, what we did about it, and what we are still going to be wrong about.
 
 ## What is actually in the archive
 
@@ -36,7 +36,7 @@ We wrote the differences down as a list rather than a paragraph, because a list 
 - **Light.** A dark room at 3am. Whatever we do at the showcase will be in a lit room, which flatters us.
 - **Duration.** Chronic pain may not produce the sharp onset the LSTM learned to look for. A face that has been in pain for an hour may be still.
 
-<blockquote class="pull-quote"><p>The mitigations we have are real and they are not enough. Both halves of that sentence matter.</p></blockquote>
+<blockquote class="pull-quote"><p>The mitigations we have are real, and they are not enough.</p></blockquote>
 
 ## What we did about it
 
@@ -59,4 +59,4 @@ Perspective jitter is not the same as a camera actually being below someone. It 
 
 We are not going to report an accuracy figure as if it were an accuracy figure for a bedroom. Any number we show is measured on held-out clinic footage, and we will say so in the same breath as the number. If someone reads our result as evidence that this works at a bedside, we have misled them, even if every digit is correct.
 
-This is the part I am least sure about, so I am writing it down rather than pretending it is settled: I do not know how much of the gap the augmentation closes. Measuring that honestly needs footage we do not have and cannot ethically collect in twelve weeks. So the answer for now is that we do not know, and a Week 9 demo is not the thing that finds out.
+This is the part I am least sure about, so I am writing it down rather than pretending it is settled: I do not know how much of the gap the augmentation closes. Measuring that honestly needs footage we do not have and cannot ethically collect in ten weeks. So the answer for now is that we do not know, and a Week 8 demo is not the thing that finds out.

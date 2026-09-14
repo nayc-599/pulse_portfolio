@@ -14,14 +14,14 @@ motif: staircase
 listMotif: staircase
 chainOrder: 3
 ---
-For about ten days in week six, none of our models worked. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.
+For about ten days in week five, none of our models worked. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.
 
 It felt like procrastination. It was the most useful ten days of the project so far.
 
 ## The stubs
 
 <figure>
-<pre><code><span style="color:var(--amber-dim)"># pulse/stubs.py — stand-ins with the right shapes and nothing else</span>
+<pre><code><span style="color:var(--amber-dim)"># pulse/stubs.py: stand-ins with the right shapes and nothing else</span>
 <span style="color:var(--purple-300)">def</span> detect_face(frame):
     <span style="color:var(--amber-dim)"># 1 in 8 frames has no face, like a real room</span>
     <span style="color:var(--purple-300)">if</span> random.random() &lt; <span style="color:var(--amber)">0.125</span>: <span style="color:var(--purple-300)">return</span> <span style="color:var(--amber)">None</span>
@@ -40,14 +40,14 @@ The one decision worth copying is the **1 in 8 frames has no face** line. A stub
 ## What it caught
 
 - **The buffer never drained.** On a missing face we skipped the frame but also skipped the buffer eviction, so the window silently held frames from ten seconds earlier.
-- **Alerts fired every frame.** Above threshold, we sent a notification per frame — thirty per second. We now debounce to one alert per 30-second window unless confidence rises materially.
+- **Alerts fired every frame.** Above threshold, we sent a notification per frame, thirty per second. We now debounce to one alert per 30-second window unless confidence rises materially.
 - **Timestamps came from the wrong clock.** The alert carried the time the notification was built, not the time of the frame that triggered it. Off by up to 400ms, which sounds small until a carer asks what happened when.
 - **Startup lied.** For the first 32 frames the window is not full, and we were happily returning a confidence for a partial window. It now reports `warming_up` instead.
 
 <blockquote class="pull-quote"><p>None of these are model bugs. All four would have looked like model bugs if we had found them a week later, with real weights in the loop.</p></blockquote>
 
-## The cost
+## The cost, and what happens next
 
-Two evenings of writing code that did nothing, and a habit of trusting the loop enough to believe the numbers coming out of it. When Aaron's CNN landed, we replaced one function and it ran. When the LSTM landed, we replaced another and it also ran — and then produced a flat 0.5 for eleven minutes, which turned out to be a contract problem rather than a plumbing problem. Nay Chi wrote that one up.
+Two evenings of writing code that did nothing, and a habit of trusting the loop enough to believe the numbers coming out of it, once there are real numbers to believe. The plan for weeks five and six is to swap the stubs out one at a time: Aaron's CNN replaces `features()`, then the LSTM replaces `confidence()`. Nay Chi has already written up the interface contract the two of them will need to agree on before that happens, so we are not starting that argument from nothing.
 
-I would do it again, and earlier. Writing the loop first forced us to decide what a frame, a window and an alert actually are while the decisions were still cheap.
+I would do this again, and earlier. Writing the loop first forced us to decide what a frame, a window and an alert actually are while the decisions were still cheap, before there was a trained model around to make us feel like the hard part was already done.

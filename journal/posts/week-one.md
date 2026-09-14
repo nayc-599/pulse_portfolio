@@ -14,25 +14,25 @@ motif: scatter
 listMotif: staircase
 chainOrder: 6
 ---
-We walked into the first Wednesday meeting intending to build falls detection. We walked out with pain detection, two hours later, mostly because of one question nobody could answer.
+We walked into the first Wednesday meeting planning to build falls detection. Two hours later we walked out with pain detection instead, mostly because of one question nobody in the room could answer.
 
-The question was: who is the alert for, and what do they do differently because of it?
+The question was: who gets the alert, and what do they actually do differently because of it?
 
 ## Falls, and why we dropped it
 
-Falls detection is the obvious camera-in-a-bedroom project. It is also, we found within an hour of reading, extremely well covered — by commercial products, by published work, and by cheap accelerometers that do not need a camera at all. And a fall is a loud event. Someone in the house usually knows.
+Falls detection is the obvious camera-in-a-bedroom project. Within about an hour of reading around it we found it's also crowded: commercial products cover it, there's published work on it, and a cheap wrist accelerometer catches a fall more reliably than a camera would, without needing a camera at all. A fall is also a loud event. Someone in the house usually notices on their own.
 
-- **Crowded.** We would be a worse version of something you can buy.
-- **Already solved without cameras.** A wrist accelerometer detects a fall more reliably than we could from video.
-- **The wrong gap.** A fall is detectable by other means. Silent pain is not.
+- **Crowded.** We would be a worse version of something you can already buy.
+- **Already solved without cameras.** An accelerometer beats video here.
+- **The wrong gap.** A fall gets noticed through other means. Pain that someone is silently sitting with does not.
 
 ## What we chose instead
 
-A bedridden patient who cannot reach a call button has no channel at all. Not a weak channel — none. Between scheduled rounds, pain simply goes unreported. That is a gap a camera is unusually well suited to, because the face is where the signal already is.
+A bedridden patient who cannot reach a call button has no way to report pain between scheduled rounds. That gap is one a camera is well placed to close, because the face is already carrying the signal.
 
-<blockquote class="pull-quote"><p>Not "improves response times". Forty-one seconds, not four hours.</p></blockquote>
+We liked that the claim stays small and checkable. Pulse does not diagnose, does not treat, and does not replace a carer. It says: this face looks like pain, at this confidence, right now. A person decides what that means. Every hard question that follows from there, thresholds, false alarms, whether anyone trusts the thing after the third false alert, sits inside that one sentence.
 
-We also liked that the claim is small and checkable. Pulse does not diagnose, does not treat, does not replace a carer. It says: this face looks like pain, at this confidence, right now. A person decides what that means. Every hard question that follows — thresholds, false alarms, trust — sits inside that one sentence, which is a good sign that the sentence is the right size.
+Scheduled rounds can run up to four hours apart. What we want to build should be able to close that to something closer to forty-one seconds. That difference is the whole pitch.
 
 ## What we agreed in that first meeting
 
@@ -41,4 +41,4 @@ We also liked that the claim is small and checkable. Pulse does not diagnose, do
 - The dataset would be UNBC-McMaster, with the domain gap stated up front rather than buried.
 - We would write the journal as we went, including the parts we got wrong.
 
-Three of those four have held. The fourth — writing as we go — slipped by about two weeks, which is why this entry is being published after the ones that follow it chronologically. We are catching up, unedited.
+Three of those four have held. The fourth, writing as we go, slipped by about two weeks: this entry is going up after some of the ones that follow it chronologically, because we are catching up. Unedited, as promised, just late.

@@ -2,6 +2,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy("media");
 
   eleventyConfig.addFilter("dateDisplay", (value) => {
     const d = value instanceof Date ? value : new Date(value + "T00:00:00Z");
