@@ -53,7 +53,7 @@ extraScripts:
         <div class="stat-block">
           <span class="metadata">02 · THE APPROACH</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Two branches: a face, or a body.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so the only signal left is the face: 256 numbers read over a rolling second of video. Out of bed, the body is visible instead, so the plan is to read its position. Above a threshold, a carer's phone rings. The face branch runs today. The pose branch is designed, not built.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so the only signal left is the face: 256 numbers read over a rolling second of video. Out of bed, the body is visible, so a pose model reads it as 17 keypoints instead. Both detectors run today. What is missing is what comes after them: the CNN and LSTM that score pain are weeks five and six, and nothing yet turns a set of keypoints into a fall.</p>
         </div>
         <div class="stat-block">
           <span class="metadata">03 · WHERE IT IS NOW</span>

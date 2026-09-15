@@ -36,14 +36,15 @@ blockquote.pull-quote {
   border-left: 2px solid var(--amber-deep);
 }
 
+/* Status flag, not a badge: the site marks state with mono metadata and a
+   rule rather than an outlined container. */
 .not-built-pill {
   align-self: flex-start;
   font: 400 10px/1 var(--font-mono);
   letter-spacing: 0.14em;
   color: var(--ink-signal);
-  border: 1px dashed var(--signal);
-  border-radius: 999px;
-  padding: 9px 16px;
+  border-left: 2px solid var(--signal);
+  padding: 3px 0 3px 12px;
 }
 
 /* Buttons and links (Brand Kit §4) */
@@ -261,6 +262,49 @@ blockquote.pull-quote {
 .lightbox-stage img[hidden],
 .lightbox-stage video[hidden] {
   display: none;
+}
+
+/* Inference pipeline diagram (project page). No containers: each stage is a
+   pixel-grid glyph on its charcoal plate plus a label, and the structure
+   comes from the hairline rules between branches and the arrows between
+   stages, the same way the rest of the site builds groupings. */
+.pipeline-stage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pipeline-stage__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pipeline-stage__num {
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--ink-eyebrow);
+}
+.pipeline-stage__name {
+  font: 500 15px/1.3 var(--font-sans);
+  color: var(--ink-primary);
+}
+.pipeline-stage__state {
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+}
+.pipeline-stage__state--live { color: var(--ink-eyebrow); }
+/* Dimming the decorative glyph only: labels stay at full-opacity ink, since
+   the palette forbids alpha-muted type. */
+.pipeline-stage__glyph--planned { opacity: 0.45; }
+.pipeline-arrow {
+  font: 400 14px/1 var(--font-mono);
+  color: var(--ink-eyebrow);
+}
+.pipeline-branch {
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--ink-eyebrow);
+  min-width: 132px;
 }
 
 /* Vertical curved roadmap timeline (project page). The SVG path is drawn

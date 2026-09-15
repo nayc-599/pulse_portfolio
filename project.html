@@ -2,7 +2,7 @@
 layout: layout.njk
 permalink: "project.html"
 title: "The Project: Pulse"
-description: "How Pulse works: two branches for in bed and out of bed, a CNN and an LSTM planned for the face branch, pose detection planned for the other. The device, the dataset, its limits, and the roadmap to the showcase."
+description: "How Pulse works: two branches for in bed and out of bed. Face and pose detection both run; the CNN and LSTM that score pain do not exist yet. The device, the dataset, its limits, and the roadmap to the showcase."
 ogTitle: "The Project: Pulse"
 ogDescription: "Two branches, one threshold, and an honest account of what a five-person student project can and cannot do."
 extraScripts:
@@ -75,51 +75,81 @@ extraScripts:
           <span class="eyebrow__label">03 · HOW IT WORKS</span>
         </span>
         <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Two branches, because in bed and out of bed aren't the same problem.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN and an LSTM, planned for weeks five and six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so the plan is to read posture: 17 body keypoints tracked over time for falls, limping, or other unusual movement. Face detection itself runs today. The CNN, the LSTM, and the pose branch are all still ahead of us.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN and an LSTM, planned for weeks five and six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. Both detectors run today. What is still ahead of us is the interpretation on either side: the CNN and LSTM that would turn a face into a pain score, weeks five and six, and whatever decides that a particular set of keypoints is a fall or a limp.</p>
 
-        <figure style="margin:24px 0 0;padding:28px;background:var(--charcoal);color:var(--ink-on-charcoal);overflow-x:auto">
-          <figcaption class="metadata metadata--on-charcoal" style="margin-bottom:20px">FIGURE 1 · TWO BRANCHES · ONLY FACE DETECTION RUNS TODAY</figcaption>
-          <div style="display:flex;flex-direction:column;gap:20px;min-width:max-content">
-            <div style="display:flex;align-items:center;gap:12px">
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">01</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Camera frame</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">RGB FRAME · 30 FPS</span>
-              </div>
-              <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid rgba(var(--bone-rgb),0.28);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">02</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Face found?</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">SPLITS THE TWO BRANCHES</span>
-              </div>
+        <figure style="margin:24px 0 0;padding:30px 26px;background:var(--bone-2);overflow-x:auto">
+          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH DETECTORS RUN, NEITHER INTERPRETATION LAYER DOES</figcaption>
+          <div style="display:flex;flex-direction:column;min-width:max-content">
+            <div style="display:flex;align-items:center;gap:18px;padding:22px 0">
+              <span class="pipeline-stage">
+                <span class="pixel-grid" data-pixel-grid data-pattern="scatter" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">01</span>
+                  <span class="pipeline-stage__name">Camera frame</span>
+                  <span class="pipeline-stage__state">RGB FRAME · 30 FPS</span>
+                </span>
+              </span>
+              <span class="pipeline-arrow">&#8594;</span>
+              <span class="pipeline-stage">
+                <span class="pixel-grid" data-pixel-grid data-pattern="iris" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">02</span>
+                  <span class="pipeline-stage__name">Face found?</span>
+                  <span class="pipeline-stage__state">SPLITS THE TWO BRANCHES</span>
+                </span>
+              </span>
             </div>
-            <div style="display:flex;align-items:center;gap:12px;padding-left:40px;opacity:0.55">
-              <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62);min-width:150px">YES · IN BED →</span>
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">03</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">CNN</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 5</span>
-              </div>
-              <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">04</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">LSTM</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 6</span>
-              </div>
-              <span style="font:400 14px/1 var(--font-mono);color:var(--amber-dim)">→</span>
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:132px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">05</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Alert decision</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">PLANNED · WEEK 7</span>
-              </div>
+            <div style="display:flex;align-items:center;gap:18px;padding:22px 0;border-top:1px solid var(--rule-bone-16)">
+              <span class="pipeline-branch">YES · IN BED</span>
+              <span class="pipeline-stage">
+                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">03</span>
+                  <span class="pipeline-stage__name">CNN</span>
+                  <span class="pipeline-stage__state">PLANNED · WEEK 5</span>
+                </span>
+              </span>
+              <span class="pipeline-arrow">&#8594;</span>
+              <span class="pipeline-stage">
+                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">04</span>
+                  <span class="pipeline-stage__name">LSTM</span>
+                  <span class="pipeline-stage__state">PLANNED · WEEK 6</span>
+                </span>
+              </span>
+              <span class="pipeline-arrow">&#8594;</span>
+              <span class="pipeline-stage">
+                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="ring" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">05</span>
+                  <span class="pipeline-stage__name">Alert decision</span>
+                  <span class="pipeline-stage__state">PLANNED · WEEK 7</span>
+                </span>
+              </span>
             </div>
-            <div style="display:flex;align-items:center;gap:12px;padding-left:40px;opacity:0.55">
-              <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62);min-width:150px">NO · OUT OF BED →</span>
-              <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px dashed rgba(var(--bone-rgb),0.4);min-width:200px">
-                <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">06</span>
-                <span style="font:500 15px/1.3 var(--font-sans)">Patient detection (pose)</span>
-                <span style="font:400 10px/1.5 var(--font-mono);letter-spacing:0.1em;color:var(--ink-on-charcoal-62)">17 KEYPOINTS · DESIGNED, NOT BUILT</span>
-              </div>
+            <div style="display:flex;align-items:center;gap:18px;padding:22px 0 4px;border-top:1px solid var(--rule-bone-16)">
+              <span class="pipeline-branch">NO · OUT OF BED</span>
+              <span class="pipeline-stage">
+                <span class="pixel-grid" data-pixel-grid data-pattern="iris" data-n="7" style="padding:7px">
+                  <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
+                </span>
+                <span class="pipeline-stage__text">
+                  <span class="pipeline-stage__num">06</span>
+                  <span class="pipeline-stage__name">Patient detection (pose)</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS TODAY</span>
+                </span>
+              </span>
             </div>
           </div>
         </figure>
@@ -143,7 +173,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part runs today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are meant to handle once they exist. If there is no face, that usually means the patient is out of bed, which is the case the pose branch is meant to handle. Neither of those branches is built yet, so right now a detected face (or the lack of one) is logged and nothing downstream happens with it.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part runs today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are meant to handle once they exist. If there is no face, that usually means the patient is out of bed, and the pose model picks it up from there. Both detectors work. What neither branch has yet is the layer that decides what it is looking at, so right now a detected face, or a detected body, is logged and nothing downstream acts on it.</p>
               <span class="metadata">FRAME → FACE CROP</span>
             </div>
           </li>
@@ -187,8 +217,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The plan for the out-of-bed case: map the body to 17 COCO keypoints and read the joint positions over time to catch falls, limping, and other unusual movement. This is designed, not built. No code runs this today, the same way the cube is a CAD file and not yet plastic.</p>
-              <span class="metadata">17 KEYPOINTS · DESIGNED, NOT BUILT</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame, and there is a demo video of it on the media page. What it does not do yet is decide what those keypoints mean. No fall detection, no limp detection, nothing that turns a moving skeleton into an alert. That interpretation layer is the next piece of this branch and it is not written.</p>
+              <span class="metadata">17 KEYPOINTS · RUNS TODAY</span>
             </div>
           </li>
           <li>
@@ -198,7 +228,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. Nothing feeds it yet. The face branch doesn't produce a confidence until the CNN and LSTM exist, and the pose branch doesn't exist at all.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. Nothing feeds it yet. The face branch doesn't produce a confidence until the CNN and LSTM exist, and the pose branch produces keypoints rather than a decision about them.</p>
               <span class="metadata">PLANNED · WEEK 7</span>
             </div>
           </li>
@@ -377,7 +407,7 @@ extraScripts:
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not clinically validated. Our numbers come from a research dataset, not from patients in a bedroom.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a diagnosis. Pulse says a face looks like pain, at a confidence. A carer decides what that means.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a replacement for a carer, and never a reason to check on someone less often.</li>
-          <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not tracking posture yet. The pose branch that handles a patient out of bed is designed, not built.</li>
+          <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not reading meaning into posture yet. The pose branch tracks 17 body keypoints, but nothing classifies those into a fall or a limp.</li>
           <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built. Week 8 is a software demo. We're not pretending otherwise.</li>
         </ul>
       </section>
@@ -406,7 +436,7 @@ extraScripts:
               <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 2</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection working; patient detection (pose) designed</p>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection and patient detection (17 keypoints) both working</p>
                 <span class="metadata" style="color:var(--ink-muted)">DONE</span>
               </div>
             </li>
