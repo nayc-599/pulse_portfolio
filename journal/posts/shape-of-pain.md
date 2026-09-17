@@ -22,9 +22,9 @@ Dataset access came through on Monday. The first thing I did was not train anyth
 
 ## The thing hiding in the filenames
 
-Every sequence name in UNBC-McMaster parses the same way: subject, trial, movement, limb. I'd read that structure as bookkeeping and moved on the first time I saw it. Looking properly, the limb field is not bookkeeping: it is `aff` or `unaff`, and `unaff` means the unaffected shoulder. The clinician ran the same range-of-motion test on the arm that doesn't hurt.
+Every sequence name in UNBC-McMaster parses the same way: subject, trial, movement, limb. I'd read that structure as bookkeeping and moved on the first time I saw it.
 
-109 sequences are the painful arm. 91 are the other one.
+The limb field is `aff` or `unaff`, and `unaff` means the unaffected shoulder: the clinician ran the same range-of-motion test on the arm that doesn't hurt. 109 sequences are the painful arm. 91 are the other one.
 
 That is a control condition, built into the dataset, that none of us had noticed. We had been thinking of our negatives as "frames that happened to be neutral," background we'd absorb wherever it showed up, when closer to a third of the data is structurally non-painful by design, from a limb a clinician chose specifically because it wasn't the problem. It also hands us a test nobody had proposed: a model that understands pain should stay quiet on `unaff` sequences almost by construction. If it doesn't, that's not noise to average out, that's the model reacting to the movement itself rather than the pain.
 
