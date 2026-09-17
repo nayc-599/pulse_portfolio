@@ -160,6 +160,10 @@ blockquote.pull-quote {
 }
 .nav-link:hover { color: var(--ink-primary); border-bottom-color: rgba(var(--charcoal-rgb), 0.35); }
 .nav-link[aria-current="page"] { color: var(--ink-primary); border-bottom-color: var(--amber-deep); }
+@media (max-width: 640px) {
+  /* Five items need tighter padding to fit a phone-width header on one line. */
+  .nav-link { padding: 9px 5px; }
+}
 
 /* Filter chip: state is an 8px LED marker + ink weight, no border/fill */
 .filter-chip {

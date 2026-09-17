@@ -14,9 +14,9 @@
     <div class="header-status-wrap">
       <span class="metadata header-status">{{ site.headerStatus }}</span>
     </div>
-    <nav aria-label="Primary" style="flex:0 0 auto;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+    <nav aria-label="Primary" style="flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap">
       {% for l in site.nav %}
-      <a href="{{ l.href }}" class="nav-link"{% if page.url.startsWith(l.href) %} aria-current="page"{% endif %}>{{ l.label }}</a>
+      <a href="{{ l.href }}" class="nav-link"{% if (l.href == '/' and page.url == '/') or (l.href != '/' and page.url.startsWith(l.href)) %} aria-current="page"{% endif %}>{{ l.label }}</a>
       {% endfor %}
     </nav>
   </div>
