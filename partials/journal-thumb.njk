@@ -1,0 +1,16 @@
+{#- Journal thumbnail in the site's 16:10 .media-thumb crop.
+    Posts set `thumb` / `thumbAlt` (and optionally `thumbPos`) in front matter;
+    posts without an image fall back to their dimmed pixel-grid motif. -#}
+{% macro journalThumb(post, n, cell, gap, extraClass) %}
+{%- if post.data.thumb -%}
+<span class="media-thumb {{ extraClass }}"{% if post.data.thumbPos %} style="--thumb-pos:{{ post.data.thumbPos }}"{% endif %}>
+  <img src="{{ post.data.thumb }}" alt="{{ post.data.thumbAlt }}" loading="lazy" />
+</span>
+{%- else -%}
+<span class="media-thumb media-thumb--motif {{ extraClass }}" aria-hidden="true">
+  <span class="pixel-grid" data-pixel-grid data-pattern="{{ post.data.listMotif }}" data-n="{{ n }}">
+    <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat({{ n }},{{ cell }}px);grid-auto-rows:{{ cell }}px;gap:{{ gap }}px"></span>
+  </span>
+</span>
+{%- endif -%}
+{% endmacro %}

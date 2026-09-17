@@ -12,7 +12,10 @@ readTime: 5
 excerpt: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 motif: staircase
 listMotif: staircase
-chainOrder: 3
+chainOrder: 4
+thumb: /media/skeletal_code.png
+thumbAlt: "Dark-theme notebook cell defining PyTorch train and validation transforms: random flip, rotation, colour jitter and ImageNet normalisation."
+thumbPos: "left top"
 ---
 For about ten days in week five, none of our models worked. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.
 
@@ -36,6 +39,11 @@ It felt like procrastination. It was the most useful ten days of the project so 
 </figure>
 
 The one decision worth copying is the **1 in 8 frames has no face** line. A stub that always succeeds tests nothing. A stub that fails at a realistic rate turns the missing-face path from a hypothetical into something you trip over on the first run.
+
+<figure>
+<img src="/media/skeletal_code.png" alt="Screenshot of a Colab notebook cell titled Transforms, defining train_transform with RandomHorizontalFlip, RandomRotation of 10 degrees, ColorJitter and Normalize, and a val_transform that only normalises." />
+<figcaption>FIGURE 2 · THE PREPROCESSING THE REAL MODELS WILL SLOT INTO: AUGMENTATION ON TRAIN, NORMALISATION ONLY ON VALIDATION.</figcaption>
+</figure>
 
 ## What it caught
 

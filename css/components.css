@@ -247,6 +247,34 @@ blockquote.pull-quote {
   display: block;
 }
 
+/* Journal index thumbnails: same 16:10 .media-thumb crop, fixed widths.
+   The featured entry keeps its larger, distinct treatment. */
+.journal-featured__thumb {
+  flex: 0 1 440px;
+  min-width: 0;
+}
+.journal-entry__link {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) auto;
+  column-gap: 28px;
+  row-gap: 12px;
+  align-items: center;
+  padding: 28px 0;
+  text-decoration: none;
+  color: var(--ink-primary);
+}
+@media (max-width: 640px) {
+  .journal-entry__link { grid-template-columns: 1fr; }
+  .journal-entry__link > .metadata { text-align: left !important; }
+}
+/* Posts with no image of their own: the dimmed motif on a charcoal plate,
+   same low-intensity treatment as the team page. */
+.media-thumb--motif { background: var(--charcoal); }
+.media-thumb--motif .pixel-grid { opacity: 0.45; }
+
+/* In-post image figures */
+.article-body figure img { width: 100%; display: block; border: 1px solid var(--rule-bone-16); }
+
 /* Lightbox stage: fixed viewport-relative box; media scales to fit inside
    without cropping, regardless of its own aspect ratio. */
 .lightbox-stage {

@@ -12,7 +12,10 @@ readTime: 6
 excerpt: "A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason."
 motif: ring
 listMotif: ring
-chainOrder: 4
+chainOrder: 5
+thumb: /media/inspo_pic.png
+thumbAlt: "Concept render of a small white cube on a bedside table, its front showing a glowing pixel-art smile beside a round camera lens."
+thumbPos: "center 55%"
 ---
 A camera pointed at a bed is a surveillance object until you give it a reason not to be. We spent a week on the reason.
 
@@ -25,6 +28,11 @@ The 240 × 240 round display exists to hold a low-resolution smile, and it does 
 - **It is legible from a bed.** Eleven pixels across at arm's length beats any text we could fit.
 - **It has one register: calm.** A face is the fastest way to communicate "nothing is wrong" to someone who is unwell and cannot get up.
 - **It makes the object attributable.** A thing with a face is a thing in the room with you, not an instrument someone else is pointing at you.
+
+<figure>
+<img src="/media/inspo_pic.png" alt="Concept render of a soft-cornered white cube on a wooden bedside table in a hospital room, with a lit pixel-art smiling face on its front, a round camera lens in the top corner and a speaker grille on the side." />
+<figcaption>FIGURE 1 · THE REFERENCE IMAGE WE DESIGNED TOWARD. SAME LENS, BUT THE SMILE IS WHAT YOU SEE FIRST.</figcaption>
+</figure>
 
 ## Two expressions, and a hard prohibition
 

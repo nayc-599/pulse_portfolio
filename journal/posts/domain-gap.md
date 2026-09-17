@@ -12,7 +12,11 @@ readTime: 7
 excerpt: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
 motif: ring
 listMotif: scatter
-chainOrder: 1
+chainOrder: 2
+# Stand-in until a clinic-vs-bedroom comparison image exists: swap thumb, thumbAlt and the in-post figure together.
+thumb: /media/pain_rate_per_subject.png
+thumbAlt: "Horizontal bar chart of the percentage of frames at PSPI 2 or above for each of the 25 dataset subjects, ranging from zero to about 50 percent."
+thumbPos: "left center"
 ---
 Every number we report at the showcase will have been measured on video of seated adults in a physiotherapy clinic, in good light, facing the camera, in acute pain that a clinician provoked on purpose. Our target is a person lying down, in the dark, at an oblique angle, possibly in pain that has lasted for weeks.
 
@@ -26,6 +30,11 @@ The UNBC-McMaster Shoulder Pain Expression Archive is video of patients with sho
 - **Pose.** Seated, upright, roughly frontal to the camera.
 - **Lighting.** Clinical and consistent. No infrared, no dark room, no lamp casting half a face in shadow.
 - **Pain type.** Acute and provoked, in short episodes with a clear onset. Not chronic, not sustained across an hour.
+
+<figure>
+<img src="/media/pain_rate_per_subject.png" alt="Horizontal bar chart titled Pain rate per subject, showing the percentage of frames with PSPI of 2 or more for each of 25 subjects: two subjects have none, most sit between 1 and 10 percent, and one reaches about 50 percent." />
+<figcaption>FIGURE 1 · SHARE OF FRAMES AT PSPI ≥ 2, PER SUBJECT. EVEN INSIDE ONE CLINIC, TWO PEOPLE NEVER CROSS IT AND ONE SPENDS HALF THEIR FRAMES ABOVE IT.</figcaption>
+</figure>
 
 ## Four ways our room differs
 
@@ -50,7 +59,7 @@ aug = Compose([
     RandomBrightnessContrast(<span style="color:var(--amber)">0.3</span>, <span style="color:var(--amber)">0.3</span>),
     RandomOcclusion(max_frac=<span style="color:var(--amber)">0.25</span>),   <span style="color:var(--amber-dim)"># pillow, arm, blanket</span>
 ])</code></pre>
-<figcaption>FIGURE 1 · SYNTHESISING A BEDROOM OUT OF A CLINIC. IT IS A GUESS, NOT A GROUND TRUTH.</figcaption>
+<figcaption>FIGURE 2 · SYNTHESISING A BEDROOM OUT OF A CLINIC. IT IS A GUESS, NOT A GROUND TRUTH.</figcaption>
 </figure>
 
 Perspective jitter is not the same as a camera actually being below someone. It moves pixels; it does not add the parts of a face you can only see from underneath. We are honest about that in the write-up and we will be honest about it on stage.

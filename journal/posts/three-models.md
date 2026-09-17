@@ -12,11 +12,18 @@ readTime: 6
 excerpt: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
 motif: lattice
 listMotif: lattice
-chainOrder: 5
+chainOrder: 6
+thumb: /media/workflow.png
+thumbAlt: "Flowchart of the planned pipeline: a live video feed branching into patient detection and a CNN feeding an LSTM, both converging on an alert system and dashboard."
 ---
 The obvious architecture is one network: video in, pain confidence out, trained end to end. We are not building that, and the reason is not accuracy.
 
 The plan is three models instead: a face detector, a CNN feature extractor, and an LSTM over a rolling window, trained separately and frozen at inference once each one exists. Face detection is running already. The CNN and LSTM are weeks five and six on the roadmap, so this is the argument for the split, written down before either of them is trained rather than after.
+
+<figure>
+<img src="/media/workflow.png" alt="Flowchart on a dark background: Live Video Feed branches to Patient Detection and to CNN facial feature extraction, which feeds CNN plus RNN/LSTM pain detection; both branches flow into Alert System, then Dashboard / Frontend." />
+<figcaption>FIGURE 1 · THE PLANNED FLOW. PAIN DETECTION IS TWO MODELS IN SERIES, NOT ONE, AND IT MEETS PATIENT DETECTION AT THE ALERT SYSTEM.</figcaption>
+</figure>
 
 ## Why split
 
@@ -41,7 +48,7 @@ lstm.eval();
 
 <span style="color:var(--purple-300)">with</span> torch.no_grad():          <span style="color:var(--amber-dim)"># the device should not learn the patient</span>
     conf = lstm(window)</code></pre>
-<figcaption>FIGURE 1 · THE INTENDED PATTERN. NONE OF THIS RUNS YET.</figcaption>
+<figcaption>FIGURE 2 · THE INTENDED PATTERN. NONE OF THIS RUNS YET.</figcaption>
 </figure>
 
 <blockquote class="pull-quote"><p>People will probably assume the device learns the patient over time. It won't. The plan is for the weights to be fixed before the device is ever switched on.</p></blockquote>

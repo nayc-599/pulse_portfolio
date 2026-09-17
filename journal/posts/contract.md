@@ -12,7 +12,10 @@ readTime: 10
 excerpt: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the contract we wrote to catch that in advance."
 motif: scatter
 listMotif: lattice
-chainOrder: 2
+chainOrder: 3
+thumb: /media/contract.png
+thumbAlt: "Planning document excerpt: a pipeline overview line and a table comparing what the CNN and LSTM stages see, are trained on, and do."
+thumbPos: "center 40%"
 ---
 Aaron is going to train a CNN that outputs 256 numbers per frame. I am going to train an LSTM that reads 256 numbers per frame. Neither exists yet, both are on the roadmap for weeks five and six, and when we sat down this week to compare notes before either of us writes training code, we found we had already made four different assumptions about what those 256 numbers actually are.
 
@@ -48,6 +51,11 @@ So we wrote one page now, ahead of training either model. Not a design document:
     assert abs(window.mean()) &lt; 0.5      <span style="color:var(--amber-dim)"># catches un-normalised input</span>
     return window</code></pre>
 <figcaption>FIGURE 1 · THE WHOLE CONTRACT. NEITHER MODEL EXISTS YET TO TEST IT AGAINST.</figcaption>
+</figure>
+
+<figure>
+<img src="/media/contract.png" alt="Excerpt from our planning document: a pipeline overview running raw frame to face detection, CNN, feature vector, LSTM, alert system and dashboard, above a table showing the CNN sees raw pixels and trains per frame while the LSTM never sees pixels and trains on windows of feature vectors." />
+<figcaption>FIGURE 2 · THE PIPELINE OVERVIEW THE CONTRACT SITS INSIDE: WHICH STAGE SEES PIXELS, AND WHAT EACH ONE IS TRAINED ON.</figcaption>
 </figure>
 
 The assertion on the mean is the one I expect to matter most. It is crude, since a normalised window can legitimately drift, but the idea is that it should catch the un-normalised case within seconds instead of after an afternoon of staring at a flat line, assuming we actually remember to call it once there is code to call it on.

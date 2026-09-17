@@ -29,13 +29,12 @@ extraScripts:
 </div>
 
 <main>
-  {% set featured = collections.posts | selectattr("fileSlug", "equalto", "contract") | first %}
+  {% from "journal-thumb.njk" import journalThumb %}
+  {% set featured = collections.posts | selectattr("fileSlug", "equalto", "shape-of-pain") | first %}
   <section class="journal-featured" data-category="{{ featured.data.category }}" aria-label="Featured entry" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
     <div class="wrap" style="padding:56px 24px">
       <a href="{{ featured.url }}" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:var(--ink-primary)">
-        <span class="pixel-grid" data-pixel-grid data-pattern="{{ featured.data.listMotif }}" data-n="14" style="padding:18px">
-          <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(14,9px);grid-auto-rows:9px;gap:3px"></span>
-        </span>
+        {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
         <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
           <span class="metadata" style="color:var(--ink-eyebrow)">FEATURED · {{ featured.data.category }} · {{ featured.data.date | dateDisplay }}</span>
           <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
@@ -55,10 +54,8 @@ extraScripts:
     <ul style="list-style:none;margin:0;padding:0">
       {% for post in collections.posts %}
       <li class="journal-entry rule-top--list" data-category="{{ post.data.category }}">
-        <a href="{{ post.url }}" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:28px;row-gap:12px;align-items:center;padding:28px 0;text-decoration:none;color:var(--ink-primary)">
-          <span class="pixel-grid" data-pixel-grid data-pattern="{{ post.data.listMotif }}" data-n="7" style="padding:9px">
-            <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,6px);grid-auto-rows:6px;gap:2px"></span>
-          </span>
+        <a href="{{ post.url }}" class="journal-entry__link hover-shift">
+          {{ journalThumb(post, 7, 6, 2) }}
           <span style="display:flex;flex-direction:column;gap:9px;min-width:0">
             <span class="metadata">{{ post.data.category }} · {{ post.data.date | dateDisplay }}</span>
             <span style="font:500 23px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
@@ -81,6 +78,6 @@ extraScripts:
       <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:rgba(var(--amber-dim-rgb),0.55)"></span>
       <span>2</span>
     </span>
-    <span class="metadata" style="margin-left:24px">SIX ENTRIES SO FAR · WE POST MOST WEDNESDAYS</span>
+    <span class="metadata" style="margin-left:24px">EIGHT ENTRIES SO FAR · WE POST MOST WEDNESDAYS</span>
   </nav>
 </main>

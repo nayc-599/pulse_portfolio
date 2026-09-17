@@ -12,7 +12,7 @@ readTime: 5
 excerpt: "Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful."
 motif: scatter
 listMotif: staircase
-chainOrder: 6
+chainOrder: 7
 ---
 We walked into the first Wednesday meeting planning to build falls detection. Two hours later we walked out with pain detection instead, mostly because of one question nobody in the room could answer.
 
