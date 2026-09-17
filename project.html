@@ -2,7 +2,7 @@
 layout: layout.njk
 permalink: "project.html"
 title: "The Project: Pulse"
-description: "How Pulse works: two branches for in bed and out of bed. Face and pose detection both run; the CNN and LSTM that score pain do not exist yet. The device, the dataset, its limits, and the roadmap to the showcase."
+description: "How Pulse works: two branches for in bed and out of bed. Face and pose detection both run on their own, and integrating them into one pipeline feeding the dashboard is under way; the CNN is complete and the LSTM that scores pain is in development. The device, the dataset, its limits, and the roadmap to the showcase."
 ogTitle: "The Project: Pulse"
 ogDescription: "Two branches, one threshold, and an honest account of what a five-person student project can and cannot do."
 extraScripts:
@@ -75,10 +75,10 @@ extraScripts:
           <span class="eyebrow__label">03 · HOW IT WORKS</span>
         </span>
         <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Two branches, because in bed and out of bed aren't the same problem.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN and an LSTM, planned for weeks five and six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. Both detectors run today. What is still ahead of us is the interpretation on either side: the CNN and LSTM that would turn a face into a pain score, weeks five and six, and whatever decides that a particular set of keypoints is a fall or a limp.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN, now complete, and an LSTM, in development in week six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. Both detectors already run, each on its own, and the current work is bringing them into one live pipeline that feeds the carer dashboard. Beyond that, the next stage on either side is interpretation: the LSTM that would turn the CNN's features into a pain score, in development now, and whatever decides that a particular set of keypoints is a fall or a limp.</p>
 
         <figure style="margin:24px 0 0;padding:30px 26px;background:var(--bone-2);overflow-x:auto">
-          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH DETECTORS RUN, NEITHER INTERPRETATION LAYER DOES</figcaption>
+          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH DETECTORS RUN STANDALONE, NEITHER INTERPRETATION LAYER DOES</figcaption>
           <div style="display:flex;flex-direction:column;min-width:max-content">
             <div style="display:flex;align-items:center;gap:18px;padding:22px 0">
               <span class="pipeline-stage">
@@ -106,13 +106,13 @@ extraScripts:
             <div style="display:flex;align-items:center;gap:18px;padding:22px 0;border-top:1px solid var(--rule-bone-16)">
               <span class="pipeline-branch">YES · IN BED</span>
               <span class="pipeline-stage">
-                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:7px">
+                <span class="pixel-grid" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">03</span>
                   <span class="pipeline-stage__name">CNN</span>
-                  <span class="pipeline-stage__state">PLANNED · WEEK 5</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">COMPLETE · WEEK 5</span>
                 </span>
               </span>
               <span class="pipeline-arrow">&#8594;</span>
@@ -123,7 +123,7 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">04</span>
                   <span class="pipeline-stage__name">LSTM</span>
-                  <span class="pipeline-stage__state">PLANNED · WEEK 6</span>
+                  <span class="pipeline-stage__state">IN PROGRESS · WEEK 6</span>
                 </span>
               </span>
               <span class="pipeline-arrow">&#8594;</span>
@@ -147,7 +147,7 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">06</span>
                   <span class="pipeline-stage__name">Patient detection (pose)</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS TODAY</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS STANDALONE</span>
                 </span>
               </span>
             </div>
@@ -173,7 +173,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part runs today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are meant to handle once they exist. If there is no face, that usually means the patient is out of bed, and the pose model picks it up from there. Both detectors work. What neither branch has yet is the layer that decides what it is looking at, so right now a detected face, or a detected body, is logged and nothing downstream acts on it.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part works and runs on its own today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are built for: the CNN is complete, and the LSTM is in development this week. If there is no face, that usually means the patient is out of bed, which is the pose model's case. Each detector runs standalone, and the current work is connecting both into one live pipeline that feeds the carer dashboard, including that handoff between them. After that comes the layer that decides what each one is looking at; until then, nothing downstream acts on a detected face or body.</p>
               <span class="metadata">FRAME → FACE CROP</span>
             </div>
           </li>
@@ -184,8 +184,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week five, not trained yet. The idea is a convolutional network that turns each crop into 256 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector.</p>
-              <span class="metadata">PLANNED · WEEK 5</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Complete as of week five. A convolutional network turns each crop into 256 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector. Training surfaced a class imbalance issue, which is now resolved.</p>
+              <span class="metadata">COMPLETE · WEEK 5</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -195,8 +195,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Depends on the CNN existing, so also not built. The plan is one vector per frame, pushed into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
-              <span class="metadata">PLANNED · WEEK 5</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The CNN now generates these vectors, one per frame. Storing them frame by frame for the live pipeline is part of this week's work, and each one goes into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
+              <span class="metadata">IN PROGRESS · WEEK 6</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -206,8 +206,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week six, not trained yet. The idea is a recurrent model that reads the last 32 vectors, about 1.1 seconds of video, and returns one confidence value between 0 and 1: change over time, not a snapshot.</p>
-              <span class="metadata">PLANNED · WEEK 6</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In development this week, not trained yet. The idea is a recurrent model that reads the last 32 vectors, about 1.1 seconds of video, and returns one confidence value between 0 and 1: change over time, not a snapshot.</p>
+              <span class="metadata">IN PROGRESS · WEEK 6</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -217,8 +217,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame, and there is a demo video of it on the media page. What it does not do yet is decide what those keypoints mean. No fall detection, no limp detection, nothing that turns a moving skeleton into an alert. That interpretation layer is the next piece of this branch and it is not written.</p>
-              <span class="metadata">17 KEYPOINTS · RUNS TODAY</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one works and runs on its own, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame. Bringing it and face detection into one pipeline that feeds the carer dashboard is the current work. Deciding what those keypoints mean is the next stage. There is no fall detection, no limp detection, nothing that turns a moving skeleton into an alert. That interpretation layer is the next piece of this branch to be written.</p>
+              <span class="metadata">17 KEYPOINTS · RUNS STANDALONE</span>
             </div>
           </li>
           <li>
@@ -228,7 +228,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. Nothing feeds it yet. The face branch doesn't produce a confidence until the CNN and LSTM exist, and the pose branch produces keypoints rather than a decision about them.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. At this stage nothing feeds it: the face branch produces a confidence once the LSTM is trained on the CNN's output, and the pose branch produces keypoints rather than a decision about them.</p>
               <span class="metadata">PLANNED · WEEK 7</span>
             </div>
           </li>
@@ -242,7 +242,7 @@ extraScripts:
         </span>
         <h2 id="thr-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Above threshold, and only above threshold, an alert goes out.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below it, the room stays quiet. False alarms cost trust. A carer who is woken three times a night by a sneeze stops trusting the fourth alert, and the fourth alert is the one that matters. Everything about this decision is a trade.</p>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones: the LSTM that would produce real numbers here is not built yet. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones: real numbers here will come from the LSTM, in development this week. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up.</p>
 
         <figure style="margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:24px">
           <figcaption class="metadata">FIGURE 2 · THRESHOLD DEMO · 20 ILLUSTRATIVE CONFIDENCE VALUES</figcaption>
@@ -418,7 +418,7 @@ extraScripts:
           <span class="eyebrow__label">08 · ROADMAP</span>
         </span>
         <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started. We're four of them in.</h2>
-        <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week four" style="margin-top:8px">
+        <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week six" style="margin-top:8px">
           <svg class="roadmap-timeline__svg" data-roadmap-svg aria-hidden="true" focusable="false">
             <path class="roadmap-timeline__path--upcoming" data-path-upcoming />
             <path class="roadmap-timeline__path--done" data-path-done />
@@ -448,6 +448,22 @@ extraScripts:
                 <span class="metadata" style="color:var(--ink-muted)">DONE</span>
               </div>
             </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 4</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Dataset access came through; indexed 48,398 frames and checked labels against the paper</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 5</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">CNN complete: 256-dimension feature vectors generated, class imbalance issue resolved</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
             <li class="roadmap-timeline__row" data-status="current" data-side="right">
               <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
               <div class="roadmap-timeline__content">
@@ -455,25 +471,9 @@ extraScripts:
                   <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:10px;height:10px;display:block" />
                   <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--purple-500)">WE ARE HERE</span>
                 </span>
-                <span class="metadata">WEEK 4</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Dataset access came through; reading the data</p>
-                <span class="metadata" style="color:var(--purple-500)">IN PROGRESS</span>
-              </div>
-            </li>
-            <li class="roadmap-timeline__row" data-status="planned" data-side="left">
-              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
-              <div class="roadmap-timeline__content">
-                <span class="metadata">WEEK 5</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">CNN feature extractor</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
-              </div>
-            </li>
-            <li class="roadmap-timeline__row" data-status="planned" data-side="right">
-              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
-              <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 6</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">LSTM on rolling windows</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Wiring the pieces together: frame storage for the CNN pipeline, webcam integration, LSTM development, patient detection refinement</p>
+                <span class="metadata" style="color:var(--purple-500)">IN PROGRESS</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="planned" data-side="left">

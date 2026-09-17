@@ -1,7 +1,7 @@
 ---
 layout: post.njk
 permalink: "journal/posts/skeletons.html"
-title: "Skeletons before data: writing code we cannot run yet"
+title: "Skeletons before data: writing the loop ahead of the models"
 description: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 ogDescription: "Pulse journal · Build log · 27 August 2026 · Christopher"
 category: "BUILD LOG"
@@ -17,7 +17,7 @@ thumb: /media/skeletal_code.png
 thumbAlt: "Dark-theme notebook cell defining PyTorch train and validation transforms: random flip, rotation, colour jitter and ImageNet normalisation."
 thumbPos: "left top"
 ---
-For about ten days in week five, none of our models worked. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.
+For about ten days in week five, none of our models were ready to run. So we wrote the entire inference loop anyway, against three stubs that returned random numbers of the right shape.
 
 It felt like procrastination. It was the most useful ten days of the project so far.
 

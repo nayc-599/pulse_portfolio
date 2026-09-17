@@ -17,7 +17,7 @@ thumb: /media/contract.png
 thumbAlt: "Planning document excerpt: a pipeline overview line and a table comparing what the CNN and LSTM stages see, are trained on, and do."
 thumbPos: "center 40%"
 ---
-Aaron is going to train a CNN that outputs 256 numbers per frame. I am going to train an LSTM that reads 256 numbers per frame. Neither exists yet, both are on the roadmap for weeks five and six, and when we sat down this week to compare notes before either of us writes training code, we found we had already made four different assumptions about what those 256 numbers actually are.
+Aaron is going to train a CNN that outputs 256 numbers per frame. I am going to train an LSTM that reads 256 numbers per frame. Both are on the roadmap for weeks five and six, and when we sat down this week to compare notes before either of us writes training code, we found we had already made four different assumptions about what those 256 numbers actually are.
 
 Nothing is broken, because nothing is built. But if we had trained both models against our own separate assumptions and only plugged them together afterward, the likely result is a confidence output that sits at some meaningless flat number for as long as it takes us to notice, followed by an afternoon of each of us assuming the other person's model is wrong.
 
@@ -50,7 +50,7 @@ So we wrote one page now, ahead of training either model. Not a design document:
     assert window.shape == (WINDOW, FEATURE_DIM)
     assert abs(window.mean()) &lt; 0.5      <span style="color:var(--amber-dim)"># catches un-normalised input</span>
     return window</code></pre>
-<figcaption>FIGURE 1 · THE WHOLE CONTRACT. NEITHER MODEL EXISTS YET TO TEST IT AGAINST.</figcaption>
+<figcaption>FIGURE 1 · THE WHOLE CONTRACT. TESTING AGAINST IT STARTS WHEN THE MODELS ARE TRAINED IN WEEKS FIVE AND SIX.</figcaption>
 </figure>
 
 <figure>
@@ -75,4 +75,4 @@ Because splitting the pipeline into three models is the right call, and it is ex
 
 This is the part I am least sure about, so I am writing it down rather than pretending it is settled: I do not know whether the right fix is more documents like this one, or fewer seams. For a ten-week project, the document is cheaper. For anything that lived longer, I suspect we would want the contract to be executable, a shared type, not a page of constants two people have to remember to read.
 
-We have not trained either model yet, so we do not actually know if this contract holds. That is a week five and week six problem, and I expect to be back here writing about what it missed.
+Neither model is trained at this stage, so we do not actually know if this contract holds. Weeks five and six are where we find out, and I expect to be back here writing about what it missed.

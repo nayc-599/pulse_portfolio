@@ -48,7 +48,7 @@ lstm.eval();
 
 <span style="color:var(--purple-300)">with</span> torch.no_grad():          <span style="color:var(--amber-dim)"># the device should not learn the patient</span>
     conf = lstm(window)</code></pre>
-<figcaption>FIGURE 2 · THE INTENDED PATTERN. NONE OF THIS RUNS YET.</figcaption>
+<figcaption>FIGURE 2 · THE INTENDED PATTERN, AT DESIGN STAGE.</figcaption>
 </figure>
 
 <blockquote class="pull-quote"><p>People will probably assume the device learns the patient over time. It won't. The plan is for the weights to be fixed before the device is ever switched on.</p></blockquote>

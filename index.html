@@ -28,11 +28,11 @@ extraScripts:
 
   <section aria-label="Project status" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
     <div class="wrap" style="padding:18px 24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center">
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">WEEK 4</span>
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">WEEK 6</span>
       <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">DATA</span>
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">PIPELINE</span>
       <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-eyebrow)">SHOWCASE IN 4 WEEKS</span>
+      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-eyebrow)">SHOWCASE IN 2 WEEKS</span>
     </div>
   </section>
 
@@ -53,17 +53,17 @@ extraScripts:
         <div class="stat-block">
           <span class="metadata">02 · THE APPROACH</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Two branches: a face, or a body.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so the only signal left is the face: 256 numbers read over a rolling second of video. Out of bed, the body is visible, so a pose model reads it as 17 keypoints instead. Both detectors run today. What is missing is what comes after them: the CNN and LSTM that score pain are weeks five and six, and nothing yet turns a set of keypoints into a fall.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so the only signal left is the face: 256 numbers read over a rolling second of video. Out of bed, the body is visible, so a pose model reads it as 17 keypoints instead. Both detectors already run, each on its own. Beyond them: the CNN that turns a face into those 256 numbers is complete, the LSTM that scores pain from them is in development, and turning a set of keypoints into a fall is the next step on the pose branch.</p>
         </div>
         <div class="stat-block">
           <span class="metadata">03 · WHERE IT IS NOW</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Face detection is the only model actually running. The CNN and LSTM that would turn it into a pain score are still ahead of us, and the 8cm cube is geometry, not plastic yet. We would rather show the project at this stage than wait for one that looks finished.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Face detection and pose detection both work, and each runs on its own today; there is a pose demo on the media page. The current work is bringing both into one live pipeline that feeds the carer dashboard. The CNN is complete and generates the 256-number feature vectors; the LSTM that turns those into a pain score is in development this week, and the 8cm cube is at CAD stage: designed, not yet fabricated. We would rather show the project at this stage than wait for one that looks finished.</p>
         </div>
         <div class="stat-block">
           <span class="metadata">04 · WHAT'S NEXT</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Live video in, alerts out.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Four weeks out: train the CNN, train the LSTM on top of it, wire both into one live loop, and find out what the domain gap between a clinic dataset and a dark bedroom actually costs us. Any one of those steps could slip past the showcase.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Two weeks out: finish the LSTM on top of the CNN, wire everything into one live loop, and find out what the domain gap between a clinic dataset and a dark bedroom actually costs us. Any one of those steps could slip past the showcase.</p>
         </div>
       </div>
       <a href="/project.html" class="link-action" style="margin-top:44px">

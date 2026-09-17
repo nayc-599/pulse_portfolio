@@ -9,7 +9,7 @@
 <x-dc>
 <helmet>
   <title>The Project — Pulse</title>
-  <meta name="description" content="How Pulse works: face detection, a CNN, an LSTM over a rolling window, and a threshold. The device, the dataset, its limits, and the roadmap to the Week 12 showcase." />
+  <meta name="description" content="How Pulse works: face detection, a CNN, an LSTM over a rolling window, and a threshold. Face and pose detection both run on their own, and integrating them into one pipeline feeding the dashboard is under way; the CNN and LSTM are planned for weeks five and six. The device, the dataset, its limits, and the roadmap to the Week 12 showcase." />
   <meta property="og:title" content="The Project — Pulse" />
   <meta property="og:description" content="Three frozen models, one threshold, and an honest account of what a Week 8 student project can and cannot do." />
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
@@ -93,7 +93,7 @@
           <span style="font:400 11px/1 'Space Mono',monospace;letter-spacing:0.2em;color:#6B5528">03 · HOW IT WORKS</span>
         </span>
         <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 'General Sans',system-ui,sans-serif;letter-spacing:-0.02em">A face flows through three frozen models and a number comes out.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Three separately trained models, wired in sequence. At inference nothing learns. Observers repeatedly assume the device learns the patient over time — it does not. The weights are fixed before the device is ever switched on.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 'General Sans',system-ui,sans-serif;color:#4A453D">Three separately trained models, designed to run in sequence. Face detection already works on its own, as does a separate pose model for when the patient is out of bed; the current work is bringing both into one live pipeline that feeds the carer dashboard. At inference nothing learns. Observers repeatedly assume the device learns the patient over time — it does not. The weights are fixed before the device is ever switched on.</p>
 
         <figure style="margin:24px 0 0;padding:28px;background:#1C1A17;color:#F4F1EA;overflow-x:auto">
           <figcaption style="font:400 10px/1.6 'Space Mono',monospace;letter-spacing:0.14em;color:rgba(244,241,234,0.55);margin-bottom:20px">FIGURE 1 · INFERENCE PIPELINE · 32-FRAME WINDOW ≈ 1.1S</figcaption>
@@ -326,7 +326,7 @@ class Component extends DCLogic {
   renderVals() {
     const defs = [
       ['01', 'Camera frame', 'RGB FRAME · 30 FPS', 'A wide-angle frame every 33 milliseconds. Nothing leaves the device: frames are processed and discarded, and no video is stored or streamed.'],
-      ['02', 'Face detection', 'FRAME → FACE CROP', 'A lightweight detector finds the face and crops it out. If there is no face — the patient is turned away, or the room is empty — the pipeline stops here and no decision is made.'],
+      ['02', 'Face detection', 'FRAME → FACE CROP', 'A lightweight detector finds the face and crops it out. If there is no face — the patient is turned away, or the room is empty — the pipeline stops here and no decision is made. This part works and runs on its own today; connecting it and the pose model to the carer dashboard is the current work.'],
       ['03', 'CNN', 'CROP → 256 NUMBERS', 'A convolutional network turns each crop into 256 numbers describing the shape of the expression. Not a picture — a description. Brow tension, eye closure, mouth shape, all compressed into a vector.'],
       ['04', 'Feature vector', '256-D · PER FRAME', 'One vector per frame, pushed into a rolling buffer. A single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.'],
       ['05', 'LSTM', '32 FRAMES → CONFIDENCE', 'A recurrent model reads the last 32 vectors — about 1.1 seconds — and returns one confidence value between 0 and 1. It is reading change over time, not a snapshot.'],
