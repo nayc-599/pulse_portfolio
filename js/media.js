@@ -135,6 +135,31 @@ backdrop.addEventListener('click', (e) => {
   if (e.target === backdrop) closeLightbox();
 });
 
+// Touch: horizontal swipe steps through the group, the same as the arrows.
+// Only a clearly horizontal drag counts, so a vertical scroll of a long
+// caption is never read as a step, and swipes starting on the <video> are
+// ignored so they cannot fight its own scrub control.
+let touchX = null;
+let touchY = null;
+
+dialog.addEventListener('touchstart', (e) => {
+  if (e.touches.length !== 1 || videoEl.contains(e.target)) {
+    touchX = null;
+    return;
+  }
+  touchX = e.touches[0].clientX;
+  touchY = e.touches[0].clientY;
+}, { passive: true });
+
+dialog.addEventListener('touchend', (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  touchX = null;
+  if (Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy)) return;
+  step(dx < 0 ? 1 : -1);
+}, { passive: true });
+
 window.addEventListener('keydown', (e) => {
   if (dialog.hidden) return;
   if (e.key === 'Escape') {

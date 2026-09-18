@@ -146,21 +146,21 @@ extraScripts:
   <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">More from Week 4 lives in the journal, where the charts have context. Weeks five onward get added here as each one runs.</p>
 </main>
 
-<div class="lightbox" role="dialog" aria-modal="true" aria-label="" hidden style="position:fixed;inset:0;z-index:80;background:rgba(var(--charcoal-rgb),0.94);animation:om-fade var(--dur-lightbox) var(--ease)">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid var(--rule-charcoal-18);flex:0 0 auto">
+<div class="lightbox" role="dialog" aria-modal="true" aria-label="" hidden>
+  <div class="lightbox__bar">
     <span data-lightbox-type class="metadata metadata--on-charcoal"></span>
-    <button type="button" data-lightbox-close aria-label="Close" class="link-on-dark link-on-dark--underline" style="font:400 12px/1 var(--font-mono);letter-spacing:0.14em;background:none;border:0;padding:8px 0;cursor:pointer">CLOSE ESC</button>
+    <button type="button" data-lightbox-close aria-label="Close" class="link-on-dark link-on-dark--underline lightbox__close">CLOSE<span class="lightbox__close-key"> ESC</span></button>
   </div>
-  <div data-lightbox-backdrop style="flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:20px;padding:28px 24px;min-height:0">
-    <button type="button" data-lightbox-prev aria-label="Previous" class="lightbox-nav" style="font:400 20px/1 var(--font-mono);background:none;border:0;padding:14px 10px;cursor:pointer;flex:0 0 auto">←</button>
+  <div data-lightbox-backdrop class="lightbox__backdrop">
+    <button type="button" data-lightbox-prev aria-label="Previous" class="lightbox-nav">←</button>
     <span data-lightbox-stage class="lightbox-stage">
       <img data-lightbox-image alt="" hidden />
       <video data-lightbox-video hidden controls playsinline disablepictureinpicture controlslist="nodownload noremoteplayback"></video>
-      <span data-lightbox-slot style="font:400 11px/1.7 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62);text-align:center"></span>
+      <span data-lightbox-slot class="lightbox__slot"></span>
     </span>
-    <button type="button" data-lightbox-next aria-label="Next" class="lightbox-nav" style="font:400 20px/1 var(--font-mono);background:none;border:0;padding:14px 10px;cursor:pointer;flex:0 0 auto">→</button>
+    <button type="button" data-lightbox-next aria-label="Next" class="lightbox-nav">→</button>
   </div>
-  <div style="padding:0 24px 28px;display:flex;justify-content:center;flex:0 0 auto">
-    <span data-lightbox-caption style="font:400 14px/1.6 var(--font-mono);color:var(--ink-on-charcoal);text-align:center;max-width:60ch"></span>
+  <div class="lightbox__footer">
+    <span data-lightbox-caption class="lightbox__caption"></span>
   </div>
 </div>
