@@ -58,15 +58,15 @@ extraScripts:
     </div>
     <ul class="media-grid">
       <li class="media-item" data-type="VIDEO" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="16 AUG 2026" data-ratio="16 / 9" data-slot="SCREEN RECORDING · FACE DETECTION" data-caption="Face detection running on live webcam input, locking a box onto the face and tracking it as the head turns." data-src="/media/week2-face-detection-demo.mp4" data-media-type="video" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb placeholder-tile hover-lift">
-            <span class="metadata" style="text-align:center;padding:0 16px">SCREEN RECORDING · FACE DETECTION</span>
-            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">▶</span>
+        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="18 SEP 2026" data-ratio="16 / 9" data-slot="SCREEN RECORDING · FRAME EXTRACTION" data-caption="The per-frame extraction step running live: a face found and boxed in each webcam frame, landmarks placed on it, and the crop pushed through the CNN, which prints a feature vector for that frame, one terminal line per frame. No pain score is produced here; this is the stage that produces the vectors the pain model will read." data-src="/media/frame_extract_demo.mp4" data-media-type="video" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="media-thumb hover-lift">
+            <img src="/media/frame_extract_demo-poster.jpg" alt="A monitor filmed off-screen running the pulse-ai project: a live webcam window with a green box locked onto a face and a mesh of cyan landmark dots across it, an overlay reading faces: 1, and a terminal column beside it streaming one line per frame, each logging the frame number and the feature vector taken from it." />
+            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">&#9654;</span>
           </span>
           <span style="display:flex;flex-direction:column;gap:6px">
             <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Face detection running on live webcam input, locking a box onto the face and tracking it as the head turns.</span>
-            <span class="metadata">16 AUG 2026</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The per-frame extraction step running live: a face found and boxed in each webcam frame, landmarks placed on it, and the crop pushed through the CNN, which prints a feature vector for that frame, one terminal line per frame. No pain score is produced here; this is the stage that produces the vectors the pain model will read.</span>
+            <span class="metadata">18 SEP 2026</span>
           </span>
         </button>
       </li>
