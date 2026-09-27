@@ -43,33 +43,41 @@ extraScripts:
         <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
         <span class="eyebrow__label">WHERE THINGS STAND</span>
       </span>
-      <h2 id="where-title" style="margin:0 0 56px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <h2 id="where-title" style="margin:0 0 20px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <p style="margin:0 0 56px;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse is a device that watches over bedridden patients in the hours between carer rounds. A CNN-LSTM pipeline reads facial pain expression over time, a separate pose model tracks movement out of bed, and planned environmental sensors will add a fuller read on patient state, so problems are caught continuously instead of at the next check.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:var(--grid-col-gap);row-gap:36px">
         <div class="stat-block">
           <span class="metadata">01 · THE PROBLEM</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Four hours. That is how long a bedridden patient who cannot call for help may wait between scheduled rounds. We are building toward an alert that closes that gap to something closer to forty-one seconds.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Up to four hours can pass between rounds for a patient who can't call for help. We're aiming to close that gap to closer to forty-one seconds.</p>
         </div>
         <div class="stat-block">
           <span class="metadata">02 · THE APPROACH</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Two branches: a face, or a body.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so the only signal left is the face: 256 numbers read over a rolling second of video. Out of bed, the body is visible, so a pose model reads it as 17 keypoints instead. Both detectors already run, each on its own. Beyond them: the CNN that turns a face into those 256 numbers is complete, the LSTM that scores pain from them is in development, and turning a set of keypoints into a fall is the next step on the pose branch.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so Pulse reads the face. Out of bed, a pose model reads 17 body keypoints instead. Environmental sensors, planned next, add context from the room itself for a fuller read on patient state.</p>
         </div>
         <div class="stat-block">
           <span class="metadata">03 · WHERE IT IS NOW</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Face detection and pose detection both work, and each runs on its own today; there is a pose demo on the media page. The current work is bringing both into one live pipeline that feeds the carer dashboard. The CNN is complete and generates the 256-number feature vectors; the LSTM that turns those into a pain score is in development this week, and the 8cm cube is at CAD stage: designed, not yet fabricated. We would rather show the project at this stage than wait for one that looks finished.</p>
+          <ul class="status-list">
+            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">Face and pose detection</span></li>
+            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">CNN trained on pain expressions</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">LSTM pain score</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">Live pipeline into the carer dashboard</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">The 8cm cube, hardware arrived for assembly</span></li>
+          </ul>
         </div>
         <div class="stat-block">
           <span class="metadata">04 · WHAT'S NEXT</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Live video in, alerts out.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Two weeks out: finish the LSTM on top of the CNN, wire everything into one live loop, and find out what the domain gap between a clinic dataset and a dark bedroom actually costs us. Any one of those steps could slip past the showcase.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Before the 7 October showcase: finish the LSTM and wire everything into one live loop. After that: environmental sensors, and testing how a clinic dataset holds up in a dark bedroom.</p>
         </div>
       </div>
       <a href="/project.html" class="link-action" style="margin-top:44px">
         <span>Read the full project</span>
         <span aria-hidden="true" class="link-action__arrow">→</span>
       </a>
+      <p style="margin:32px 0 0;max-width:68ch;font:400 14px/1.6 var(--font-sans);color:var(--ink-muted)">We'd rather show the project at this stage than wait for one that looks finished.</p>
     </div>
   </section>
 

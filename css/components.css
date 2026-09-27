@@ -656,6 +656,36 @@ main section[id] { scroll-margin-top: 74px; }
   min-width: 0;
 }
 
+/* Status list inside a stat block (home page, "where it is now"). Each row
+   is a mono state label over the item, so the state is always spelled out
+   in words: the tick and the half-disc, and the darker ink on DONE, only
+   reinforce it. Same label treatment as .pipeline-stage__state. */
+.status-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.status-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 0;
+  border-top: 1px solid var(--rule-bone-12);
+}
+.status-list li:first-child { border-top: 0; padding-top: 2px; }
+.status-list__state {
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+.status-list__state--done { color: var(--ink-eyebrow); }
+.status-list__item {
+  font: 400 16px/1.5 var(--font-sans);
+  color: var(--ink-body);
+}
+
 /* LED pixel grid - charcoal plate rule: a grid never sits directly on bone */
 .pixel-grid {
   display: inline-flex;

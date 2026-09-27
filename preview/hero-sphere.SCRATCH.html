@@ -1,0 +1,456 @@
+---
+permalink: /preview/hero-sphere/
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<!--
+  SCRATCH / THROWAWAY. Side-by-side comparison of two dot-sphere hero intros.
+  Not linked from anywhere and changes nothing in js/hero.js or
+  js/pixel-grid.js. To remove it, delete this one file.
+
+  How it works: the 576 dots ARE the 576 cells that makeGrid() builds for
+  the real face. Each cell is moved onto a 24 x 24 lat/long sphere with a
+  CSS transform (column = longitude, row = latitude), so every dot owns
+  exactly one grid cell. Flattening eases each transform back to none, at
+  which point the cell is sitting in its own slot and the real paint() takes
+  over. Nothing is crossfaded, nothing is respawned, no second layer exists.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sphere intro preview (scratch)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/tokens.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--bone); color: var(--charcoal); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 40px 16px 64px; }
+  .mono { font: 400 11px/1.6 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  h1 { margin: 10px 0 12px; font: 500 clamp(26px, 4vw, 36px)/1.15 var(--font-sans); letter-spacing: -0.02em; }
+  .lede { margin: 0 0 28px; max-width: 70ch; font: 400 16px/1.65 var(--font-sans); color: var(--ink-body); }
+
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; padding: 16px 0; margin-bottom: 24px; border-top: 1px solid var(--rule-bone-16); border-bottom: 1px solid var(--rule-bone-16); }
+  .btn { font: 400 12px/1 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone); background: var(--charcoal); border: 0; border-radius: 2px; padding: 14px 18px; cursor: pointer; }
+  .btn:hover { background: var(--ink-body); }
+  .btn:disabled { opacity: 0.4; cursor: default; }
+  .field { display: inline-flex; align-items: center; gap: 12px; font: 400 14px/1 var(--font-sans); color: var(--ink-body); min-height: 44px; }
+  .field input[type=range] { width: 150px; accent-color: var(--charcoal); }
+  .field output { font: 400 12px/1 var(--font-mono); color: var(--charcoal); min-width: 4ch; }
+  .field input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--charcoal); margin: 0; }
+  .seg { display: inline-flex; border: 1px solid var(--charcoal); border-radius: 2px; overflow: hidden; }
+  .seg button { font: 400 11px/1 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; background: none; color: var(--charcoal); border: 0; padding: 0 14px; min-height: 40px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--charcoal); color: var(--bone); }
+  :focus-visible { outline: 2px solid var(--charcoal); outline-offset: 3px; }
+  .status { margin-left: auto; }
+
+  .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 28px; }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  figcaption { display: flex; flex-direction: column; gap: 4px; }
+  figcaption strong { font: 500 19px/1.3 var(--font-sans); letter-spacing: -0.01em; }
+  figcaption span { font: 400 14px/1.55 var(--font-sans); color: var(--ink-body); }
+  .stage { position: relative; aspect-ratio: 1; background: var(--charcoal); border: 1px solid transparent; border-radius: 3px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  body[data-bg="light"] .stage { background: var(--bone); border-color: var(--rule-bone-16); }
+  .glow { position: absolute; left: 50%; top: 50%; border-radius: 999px; pointer-events: none; transform: translate(-50%, -50%);
+          background: radial-gradient(circle, rgba(var(--amber-rgb), 0.22) 0%, rgba(var(--amber-rgb), 0.10) 38%, rgba(var(--amber-rgb), 0) 70%); }
+  .rig { position: relative; }
+  .grid { display: grid; gap: 2px; }
+  .finding { margin: 0 0 24px; padding: 14px 16px; max-width: 76ch; border-left: 2px solid var(--charcoal); background: var(--bone-2); font: 400 14px/1.65 var(--font-sans); color: var(--ink-body); }
+  .finding[hidden] { display: none; }
+  .finding strong { color: var(--charcoal); font-weight: 500; }
+</style>
+</head>
+<body data-bg="dark">
+<div class="wrap">
+  <p class="mono">Scratch · not linked from the site · safe to delete</p>
+  <h1>Hero intro: the dot sphere</h1>
+  <p class="lede">Each sphere is built from the real face's own 576 grid cells, 24 meridians by 24 parallels, so every dot has exactly one home cell. Once flat, the real <code>paint()</code> from <code>js/pixel-grid.js</code> takes over, driven by the same resting loop as <code>js/hero.js</code>. Move your cursor after it settles to check the eyes track.</p>
+
+  <div class="controls">
+    <button type="button" class="btn" id="replay">Replay both</button>
+    <label class="field">Transform length
+      <input type="range" id="dur" min="1" max="4" step="0.1" value="2.2">
+      <output id="durOut" for="dur">2.2s</output>
+    </label>
+    <span class="field">Background
+      <span class="seg" role="group" aria-label="Background">
+        <button type="button" data-bg="dark" aria-pressed="true">Dark</button>
+        <button type="button" data-bg="light" aria-pressed="false">Light</button>
+      </span>
+    </span>
+    <label class="field"><input type="checkbox" id="restOnly"> Resting face only</label>
+    <span class="mono status" id="status" aria-live="off"></span>
+  </div>
+
+  <p class="finding" id="lightFinding" hidden><strong>Read this before judging light mode.</strong> The settled face below is the live renderer, unmodified. <code>paint()</code> lights cells in <code>--amber</code> #F5C86B whatever the background, and that is <strong>1.39:1 against bone</strong>, against 11.0:1 on charcoal. The charcoal dots only exist during the intro. A light hero would need <code>paint()</code> to take an ink colour, which is a change to the component and out of scope here.</p>
+
+  <div class="pair">
+    <figure class="panel" data-concept="unwrap">
+      <figcaption>
+        <strong>A · The Unwrap</strong>
+        <span>The sphere spins down to face you, then unrolls row by row into a flat sheet. Each dot lands in its own cell and the face lights as it lands.</span>
+      </figcaption>
+      <div class="stage">
+        <span class="glow" aria-hidden="true"></span>
+        <div class="rig"><div class="grid" aria-hidden="true"></div></div>
+      </div>
+    </figure>
+
+    <figure class="panel" data-concept="turn">
+      <figcaption>
+        <strong>B · The Turn</strong>
+        <span>The sphere is looking down. It turns to face you, and its near side settles into the grid while the far side fades out behind it.</span>
+      </figcaption>
+      <div class="stage">
+        <span class="glow" aria-hidden="true"></span>
+        <div class="rig"><div class="grid" aria-hidden="true"></div></div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+<script type="module">
+import { makeGrid, paint, face, clamp, lerp, AMBER, AMBER_DIM } from '/js/pixel-grid.js';
+
+const N = 24;
+const TAU = Math.PI * 2;
+const BEAT = 1.5;                        // 40bpm
+const css = (n, f) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f;
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.trim().slice(i, i + 2), 16));
+const RGB_AMBER = hex(AMBER);
+const RGB_AMBER_DIM = hex(AMBER_DIM);
+const RGB_CHARCOAL = css('--charcoal-rgb', '28, 26, 23').split(',').map(Number);
+
+const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const mix3 = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+
+// Column = longitude, row = latitude. Front of the sphere (lon 0) is the
+// middle of the grid, so the near hemisphere is exactly columns 6-17.
+const LON = new Float32Array(N * N), LAT = new Float32Array(N * N);
+for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+  LON[r * N + c] = (c - 11.5) * (TAU / N);
+  LAT[r * N + c] = (11.5 - r) * (Math.PI / N);
+}
+
+const panels = [...document.querySelectorAll('.panel')].map((fig) => {
+  const gridEl = fig.querySelector('.grid');
+  const grid = makeGrid(gridEl, N, true);
+  return {
+    concept: fig.dataset.concept,
+    stage: fig.querySelector('.stage'),
+    rig: fig.querySelector('.rig'),
+    glow: fig.querySelector('.glow'),
+    gridEl, grid,
+    // makeGrid's own inline values, restored verbatim at the handoff.
+    orig: { transition: grid.cells[0].style.transition, radius: grid.cells[0].style.borderRadius },
+    eye: { x: 0, y: 0, tx: 0, ty: 0 },
+    flat: false,
+  };
+});
+
+let cell = 11, pitch = 13;
+function fit() {
+  // Same clamp as hero.js fitHero(), sized off the stage instead of the window.
+  cell = clamp(Math.floor((panels[0].stage.clientWidth * 0.74 - 46) / 24), 6, 11);
+  pitch = cell + 2;
+  for (const pn of panels) {
+    pn.gridEl.style.gridTemplateColumns = 'repeat(24, ' + cell + 'px)';
+    pn.gridEl.style.gridAutoRows = cell + 'px';
+    const g = Math.round(460 * (cell / 11));
+    pn.glow.style.width = g + 'px';
+    pn.glow.style.height = g + 'px';
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Resting state: a line-for-line port of frame() in js/hero.js for an
+   awake face. hero.js binds itself to the page's single .hero element on
+   import and exports nothing, so it cannot drive two panels. The face
+   bitmap and the renderer are the real imports. Blink and breath are
+   shared so both panels stay in sync; eyes are per panel.
+   --------------------------------------------------------------------- */
+const mouse = { cx: 0, cy: 0 };          // hero.js starts from (0, 0) too
+let lastInput = Date.now();
+const rest = { blink: 0, blinkAt: 0, blinking: 0, bright: 0, brightT: 0, glow: 0, time: 0, idle: false };
+
+function stepRest(now) {
+  rest.time += 1 / 60;
+  const idle = now - lastInput > 30000;
+  if (now > rest.blinkAt) { rest.blinking = 1; rest.blinkAt = now + 4000 + Math.random() * 4000; }
+  if (rest.blinking > 0) { rest.blinking -= 1 / 14; if (rest.blinking < 0) rest.blinking = 0; }
+  const target = idle ? 1 : Math.sin(clamp(rest.blinking, 0, 1) * Math.PI);
+  rest.blink = lerp(rest.blink, target, idle ? 0.05 : 0.35);
+  const breath = 0.5 + 0.5 * Math.sin(rest.time * 2 * Math.PI / 10);
+  rest.brightT = idle ? 0.34 : 0.86 + 0.14 * breath;
+  rest.bright = lerp(rest.bright, rest.brightT, 0.05);
+  rest.glow = idle ? 0.32 : 0.55 + breath * 0.45;
+  rest.idle = idle;
+}
+
+// Reads pn.rect, which frame() measures for every panel before it writes
+// any styles: measuring after 576 style writes forces a synchronous
+// relayout of all of them, which halved the frame rate.
+function stepFace(pn) {
+  const r = pn.rect;
+  const dx = (mouse.cx - (r.left + r.width / 2)) / (window.innerWidth / 2);
+  const dy = (mouse.cy - (r.top + r.height / 2)) / (window.innerHeight / 2);
+  pn.eye.tx = clamp(dx * 2.2, -2, 2);
+  pn.eye.ty = clamp(dy * 1.6, -1.5, 1.5);
+  pn.eye.x = lerp(pn.eye.x, pn.eye.tx, 0.35);
+  pn.eye.y = lerp(pn.eye.y, pn.eye.ty, 0.35);
+  face(pn.grid, { dx: pn.eye.x, dy: pn.eye.y, blink: rest.blink, flat: 0 });
+}
+
+/* ---------------------------------------------------------------------
+   Timeline. The sphere holds (spinning, beating) for H, then transforms
+   over D (the slider). H is chosen so the sphere is on screen for at least
+   three 40bpm pulses; the beat then decays over one more beat after the
+   face lands, leaving the breathing cycle that has been running under it.
+   --------------------------------------------------------------------- */
+let D = 2.2;
+const holdFor = (d) => Math.max(BEAT, 3 * BEAT - d);
+const settleAt = (d) => holdFor(d) + d;
+function beatAmp(t) {
+  const s = settleAt(D);
+  if (t <= s) return 1;
+  if (t >= s + BEAT) return 0;
+  return 0.5 + 0.5 * Math.cos(Math.PI * (t - s) / BEAT);
+}
+
+/* The one place this file mirrors pixel-grid.js instead of calling it:
+   paint()'s value-to-style mapping, needed so a dot mid-flight can blend
+   towards what paint() will draw once it lands. After the handoff, paint()
+   itself draws every frame. */
+function paintTarget(v, out) {
+  if (v > 0.05) { out.rgb = RGB_AMBER; out.op = v; out.blur = 7 * v; out.a = 0.5 * v; }
+  else { out.rgb = RGB_AMBER_DIM; out.op = 0.12; out.blur = 0; out.a = 0; }
+  return out;
+}
+
+// Depth styling, the dot-loader look: near dots larger and brighter.
+function sphereLook(d, light, out) {
+  const w = Math.pow(d, 1.3);
+  out.scale = lerp(0.26, 0.6, d);
+  if (light) {
+    const hl = smoothstep(0.82, 1, d);           // amber catches only the front-most dots
+    out.rgb = mix3(RGB_CHARCOAL, RGB_AMBER, hl);
+    out.op = lerp(0.1, 0.9, w);
+    out.blur = 5 * hl; out.a = 0.5 * hl;
+  } else {
+    out.rgb = RGB_AMBER;
+    out.op = lerp(0.12, 1, w);
+    out.blur = 6 * d * d; out.a = 0.45 * d * d;
+  }
+  return out;
+}
+
+const tgt = {}, look = {};
+function drawDot(el, x, y, scale, radius, rgb, op, blur, a, z) {
+  const s = el.style;
+  s.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px) scale(' + scale.toFixed(3) + ')';
+  s.opacity = clamp(op, 0, 1).toFixed(3);
+  s.backgroundColor = 'rgb(' + (rgb[0] | 0) + ',' + (rgb[1] | 0) + ',' + (rgb[2] | 0) + ')';
+  s.boxShadow = a > 0.005 ? '0 0 ' + blur.toFixed(1) + 'px rgba(' + (rgb[0] | 0) + ',' + (rgb[1] | 0) + ',' + (rgb[2] | 0) + ',' + a.toFixed(2) + ')' : 'none';
+  s.borderRadius = radius.toFixed(2) + 'px';
+  s.zIndex = z;
+}
+
+/* Concept A: the unwrap. A true unroll: the surface keeps its (lon, lat)
+   arc-length coordinates while its curvature k falls from 1 (unit sphere)
+   to 0 (flat equirectangular sheet), and the flat sheet is scaled so each
+   (lon, lat) is exactly its cell centre. Each row gets its own k, top row
+   first, so it unrolls rather than collapsing. */
+function unwrap(pn, t, bright, beat, light) {
+  const H = holdFor(D), buf = pn.grid.buf, cells = pn.grid.cells;
+  const R = 0.4 * (N * pitch);
+  const spin = -Math.PI * Math.pow(1 - clamp(t / H, 0, 1), 2);         // half a turn, slowing to rest face-front at the trigger
+  const tilt = 0.4 * (1 - smoothstep(H, H + 0.35 * D, t));
+  const roll = 0.22 * (1 - smoothstep(H, H + 0.35 * D, t));
+  const cT = Math.cos(tilt), sT = Math.sin(tilt), cR = Math.cos(roll), sR = Math.sin(roll);
+  const u = clamp((t - H) / D, 0, 1);
+  for (let i = 0; i < N * N; i++) {
+    const r = (i / N) | 0, c = i % N;
+    const L = clamp((u - (r / 23) * 0.4) / 0.6, 0, 1);
+    const e = ease(L);
+    const k = 1 - e;
+    const s = LON[i] + spin, la = LAT[i];
+    let px, py, pz;
+    if (k > 1e-4) {
+      px = Math.sin(k * s) * Math.cos(k * la) / k;
+      py = Math.sin(k * la) / k;
+      pz = (Math.cos(k * s) * Math.cos(k * la) - 1) / k;
+      // Tilted spin axis: rotate about the sphere's centre (0, 0, -1/k).
+      const cz = -1 / k, qz = pz - cz;
+      const y1 = py * cT - qz * sT, z1 = py * sT + qz * cT;
+      const x2 = px * cR - y1 * sR, y2 = px * sR + y1 * cR;
+      px = x2; py = y2; pz = z1 + cz;
+    } else { px = s; py = la; pz = 0; }
+    const Sx = lerp(N * pitch / TAU, R, k), Sy = lerp(N * pitch / Math.PI, R, k);
+    const d = clamp(1 + pz * k / 2, 0, 1);
+    sphereLook(d, light, look);
+    look.op *= lerp(1, 0.35, e) * (1 + 0.16 * beat);            // the sheet dims as it flattens...
+    paintTarget(clamp(buf[i] * bright, 0, 1), tgt);
+    const lit = smoothstep(0.75, 1, L);                           // ...and the face lights as each dot lands
+    drawDot(cells[i],
+      px * Sx - (c - 11.5) * pitch, -py * Sy - (r - 11.5) * pitch,
+      lerp(look.scale, 1, e), lerp(cell / 2, 1, e),
+      mix3(look.rgb, tgt.rgb, lit), lerp(look.op, tgt.op, lit),
+      lerp(look.blur, tgt.blur, lit), lerp(look.a, tgt.a, lit),
+      1 + Math.round(d * 100 * (1 - e)));
+  }
+}
+
+/* Concept B: the turn. The sphere starts pitched down (looking at the
+   floor) and spinning; it turns up to face the viewer. The near
+   hemisphere, columns 6-17, which holds every lit pixel of the face,
+   settles centre-out into its cells. The far hemisphere, columns 0-5 and
+   18-23, fades out behind it, travels unseen, and comes back up as the
+   dim margin cells: every cell needs its dot, so they cannot just vanish. */
+function turn(pn, t, bright, beat, light) {
+  const H = holdFor(D), buf = pn.grid.buf, cells = pn.grid.cells;
+  const R = 0.4 * (N * pitch);
+  const Te = H + 0.55 * D;
+  const yaw = -Math.PI * Math.pow(1 - clamp(t / Te, 0, 1), 2);
+  const pitchA = 0.85 * (1 - ease(clamp((t - 0.6 * H) / (0.4 * H + 0.55 * D), 0, 1)));
+  const cP = Math.cos(pitchA), sP = Math.sin(pitchA);
+  const u = clamp((t - H) / D, 0, 1);
+  for (let i = 0; i < N * N; i++) {
+    const r = (i / N) | 0, c = i % N;
+    const lon = LON[i] + yaw, la = LAT[i];
+    const x = Math.cos(la) * Math.sin(lon), y0 = Math.sin(la), z0 = Math.cos(la) * Math.cos(lon);
+    const y = y0 * cP - z0 * sP, z = y0 * sP + z0 * cP;
+    const d = (z + 1) / 2;
+    const near = c >= 6 && c <= 17;
+    let g, lit, vis;
+    if (near) {
+      const dly = 0.25 * Math.hypot(c - 11.5, r - 11.5) / 16;
+      g = ease(clamp((u - 0.3 - dly) / 0.45, 0, 1));
+      lit = smoothstep(0.7, 1, g);
+      vis = 1;
+    } else {
+      g = ease(clamp((u - 0.35) / 0.5, 0, 1));
+      lit = smoothstep(0.8, 1, u);
+      vis = 1 - smoothstep(0.1, 0.55, u);
+    }
+    sphereLook(d, light, look);
+    look.op *= vis * (1 + 0.16 * beat);
+    paintTarget(clamp(buf[i] * bright, 0, 1), tgt);
+    const sx = x * R - (c - 11.5) * pitch, sy = -y * R - (r - 11.5) * pitch;
+    drawDot(cells[i],
+      lerp(sx, 0, g), lerp(sy, 0, g),
+      lerp(look.scale, 1, g), lerp(cell / 2, 1, g),
+      mix3(look.rgb, tgt.rgb, lit), lerp(look.op, tgt.op, lit),
+      lerp(look.blur, tgt.blur, lit), lerp(look.a, tgt.a, lit),
+      1 + Math.round(d * 100 * (1 - g)));
+  }
+}
+
+// Hand the cells back to the real component: makeGrid's own inline values,
+// no transform, and a forced full repaint so paint() owns every cell.
+function handoff(pn) {
+  if (pn.flat) return;
+  for (const el of pn.grid.cells) {
+    el.style.transform = '';
+    el.style.zIndex = '';
+    el.style.borderRadius = pn.orig.radius;
+    el.style.transition = pn.orig.transition;
+  }
+  pn.grid.prev.fill(-1);
+  pn.flat = true;
+}
+
+function unflatten(pn) {
+  pn.flat = false;
+  for (const el of pn.grid.cells) el.style.transition = 'none';   // paint's .22s easing would smear the motion
+}
+
+/* --------------------------------------------------------------------- */
+let t0 = performance.now();
+let restOnly = false;
+const statusEl = document.getElementById('status');
+
+function replay() {
+  t0 = performance.now();
+  rest.time = 0; rest.blink = 0; rest.blinking = 0;
+  rest.brightT = rest.bright = 0.86 + 0.14 * 0.5;
+  rest.blinkAt = Date.now() + (restOnly ? 0 : (settleAt(D) + BEAT) * 1000) + 4000 + Math.random() * 4000;
+  for (const pn of panels) {
+    pn.eye.x = pn.eye.tx; pn.eye.y = pn.eye.ty;
+    if (restOnly) handoff(pn); else unflatten(pn);
+  }
+}
+
+function frame(ts) {
+  const now = Date.now();
+  stepRest(now);
+  const t = (ts - t0) / 1000;
+  const light = document.body.dataset.bg === 'light';
+  const beat = restOnly ? 0 : beatAmp(t) * Math.sin(TAU * t / BEAT);
+  const bright = rest.bright * (1 + 0.16 * beat);
+  const done = restOnly || t >= settleAt(D);
+
+  for (const pn of panels) pn.rect = pn.gridEl.getBoundingClientRect();
+  for (const pn of panels) {
+    stepFace(pn);
+    if (done) {
+      handoff(pn);
+      paint(pn.grid, pn.grid.buf, bright);
+    } else if (pn.concept === 'unwrap') unwrap(pn, t, bright, beat, light);
+    else turn(pn, t, bright, beat, light);
+    pn.rig.style.transform = beat ? 'scale(' + (1 + 0.035 * beat).toFixed(4) + ')' : '';
+    pn.glow.style.opacity = clamp(rest.glow * (1 + 0.6 * beat), 0, 1).toFixed(3);
+    pn.glow.style.transform = beat ? 'translate(-50%, -50%) scale(' + (1 + 0.08 * beat).toFixed(4) + ')' : 'translate(-50%, -50%)';
+  }
+
+  let phase;
+  if (restOnly) phase = 'resting face, no intro';
+  else if (t < holdFor(D)) phase = 'sphere';
+  else if (t < settleAt(D)) phase = 'transforming';
+  else if (t < settleAt(D) + BEAT) phase = 'landed · beat decaying';
+  else phase = 'landed · breathing';
+  if (rest.idle) phase += ' · idle, move the cursor';
+  statusEl.textContent = (restOnly ? '' : 't ' + t.toFixed(1) + 's · ') + phase;
+
+  requestAnimationFrame(frame);
+}
+
+window.addEventListener('pointermove', (e) => { lastInput = Date.now(); mouse.cx = e.clientX; mouse.cy = e.clientY; }, { passive: true });
+window.addEventListener('scroll', () => { lastInput = Date.now(); }, { passive: true });
+window.addEventListener('keydown', () => { lastInput = Date.now(); });
+window.addEventListener('resize', fit);
+
+const durEl = document.getElementById('dur');
+const durOut = document.getElementById('durOut');
+const replayBtn = document.getElementById('replay');
+let durTimer = 0;
+durEl.addEventListener('input', () => {
+  D = Number(durEl.value);
+  durOut.textContent = D.toFixed(1) + 's';
+  clearTimeout(durTimer);
+  if (!restOnly) durTimer = setTimeout(replay, 180);
+});
+replayBtn.addEventListener('click', replay);
+document.getElementById('restOnly').addEventListener('change', (e) => {
+  restOnly = e.target.checked;
+  replayBtn.disabled = restOnly;
+  durEl.disabled = restOnly;
+  replay();
+});
+document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+  document.body.dataset.bg = b.dataset.bg;
+  document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  document.getElementById('lightFinding').hidden = b.dataset.bg !== 'light';
+}));
+
+// Test hook for the headless checks; harmless in a scratch page.
+window.__preview = { panels, rest, seek: (s) => { t0 = performance.now() - s * 1000; } };
+
+fit();
+replay();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
