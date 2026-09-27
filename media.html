@@ -178,20 +178,6 @@ extraScripts:
           </span>
         </button>
       </li>
-      <!-- OPTIONAL EMPTY SLOT: only if a photo exists. Drop it at /media/week6-naguib-camera-placement.jpg
-           (same swap steps as above), or delete this whole <li> if there is no photo. -->
-      <li class="media-item" data-type="PHOTOS" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="PHOTO" data-date="DATE TBC" data-ratio="16 / 10" data-slot="PHOTO PENDING · CAMERA PLACEMENT" data-caption="Naguib reviewing camera placement" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb placeholder-tile hover-lift">
-            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO PENDING · CAMERA PLACEMENT</span>
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Naguib reviewing camera placement</span>
-            <span class="metadata">DATE TBC</span>
-          </span>
-        </button>
-      </li>
       <li class="media-item" data-type="DIAGRAMS" style="min-width:0">
         <button type="button" class="media-item__open" data-type="DIAGRAM" data-date="27 SEP 2026" data-ratio="560 / 580" data-slot="DIAGRAM · INFERENCE PIPELINE" data-caption="The pipeline as it stands in week six: camera, MediaPipe face and pose detection, the CNN's per-frame features, the LSTM's windowed prediction, and the dashboard alert." data-src="/media/pipeline_diagram.svg" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
           <span class="media-thumb hover-lift" style="--thumb-pos:center top">
@@ -204,16 +190,17 @@ extraScripts:
           </span>
         </button>
       </li>
+      <!-- TODO: drop the chart at /media/training_curves.png, then set data-ratio below to its real "<width> / <height>". -->
       <li class="media-item" data-type="CHARTS" style="min-width:0">
         <div style="display:flex;flex-direction:column;gap:12px">
-          <button type="button" class="media-item__open" data-type="CHART" data-date="27 SEP 2026" data-ratio="1600 / 880" data-slot="CHART · LSTM TRAINING CURVE" data-caption="LSTM train and validation MSE per epoch. Validation ended at 0.502 at the best checkpoint; the same checkpoint scored 2.243 on the test set. Written up in the journal." data-src="/media/lstm_training_curve.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <button type="button" class="media-item__open" data-type="CHART" data-date="27 SEP 2026" data-ratio="1600 / 880" data-slot="CHART · CNN AND LSTM TRAINING CURVES" data-caption="CNN and LSTM train and validation MSE per epoch. CNN best val MSE 0.519 (epoch 7); LSTM best val MSE 0.502 (epoch 15). The LSTM's test performance currently trails the CNN's, still being investigated. Written up in the journal." data-src="/media/training_curves.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
             <span class="media-thumb hover-lift">
-              <img src="/media/lstm_training_curve.png" alt="" />
+              <img src="/media/training_curves.png" alt="" />
             </span>
           </button>
           <span style="display:flex;flex-direction:column;gap:6px">
             <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">LSTM train and validation MSE per epoch. Validation ended at 0.502 at the best checkpoint; the same checkpoint scored 2.243 on the test set. <a href="/journal/posts/week-six.html">Written up in the journal.</a></span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">CNN and LSTM train and validation MSE per epoch. CNN best val MSE 0.519 (epoch 7); LSTM best val MSE 0.502 (epoch 15). The LSTM's test performance currently trails the CNN's, still being investigated. <a href="/journal/posts/week-six.html">Written up in the journal.</a></span>
             <span class="metadata">27 SEP 2026</span>
           </span>
         </div>
