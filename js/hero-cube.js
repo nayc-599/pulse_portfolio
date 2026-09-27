@@ -306,12 +306,14 @@ export function createCubeIntro(root, grid) {
     W = root.clientWidth; Ht = root.clientHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(Ht * dpr);
     canvas.style.width = W + 'px'; canvas.style.height = Ht + 'px';
-    const rr = root.getBoundingClientRect(), gr = grid.el.getBoundingClientRect();
-    cx = gr.left - rr.left + gr.width / 2;
-    cy = gr.top - rr.top + gr.height / 2;
+    // The shutter opens from the centre of the hero section: a fixed point
+    // that ignores the cube entirely. (The grid sits a little above it,
+    // because the copy below the grid shares the section's centred column.)
+    cx = W / 2;
+    cy = Ht / 2;
   }
 
-  // The 8-blade iris, as vector geometry. The opening is a regular octagon;
+  // The 8-blade iris, as vector geometry, centred on (cx, cy). The opening is a regular octagon;
   // blade b is the region beyond side b, between the seams that continue
   // sides b-1 and b past their corners. One ease drives both the opening
   // (from 0.8 cells to just past the section's farthest corner) and the
