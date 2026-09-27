@@ -12,7 +12,7 @@ readTime: 9
 excerpt: "Before training anything, I plotted 48,398 frames of the dataset. One finding validated our architecture. One we cannot engineer our way past."
 motif: scatter
 listMotif: scatter
-chainOrder: 1
+chainOrder: 2
 thumb: /media/highest_pain_seq.png
 thumbAlt: "Six line charts of PSPI pain intensity over time for the highest-pain sequences, each rising, holding and decaying rather than spiking."
 ---

@@ -143,7 +143,85 @@ extraScripts:
     </ul>
   </section>
 
-  <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">More from Week 4 lives in the journal, where the charts have context. Weeks five onward get added here as each one runs.</p>
+  <section class="media-group" aria-label="Week 6: models trained, hardware arrives" style="flex-direction:column;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
+      <span class="metadata">MILESTONE · WEEK 6</span>
+      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 6: models trained, hardware arrives</h2>
+    </div>
+    <ul class="media-grid">
+      <!-- EMPTY SLOT: drop Kate's render at /media/week6-cad-cube-render.png, then:
+           add data-src="/media/week6-cad-cube-render.png" and data-ratio="<w> / <h>" to the button,
+           replace the placeholder-tile span with <span class="media-thumb hover-lift"><img src="/media/week6-cad-cube-render.png" alt="..." /></span>,
+           and set the real date in data-date and the date line. -->
+      <li class="media-item" data-type="RENDERS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="RENDER" data-date="DATE TBC" data-ratio="16 / 10" data-slot="RENDER PENDING · CAD CUBE MONITOR" data-caption="Kate's CAD design for the cube monitor" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="media-thumb placeholder-tile hover-lift">
+            <span class="metadata" style="text-align:center;padding:0 16px">RENDER PENDING · CAD CUBE MONITOR</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">RENDERS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Kate's CAD design for the cube monitor</span>
+            <span class="metadata">DATE TBC</span>
+          </span>
+        </button>
+      </li>
+      <!-- EMPTY SLOT: drop the Makerspace photo at /media/week6-makerspace-hardware.jpg (same swap steps as above). -->
+      <li class="media-item" data-type="PHOTOS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="DATE TBC" data-ratio="16 / 10" data-slot="PHOTO PENDING · HARDWARE AT MAKERSPACE" data-caption="Hardware components at Makerspace, ready for assembly" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="media-thumb placeholder-tile hover-lift">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO PENDING · HARDWARE AT MAKERSPACE</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Hardware components at Makerspace, ready for assembly</span>
+            <span class="metadata">DATE TBC</span>
+          </span>
+        </button>
+      </li>
+      <!-- OPTIONAL EMPTY SLOT: only if a photo exists. Drop it at /media/week6-naguib-camera-placement.jpg
+           (same swap steps as above), or delete this whole <li> if there is no photo. -->
+      <li class="media-item" data-type="PHOTOS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="PHOTO" data-date="DATE TBC" data-ratio="16 / 10" data-slot="PHOTO PENDING · CAMERA PLACEMENT" data-caption="Naguib reviewing camera placement" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="media-thumb placeholder-tile hover-lift">
+            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO PENDING · CAMERA PLACEMENT</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Naguib reviewing camera placement</span>
+            <span class="metadata">DATE TBC</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="DIAGRAMS" style="min-width:0">
+        <button type="button" class="media-item__open" data-type="DIAGRAM" data-date="27 SEP 2026" data-ratio="560 / 580" data-slot="DIAGRAM · INFERENCE PIPELINE" data-caption="The pipeline as it stands in week six: camera, MediaPipe face and pose detection, the CNN's per-frame features, the LSTM's windowed prediction, and the dashboard alert." data-src="/media/pipeline_diagram.svg" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+          <span class="media-thumb hover-lift" style="--thumb-pos:center top">
+            <img src="/media/pipeline_diagram.svg" alt="" />
+          </span>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">DIAGRAMS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The pipeline as it stands in week six: camera, MediaPipe face and pose detection, the CNN's per-frame features, the LSTM's windowed prediction, and the dashboard alert.</span>
+            <span class="metadata">27 SEP 2026</span>
+          </span>
+        </button>
+      </li>
+      <li class="media-item" data-type="CHARTS" style="min-width:0">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button type="button" class="media-item__open" data-type="CHART" data-date="27 SEP 2026" data-ratio="1600 / 880" data-slot="CHART · LSTM TRAINING CURVE" data-caption="LSTM train and validation MSE per epoch. Validation ended at 0.502 at the best checkpoint; the same checkpoint scored 2.243 on the test set. Written up in the journal." data-src="/media/lstm_training_curve.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+            <span class="media-thumb hover-lift">
+              <img src="/media/lstm_training_curve.png" alt="" />
+            </span>
+          </button>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">LSTM train and validation MSE per epoch. Validation ended at 0.502 at the best checkpoint; the same checkpoint scored 2.243 on the test set. <a href="/journal/posts/week-six.html">Written up in the journal.</a></span>
+            <span class="metadata">27 SEP 2026</span>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">The charts from each week live in the journal too, where they have context. New weeks get added here as each one runs.</p>
 </main>
 
 <div class="lightbox" role="dialog" aria-modal="true" aria-label="" hidden>

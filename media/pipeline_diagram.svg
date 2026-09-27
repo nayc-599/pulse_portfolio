@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 580" role="img" aria-labelledby="t d">
+  <title id="t">Pulse inference pipeline</title>
+  <desc id="d">Five stages top to bottom: camera, face and pose detection with MediaPipe, CNN producing per-frame features, LSTM producing a windowed pain prediction, and the dashboard alert.</desc>
+  <style>
+    .plate { fill: #E8E3D8; }
+    .box { fill: #F4F1EA; stroke: #1C1A17; stroke-width: 1.5; }
+    .box--end { fill: #1C1A17; }
+    .num { font: 400 13px 'Space Mono', Menlo, monospace; letter-spacing: 0.14em; fill: #6B5528; }
+    .num--end { fill: #F5C86B; }
+    .name { font: 500 22px 'General Sans', 'Helvetica Neue', Arial, sans-serif; fill: #1C1A17; }
+    .name--end { fill: #F4F1EA; }
+    .state { font: 400 12.5px 'Space Mono', Menlo, monospace; letter-spacing: 0.08em; fill: #5C574D; }
+    .state--end { fill: rgba(244,241,234,0.62); }
+    .arrow { stroke: #1C1A17; stroke-width: 1.5; fill: none; }
+    .head { fill: #1C1A17; }
+    .edge { font: 400 11px 'Space Mono', Menlo, monospace; letter-spacing: 0.1em; fill: #5C574D; }
+  </style>
+
+  <rect class="plate" x="0" y="0" width="560" height="580" />
+
+  <!-- 01 Camera -->
+  <rect class="box" x="40" y="28" width="480" height="76" />
+  <text class="num" x="62" y="58">01</text>
+  <text class="name" x="104" y="60">Camera</text>
+  <text class="state" x="104" y="86">BEDSIDE RGB FRAME</text>
+
+  <path class="arrow" d="M280 104 V132" /><path class="head" d="M274 130 L280 140 L286 130 Z" />
+  <text class="edge" x="296" y="126">FRAME</text>
+
+  <!-- 02 Detection -->
+  <rect class="box" x="40" y="140" width="480" height="76" />
+  <text class="num" x="62" y="170">02</text>
+  <text class="name" x="104" y="172">Face / pose detection</text>
+  <text class="state" x="104" y="198">MEDIAPIPE · ALIGNED FACE CROP</text>
+
+  <path class="arrow" d="M280 216 V244" /><path class="head" d="M274 242 L280 252 L286 242 Z" />
+  <text class="edge" x="296" y="238">CROP</text>
+
+  <!-- 03 CNN -->
+  <rect class="box" x="40" y="252" width="480" height="76" />
+  <text class="num" x="62" y="282">03</text>
+  <text class="name" x="104" y="284">CNN</text>
+  <text class="state" x="104" y="310">PER-FRAME FEATURES</text>
+
+  <path class="arrow" d="M280 328 V356" /><path class="head" d="M274 354 L280 364 L286 354 Z" />
+  <text class="edge" x="296" y="350">FEATURE VECTOR PER FRAME</text>
+
+  <!-- 04 LSTM -->
+  <rect class="box" x="40" y="364" width="480" height="76" />
+  <text class="num" x="62" y="394">04</text>
+  <text class="name" x="104" y="396">LSTM</text>
+  <text class="state" x="104" y="422">TRAILING WINDOW → CURRENT PAIN</text>
+
+  <path class="arrow" d="M280 440 V468" /><path class="head" d="M274 466 L280 476 L286 466 Z" />
+  <text class="edge" x="296" y="462">PAIN PREDICTION</text>
+
+  <!-- 05 Dashboard -->
+  <rect class="box box--end" x="40" y="476" width="480" height="76" />
+  <text class="num num--end" x="62" y="506">05</text>
+  <text class="name name--end" x="104" y="508">Dashboard alert</text>
+  <text class="state state--end" x="104" y="534">FRONTEND + BACKEND API</text>
+
+</svg>

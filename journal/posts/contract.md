@@ -12,7 +12,7 @@ readTime: 10
 excerpt: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the contract we wrote to catch that in advance."
 motif: scatter
 listMotif: lattice
-chainOrder: 3
+chainOrder: 4
 thumb: /media/contract.png
 thumbAlt: "Planning document excerpt: a pipeline overview line and a table comparing what the CNN and LSTM stages see, are trained on, and do."
 thumbPos: "center 40%"

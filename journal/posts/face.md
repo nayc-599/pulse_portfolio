@@ -12,7 +12,7 @@ readTime: 6
 excerpt: "A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason."
 motif: ring
 listMotif: ring
-chainOrder: 5
+chainOrder: 6
 thumb: /media/inspo_pic.png
 thumbAlt: "Concept render of a small white cube on a bedside table, its front showing a glowing pixel-art smile beside a round camera lens."
 thumbPos: "center 55%"

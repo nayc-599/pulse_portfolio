@@ -12,7 +12,7 @@ readTime: 5
 excerpt: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 motif: staircase
 listMotif: staircase
-chainOrder: 4
+chainOrder: 5
 thumb: /media/skeletal_code.png
 thumbAlt: "Dark-theme notebook cell defining PyTorch train and validation transforms: random flip, rotation, colour jitter and ImageNet normalisation."
 thumbPos: "left top"

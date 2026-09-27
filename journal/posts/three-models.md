@@ -12,7 +12,7 @@ readTime: 6
 excerpt: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
 motif: lattice
 listMotif: lattice
-chainOrder: 6
+chainOrder: 7
 thumb: /media/workflow.png
 thumbAlt: "Flowchart of the planned pipeline: a live video feed branching into patient detection and a CNN feeding an LSTM, both converging on an alert system and dashboard."
 ---

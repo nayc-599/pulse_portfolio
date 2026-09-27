@@ -12,7 +12,7 @@ readTime: 7
 excerpt: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
 motif: ring
 listMotif: scatter
-chainOrder: 2
+chainOrder: 3
 # Stand-in until a clinic-vs-bedroom comparison image exists: swap thumb, thumbAlt and the in-post figure together.
 thumb: /media/pain_rate_per_subject.png
 thumbAlt: "Horizontal bar chart of the percentage of frames at PSPI 2 or above for each of the 25 dataset subjects, ranging from zero to about 50 percent."

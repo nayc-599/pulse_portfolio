@@ -12,7 +12,7 @@ readTime: 5
 excerpt: "Pulse has a second branch for when the patient is out of bed. It reads the body instead of the face. Here is what the demo shows today, and what it doesn't yet."
 motif: lattice
 listMotif: lattice
-chainOrder: 0
+chainOrder: 1
 # Draft pending Aaron's sign-off. Everything below is limited to what the 17 Sep
 # recording visibly shows and what the project page already states. Confirm with
 # Aaron: the pose model and keypoint count, and the current debugging status.
