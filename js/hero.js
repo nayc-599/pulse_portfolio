@@ -1,28 +1,35 @@
 // Home page hero: wake-on-input, blink, idle, and mouse-tracking face.
 // Builds on the shared pixel-grid primitives rather than re-implementing them.
 //
-// On the first visit of a browser session (and only without reduced
-// motion), the face arrives through the cube intro in hero-cube.js: a
-// shutter opens onto a beating dot cube, which turns and settles into the
-// face, awake. Every other load shows the resting face directly, asleep
-// until the first input as before.
+// When someone arrives at the home page fresh, or reloads it (and only
+// without reduced motion), the face arrives through the cube intro in
+// hero-cube.js: a shutter opens onto a beating dot cube, which turns and
+// settles into the face, awake. Coming from another page on the site, or
+// back/forward, shows the resting face directly, asleep until the first
+// input as before.
 
 import { makeGrid, paint, face, clamp, lerp } from './pixel-grid.js';
 import { createCubeIntro, INTRO_SECONDS } from './hero-cube.js';
 
-const INTRO_KEY = 'pulse:hero-intro-played';
-
-// True the first time it is asked in a browser session. If sessionStorage
-// is unavailable (blocked site data, some private modes) we cannot tell a
-// first visit from a reload, so the intro is skipped rather than replayed
-// on every page load.
-function firstVisitThisSession() {
+// Whether this load of the page should play the intro:
+//   reload                               play
+//   back/forward                         skip
+//   navigate, no referrer                play (typed, bookmarked, new tab)
+//   navigate, referrer on another site   play (arriving from a link elsewhere)
+//   navigate, referrer on this site      skip (e.g. from Project or Journal)
+// A page restored from the back/forward cache never re-runs this script;
+// that case is handled by the pageshow listener below.
+function introWanted() {
+  const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  const type = nav ? nav.type : 'navigate';
+  if (type === 'reload') return true;
+  if (type === 'back_forward') return false;
+  const ref = document.referrer;
+  if (!ref) return true;
   try {
-    if (window.sessionStorage.getItem(INTRO_KEY)) return false;
-    window.sessionStorage.setItem(INTRO_KEY, '1');
-    return true;
+    return new URL(ref).origin !== window.location.origin;
   } catch {
-    return false;
+    return true;
   }
 }
 
@@ -51,9 +58,10 @@ if (root) {
     time: 0,
     lastTs: 0,
     heroCell: null,
+    glowSize: 460,
   };
 
-  let intro = !rm && grid && firstVisitThisSession() ? createCubeIntro(root, grid) : null;
+  let intro = !rm && grid && introWanted() ? createCubeIntro(root, grid) : null;
   let introState = null;
 
   function fitHero() {
@@ -78,12 +86,30 @@ if (root) {
       if (copyEl) copyEl.style.marginTop = (cell < 10 ? 30 : 56) + 'px';
       if (glowEl) {
         const sz = Math.round(460 * (cell / 11));
+        state.glowSize = sz;
         glowEl.style.width = sz + 'px';
         glowEl.style.height = sz + 'px';
       }
     }
     // The shutter covers the whole section, so it follows any resize.
     if (intro) intro.resize(cell);
+  }
+
+  // The glow sits on the grid's centre, not at a fixed share of the section
+  // (the copy below the grid pushes it above the section's middle), offset
+  // by (ox, oy) while the cube's silhouette is off-centre. Its heartbeat
+  // scale pivots on the grid's centre, the point the cube pumps around and
+  // the grid scales about once the face has landed, so all three share one
+  // origin. The rects are passed in, measured before any style writes.
+  function placeGlow(gridRect, rootRect, ox, oy, scale) {
+    if (!glowEl) return;
+    const half = state.glowSize / 2;
+    const gx = gridRect.left - rootRect.left + gridRect.width / 2;
+    const gy = gridRect.top - rootRect.top + gridRect.height / 2;
+    glowEl.style.left = (gx + ox - half).toFixed(1) + 'px';
+    glowEl.style.top = (gy + oy - half).toFixed(1) + 'px';
+    glowEl.style.transformOrigin = (half - ox).toFixed(1) + 'px ' + (half - oy).toFixed(1) + 'px';
+    glowEl.style.transform = scale !== 1 ? 'scale(' + scale.toFixed(4) + ')' : 'none';
   }
 
   function wake() {
@@ -109,8 +135,10 @@ if (root) {
 
     // Measured before the intro writes 576 cell styles this frame; reading
     // it after them would force a relayout of all of them.
+    let rect = null, rootRect = null;
     if (grid && grid.el) {
-      const rect = grid.el.getBoundingClientRect();
+      rect = grid.el.getBoundingClientRect();
+      rootRect = root.getBoundingClientRect();
       const dx = (state.mouse.cx - (rect.left + rect.width / 2)) / (window.innerWidth / 2);
       const dy = (state.mouse.cy - (rect.top + rect.height / 2)) / (window.innerHeight / 2);
       state.eye.tx = clamp(dx * 2.2, -2, 2);
@@ -131,6 +159,7 @@ if (root) {
 
     let glowOp = state.awake ? (idle ? 0.32 : 0.55 + breath * 0.45) : 0.22;
     let cueOp = state.awake ? 0.45 + breath * 0.4 : 0.25;
+    let glowX = 0, glowY = 0, glowScale = 1;
     if (intro) {
       introState = intro.frame(ts, state.bright);
       const { pulse, landed, finished, glowMul, reveal } = introState;
@@ -141,12 +170,14 @@ if (root) {
       if (reveal > 0 && copyEl && copyEl.style.opacity !== '1') copyEl.style.opacity = '1';
       glowOp = clamp(glowOp * glowMul * (1 + 0.6 * pulse), 0, 1);
       cueOp *= reveal;
-      if (glowEl) glowEl.style.transform = 'translate(-50%,-50%)' + (pulse > 0.001 ? ' scale(' + (1 + 0.06 * pulse).toFixed(4) + ')' : '');
-      if (finished) { intro = null; gridEl.style.transform = ''; }
+      glowX = introState.cx; glowY = introState.cy;
+      if (pulse > 0.001) glowScale = 1 + 0.06 * pulse;
+      if (finished) { intro = null; introState = null; gridEl.style.transform = ''; }
     } else {
       paint(grid, grid.buf, state.bright);
     }
 
+    if (rect) placeGlow(rect, rootRect, glowX, glowY, glowScale);
     if (glowEl) glowEl.style.opacity = glowOp.toFixed(3);
     if (cueEl) cueEl.style.opacity = cueOp.toFixed(3);
   }
@@ -161,12 +192,32 @@ if (root) {
     if (copyEl) copyEl.style.opacity = '1';
     if (glowEl) glowEl.style.opacity = '0.6';
     if (cueEl) cueEl.style.opacity = '0.7';
+    // No frame loop here, so place the glow now and again whenever the
+    // layout can shift: on resize, and once web fonts have set the copy.
+    const placeStatic = () => { if (gridEl) placeGlow(gridEl.getBoundingClientRect(), root.getBoundingClientRect(), 0, 0, 1); };
+    placeStatic();
+    window.addEventListener('resize', placeStatic);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeStatic);
   } else {
     const onAny = () => { state.lastInput = Date.now(); wake(); };
     const onMove = (e) => { state.lastInput = Date.now(); wake(); state.mouse.cx = e.clientX; state.mouse.cy = e.clientY; };
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('scroll', onAny, { passive: true });
     window.addEventListener('keydown', onAny);
+
+    // Back/forward from the bfcache resumes this page exactly as it was
+    // left, possibly mid-intro, without re-running this script. Show the
+    // resting face instead of resuming the intro where it stopped.
+    window.addEventListener('pageshow', (e) => {
+      if (!e.persisted || !intro) return;
+      intro.skip();
+      intro = null;
+      introState = null;
+      gridEl.style.transform = '';
+      if (copyEl) copyEl.style.opacity = '1';
+      if (cueEl) cueEl.style.opacity = '';
+      state.blinkAt = Date.now() + 4000 + Math.random() * 4000;
+    });
 
     if (intro) {
       // The intro's face lands awake: eyes open, full resting brightness,

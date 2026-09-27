@@ -271,7 +271,11 @@ const BLADES = 8;
      pulse     the heartbeat as seen at the front face's centre, for the
                glow and, once landed, the face's brightness
      glowMul   how much of the glow the shutter lets out
-     reveal    0 -> 1 as the face lands, for the copy and the scroll cue */
+     reveal    0 -> 1 as the face lands, for the copy and the scroll cue
+     cx, cy    where the cube's silhouette is centred on screen, in px
+               from the grid's centre (0, 0 once it faces front), so the
+               glow can sit behind the cube rather than behind the grid
+   skip() drops the intro at once: cells home, shutter gone. */
 export function createCubeIntro(root, grid) {
   const cells = grid.cells;
   const orig = { transition: cells[0].style.transition, radius: cells[0].style.borderRadius };
@@ -293,6 +297,7 @@ export function createCubeIntro(root, grid) {
 
   let cell = 11, pitch = 13, W = 0, Ht = 0, cx = 0, cy = 0;
   let t0 = null, landed = false, finished = false;
+  let silX = 0, silY = 0;
 
   for (const el of cells) el.style.transition = 'none';   // paint's .22s easing would smear the motion
 
@@ -412,6 +417,22 @@ export function createCubeIntro(root, grid) {
     const h = 6 * pitch * CUBE_SIZE, f = FOCAL * h;
     const live = liveSparks(sparks, t);
 
+    // The cube's centre always projects onto the grid's centre (that is
+    // what the heartbeat pumps around), but with perspective and the
+    // downward look its silhouette does not: the nearer corners project
+    // larger, so the drawn cube sits up to ~17px low and ~10px to one side.
+    // The centre of the eight projected corners is where it looks centred.
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+    for (let k = 0; k < 8; k++) {
+      const X = (k & 1 ? h : -h), Y = (k & 2 ? h : -h), Z = (k & 4 ? h : -h);
+      const xr = X * cY + Z * sY, zr = -X * sY + Z * cY;
+      const yr = Y * cP - zr * sP, zp = Y * sP + zr * cP;
+      const P = f / (f - zp);
+      const px = xr * P, py = -yr * P;
+      if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py;
+    }
+    silX = (x0 + x1) / 2; silY = (y0 + y1) / 2;
+
     for (let i = 0; i < N * N; i++) {
       const r = (i / N) | 0, c = i % N;
       const s = tau - DELAY[i];
@@ -478,6 +499,12 @@ export function createCubeIntro(root, grid) {
     }
     grid.prev.fill(-1);
     landed = true;
+    silX = silY = 0;
+  }
+
+  function skip() {
+    if (!landed) handoff();
+    if (!finished) { finished = true; canvas.remove(); }
   }
 
   function frame(ts, restBright) {
@@ -498,8 +525,9 @@ export function createCubeIntro(root, grid) {
       landed, finished, pulse,
       glowMul: lerp(0.12, 1, smoothstep(0, 0.9, p)),
       reveal: smoothstep(SETTLE - 0.4, SETTLE + 0.6, t),
+      cx: silX, cy: silY,
     };
   }
 
-  return { resize, frame };
+  return { resize, frame, skip };
 }
