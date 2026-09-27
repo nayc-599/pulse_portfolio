@@ -3,8 +3,10 @@
 //
 // When someone arrives at the home page fresh, or reloads it (and only
 // without reduced motion), the face arrives through the cube intro in
-// hero-cube.js: a shutter opens onto a beating dot cube, which turns and
-// settles into the face, awake. Coming from another page on the site, or
+// hero-cube.js: a shutter opens at screen centre onto a beating dot cube,
+// which glides up into the face's place, turns and settles into the face,
+// awake, as the rest of the hero fades in. Scrolling, clicking or pressing
+// a key during it skips straight to that final state. Coming from another page on the site, or
 // back/forward, shows the resting face directly, asleep until the first
 // input as before.
 
@@ -101,15 +103,34 @@ if (root) {
   // scale pivots on the grid's centre, the point the cube pumps around and
   // the grid scales about once the face has landed, so all three share one
   // origin. The rects are passed in, measured before any style writes.
+  // Positioned by transform alone (left/top pinned at 0), so moving it
+  // every frame never triggers layout. The rects include the grid's own
+  // transform, so the glow also follows the cube's glide into place.
   function placeGlow(gridRect, rootRect, ox, oy, scale) {
     if (!glowEl) return;
     const half = state.glowSize / 2;
     const gx = gridRect.left - rootRect.left + gridRect.width / 2;
     const gy = gridRect.top - rootRect.top + gridRect.height / 2;
-    glowEl.style.left = (gx + ox - half).toFixed(1) + 'px';
-    glowEl.style.top = (gy + oy - half).toFixed(1) + 'px';
     glowEl.style.transformOrigin = (half - ox).toFixed(1) + 'px ' + (half - oy).toFixed(1) + 'px';
-    glowEl.style.transform = scale !== 1 ? 'scale(' + scale.toFixed(4) + ')' : 'none';
+    glowEl.style.transform = 'translate(' + (gx + ox - half).toFixed(1) + 'px,' + (gy + oy - half).toFixed(1) + 'px)'
+      + (scale !== 1 ? ' scale(' + scale.toFixed(4) + ')' : '');
+  }
+
+  // Straight to the intro's final state: face in place, content visible,
+  // with no fade (the copy's 2.4s transition is suspended for one change).
+  function skipIntro() {
+    if (!intro) return;
+    intro.skip();
+    intro = null;
+    introState = null;
+    gridEl.style.transform = '';
+    gridEl.style.willChange = '';
+    if (copyEl) {
+      copyEl.style.transition = 'none';
+      copyEl.style.opacity = '1';
+      requestAnimationFrame(() => requestAnimationFrame(() => { copyEl.style.transition = ''; }));
+    }
+    state.blinkAt = Date.now() + 4000 + Math.random() * 4000;
   }
 
   function wake() {
@@ -163,16 +184,20 @@ if (root) {
     if (intro) {
       introState = intro.frame(ts, state.bright);
       const { pulse, landed, finished, glowMul, reveal } = introState;
-      if (landed) {
-        paint(grid, grid.buf, state.bright * (1 + 0.16 * pulse));
-        gridEl.style.transform = pulse > 0.001 ? 'scale(' + (1 + 0.02 * pulse).toFixed(4) + ')' : '';
-      }
+      if (landed) paint(grid, grid.buf, state.bright * (1 + 0.16 * pulse));
+      // The grid is the wrapper the cube glides on (translate), and once the
+      // face has landed it also carries the beat (scale, about its centre).
+      const { offX, offY } = introState;
+      const moved = Math.abs(offX) > 0.05 || Math.abs(offY) > 0.05;
+      const beatScale = landed && pulse > 0.001;
+      gridEl.style.transform = (moved ? 'translate(' + offX.toFixed(2) + 'px,' + offY.toFixed(2) + 'px)' : '')
+        + (beatScale ? ' scale(' + (1 + 0.02 * pulse).toFixed(4) + ')' : '');
       if (reveal > 0 && copyEl && copyEl.style.opacity !== '1') copyEl.style.opacity = '1';
       glowOp = clamp(glowOp * glowMul * (1 + 0.6 * pulse), 0, 1);
       cueOp *= reveal;
       glowX = introState.cx; glowY = introState.cy;
       if (pulse > 0.001) glowScale = 1 + 0.06 * pulse;
-      if (finished) { intro = null; introState = null; gridEl.style.transform = ''; }
+      if (finished) { intro = null; introState = null; gridEl.style.transform = ''; gridEl.style.willChange = ''; }
     } else {
       paint(grid, grid.buf, state.bright);
     }
@@ -184,6 +209,12 @@ if (root) {
 
   fitHero();
   window.addEventListener('resize', fitHero);
+  if (glowEl) {
+    // The glow is placed by transform from here on (see placeGlow).
+    glowEl.style.left = '0px';
+    glowEl.style.top = '0px';
+    glowEl.style.willChange = 'transform, opacity';
+  }
 
   if (rm) {
     state.awake = true; state.bright = 1; state.blink = 0;
@@ -208,21 +239,19 @@ if (root) {
     // Back/forward from the bfcache resumes this page exactly as it was
     // left, possibly mid-intro, without re-running this script. Show the
     // resting face instead of resuming the intro where it stopped.
-    window.addEventListener('pageshow', (e) => {
-      if (!e.persisted || !intro) return;
-      intro.skip();
-      intro = null;
-      introState = null;
-      gridEl.style.transform = '';
-      if (copyEl) copyEl.style.opacity = '1';
-      if (cueEl) cueEl.style.opacity = '';
-      state.blinkAt = Date.now() + 4000 + Math.random() * 4000;
-    });
+    window.addEventListener('pageshow', (e) => { if (e.persisted) skipIntro(); });
 
     if (intro) {
+      // Any deliberate input during the intro skips it. (Pointer movement
+      // alone doesn't: it only wakes the face, as before.)
+      for (const type of ['scroll', 'wheel', 'touchmove', 'pointerdown', 'keydown']) {
+        window.addEventListener(type, skipIntro, { passive: true });
+      }
+      gridEl.style.willChange = 'transform';
+
       // The intro's face lands awake: eyes open, full resting brightness,
-      // no blink until the beat has died away. The copy is revealed as it
-      // lands, not on wake(), so input during the intro can't show it early.
+      // no blink until the beat has died away. The copy is revealed when the
+      // cube arrives in place (the intro's reveal), not on wake().
       state.awake = true;
       state.blink = 0;
       state.brightT = state.bright = 0.93;

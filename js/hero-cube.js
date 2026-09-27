@@ -12,61 +12,74 @@
 // shutter is one canvas laid over the hero section.
 //
 // Tuned in preview/hero-cube.SCRATCH.html (not deployed), which has sliders
-// for the rocking, heartbeat and shimmer; the values below are its defaults,
-// except the hold, which is fixed at 4s here.
+// for the rocking, heartbeat and shimmer. The live intro has since been
+// shortened and sped up; the tunables are the named constants just below.
 
 import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
+
+// ---- Tune these ----
+const BPM = 72;                          // heartbeat: one lub-dub every 60/72 = 0.83s
+const HOLD_SECONDS = 2;                  // the cube thinks at screen centre for this long after the shutter
+const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
+// --------------------
 
 const N = 24;
 const TAU = Math.PI * 2;
 
 const AP = 0.9;                          // the shutter opens over 0.9s
-const HOLD = 4;                          // the cube thinks for 4s once the shutter is open
 const D = 2.2;                           // the Turn
-const BEAT = 1.5;                        // seconds per heartbeat: 40bpm
-const ROCK_DEG = 25;                     // yaw sway, ± degrees
-const ROCK_PERIOD = 4 * BEAT;            // one left-right-left swing per 6s
+const BEAT = 60 / BPM;
+const QUICKEN = 0.15;                    // over the hold's last beat the heart speeds up by 15%
+const ROCK_DEG = 25;                     // yaw sway, +/- degrees
+const ROCK_PERIOD = 6;                   // one left-right-left swing per 6s (independent of the heart)
 const SWAY_PERIOD = ROCK_PERIOD / 1.618; // pitch sway, a golden-ratio period so the two never line up
 const PITCH0 = 14 * Math.PI / 180;       // fixed downward look so the top face shows
 const SWAY = 3.5 * Math.PI / 180;        // pitch sway on top of that
 const CUBE_SIZE = 1.1;                   // cube half-width, in half-widths of the 12-cell front block
 const FOCAL = 6;                         // camera distance, in cube half-widths
 
-// Heartbeat shape. Times in seconds from the lub.
-const DUB = 0.17;                        // the dub lands this long after the lub
+// Heartbeat shape. The lub-dub was tuned at 40bpm; every time in it is
+// scaled by BEAT_SCALE, so a faster heart keeps the same shape, just quicker.
+const BEAT_SCALE = BEAT / 1.5;
+const DUB = 0.17 * BEAT_SCALE;           // the dub lands this long after the lub (0.094s at 72bpm)
 const DUB_GAIN = 0.55;                   // and is this much softer
 const PUSH = 0.06;                       // radial push, in cube half-widths (3% of its size)
-const RIPPLE = 0.075;                    // seconds of delay per cube half-width from the front face's centre
+const RIPPLE = 0.075 * BEAT_SCALE;       // seconds of delay per cube half-width from the front face's centre
 // Shimmer and sparks.
-const SHIMMER_LIGHT = 0.16;              // ± brightness
-const SHIMMER_POS = 0.012;               // ± position, in cube half-widths (about 1px)
+const SHIMMER_LIGHT = 0.16;              // +/- brightness
+const SHIMMER_POS = 0.012;               // +/- position, in cube half-widths (about 1px)
 const SPARK_GAIN = 0.55;                 // extra opacity at a spark's peak
+// The dots' glow during the intro is ONE drop-shadow filter on the whole
+// grid, not a box-shadow per dot. 576 per-dot blurred shadows, restyled
+// every frame, were what made the rocking stutter (about 28fps in Chrome);
+// promoting each dot to its own layer instead cost as much again in layer
+// bookkeeping. One shared filter keeps 60fps even with the CPU slowed 4x.
+const BLOOM_ALPHA = 0.5;
+const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' + a.toFixed(3) + '))' : '');
 
 /* ---------------------------------------------------------------------
-   Timeline, in seconds from the first frame:
-     0 .. AP             the shutter opens [0 - 0.9]
-     LUB0                first lub, as the shutter nearly clears [0.68]
-     AP .. H             the cube thinks for HOLD seconds [0.9 - 4.9]
-     QS .. H             its heart quickens so that a lub lands exactly on H
-     H .. H + D          the Turn, which starts on that lub [4.9 - 7.1]
-     H + D/2 .. END      the beat decays with a raised cosine as the face
-                         lands, leaving the breathing underneath [6.0 - 8.0]
+   Timeline, in seconds from the first frame (defaults in brackets):
+     0 .. AP             the shutter opens at screen centre [0 - 0.9]
+     AP .. H             the cube thinks at screen centre [0.9 - 2.9]
+     QS .. H             its heart quickens over the hold's last beat
+     H                   a lub lands exactly here: the glide starts on it
+     H .. TURN           the glide up into the face's place [2.9 - 3.6]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.6 - 5.8]
+     TURN + D/2 .. END   the beat decays over about one beat as the face
+                         lands, leaving the breathing underneath [4.7 - 6.63]
 
    The heart's phase is an exact function of t (the integral of its rate),
-   so it never drifts. Its rate ramps with a smoothstep over the last QW
-   seconds before the Turn; the integral of a smoothstep over [0, 1] is
-   x^3 - x^4/2. QUICKEN is solved for, so that the phase at H is a whole
-   number of beats: with a 4s hold it comes out at about 0.22, a gentle
-   rise from 40 to about 49bpm.
+   anchored so that phase(H) = 0: a lub always lands on H, whatever BPM and
+   HOLD_SECONDS are. The rate ramps up with a smoothstep over [QS, H]; the
+   integral of a smoothstep over [0, 1] is x^3 - x^4/2.
    --------------------------------------------------------------------- */
-const LUB0 = 0.75 * AP;
-const H = AP + HOLD;
-const SETTLE = H + D;
-const END = SETTLE + 0.6 * BEAT;
+const H = AP + HOLD_SECONDS;
+const TURN = H + MOVE_SECONDS;
+const SETTLE = TURN + D;
+const END = SETTLE + BEAT;
 export const INTRO_SECONDS = END;        // from the first frame until the beat has fully decayed
-const QW = 2.5;
+const QW = BEAT;
 const QS = H - QW;
-const QUICKEN = (() => { const base = (H - LUB0) / BEAT; return (Math.ceil(base) - base) * 2 * BEAT / QW; })();
 
 const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
@@ -76,36 +89,36 @@ const hex = (h) => [1, 3, 5].map((i) => parseInt(h.trim().slice(i, i + 2), 16));
 const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
 const RGB_AMBER = hex(AMBER);
-const RGB_AMBER_DIM = hex(AMBER_DIM);
 const RGB_SPARK = [255, 238, 196];       // a spark warms dots towards a paler, hotter amber
 
 function heartPhase(t) {
   const x = clamp((t - QS) / QW, 0, 1);
-  const extra = (QUICKEN / BEAT) * (QW * (x * x * x - x * x * x * x / 2) + Math.max(0, t - QS - QW));
-  return (t - LUB0) / BEAT + extra;
+  return (t - QS) / BEAT + (QUICKEN / BEAT) * (QW * (x * x * x - x * x * x * x / 2) + Math.max(0, t - H))
+    - (QW / BEAT) * (1 + QUICKEN / 2);
 }
 // Seconds since the most recent lub.
 function sinceLub(t) {
   const ph = heartPhase(t);
-  return (ph - Math.floor(ph)) * BEAT / (1 + QUICKEN * smoothstep(QS, QS + QW, t));
+  return (ph - Math.floor(ph)) * BEAT / (1 + QUICKEN * smoothstep(QS, H, t));
 }
 function beatAmp(t) {
-  const a = H + 0.5 * D;
+  const a = TURN + 0.5 * D;
   if (t <= a) return 1;
   if (t >= END) return 0;
   return 0.5 + 0.5 * Math.cos(Math.PI * (t - a) / (END - a));
 }
 
-/* Heartbeat envelopes, both zero before their onset.
+/* Heartbeat envelopes, both zero before their onset (times at 40bpm,
+   scaled by BEAT_SCALE).
    push   a damped spring: a sharp rise to 1 at ~50ms, then an elastic
           return with one small inward overshoot (about -0.25), gone by ~0.5s.
    light  an alpha function: sharp attack peaking at 60ms, smooth decay. */
-const SPRING_T = 0.26, SPRING_DECAY = 0.11;
+const SPRING_T = 0.26 * BEAT_SCALE, SPRING_DECAY = 0.11 * BEAT_SCALE, LIGHT_T = 0.06 * BEAT_SCALE;
 const springRaw = (s) => Math.exp(-s / SPRING_DECAY) * Math.sin(TAU * s / SPRING_T);
 let SPRING_NORM = 0;
-for (let s = 0; s < 0.3; s += 0.0005) SPRING_NORM = Math.max(SPRING_NORM, springRaw(s));
+for (let s = 0; s < SPRING_T; s += 0.0002) SPRING_NORM = Math.max(SPRING_NORM, springRaw(s));
 const pushEnv = (s) => (s <= 0 ? 0 : springRaw(s) / SPRING_NORM);
-const lightEnv = (s) => (s <= 0 ? 0 : (s / 0.06) * Math.exp(1 - s / 0.06));
+const lightEnv = (s) => (s <= 0 ? 0 : (s / LIGHT_T) * Math.exp(1 - s / LIGHT_T));
 const lubDub = (env, s) => env(s) + DUB_GAIN * env(s - DUB);
 
 /* ---------------------------------------------------------------------
@@ -232,35 +245,19 @@ function liveSparks(sparks, t) {
   return out;
 }
 
-// paint()'s value-to-style mapping, so a dot mid-flight can blend towards
-// what paint() will draw once it lands. Keep in step with pixel-grid.js.
-function paintTarget(v, out) {
-  if (v > 0.05) { out.rgb = RGB_AMBER; out.op = v; out.blur = 7 * v; out.a = 0.5 * v; }
-  else { out.rgb = RGB_AMBER_DIM; out.op = 0.12; out.blur = 0; out.a = 0; }
-  return out;
-}
-
-// Depth styling on square dots: near dots larger, brighter and glowing.
-// d is 0 at the back plane, 1 at the front.
-function cubeLook(d, out) {
-  const w = Math.pow(d, 1.3);
-  out.scale = lerp(0.3, 0.62, d);
-  out.rgb = RGB_AMBER;
-  out.op = lerp(0.12, 1, w);
-  out.blur = 6 * d * d; out.a = 0.45 * d * d;
-  return out;
-}
-
-function drawDot(el, x, y, scale, rgb, op, blur, a, z) {
-  const s = el.style;
-  s.transform = 'translate(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px) scale(' + scale.toFixed(3) + ')';
-  s.opacity = clamp(op, 0, 1).toFixed(3);
-  s.backgroundColor = 'rgb(' + (rgb[0] | 0) + ',' + (rgb[1] | 0) + ',' + (rgb[2] | 0) + ')';
-  s.boxShadow = a > 0.005 ? '0 0 ' + blur.toFixed(1) + 'px rgba(' + (rgb[0] | 0) + ',' + (rgb[1] | 0) + ',' + (rgb[2] | 0) + ',' + a.toFixed(2) + ')' : 'none';
-  s.zIndex = z;
+// paint()'s value-to-style mapping, so a dot can take on what paint() will
+// draw once it lands. Keep in step with pixel-grid.js.
+const RGB_AMBER_DIM_CSS = AMBER_DIM;
+function landedLook(v) {
+  if (v > 0.05) {
+    const q = Math.round(v * 20) / 20;       // quantised, so a landed dot is restyled rarely
+    return { key: 'L' + q, bg: AMBER, shadow: '0 0 ' + (7 * q).toFixed(1) + 'px rgba(' + AMBER_RGB + ',' + (0.5 * q).toFixed(2) + ')', op: v };
+  }
+  return { key: 'D', bg: RGB_AMBER_DIM_CSS, shadow: 'none', op: 0.12 };
 }
 
 const BLADES = 8;
+const SPARK_LEVELS = 3;                      // spark tint steps: colour changes only between these
 
 /* Creates the intro for one hero. root is the .hero section (the shutter
    covers it); grid is its makeGrid() result. Call resize(cell) whenever
@@ -271,18 +268,25 @@ const BLADES = 8;
      pulse     the heartbeat as seen at the front face's centre, for the
                glow and, once landed, the face's brightness
      glowMul   how much of the glow the shutter lets out
-     reveal    0 -> 1 as the face lands, for the copy and the scroll cue
-     cx, cy    where the cube's silhouette is centred on screen, in px
-               from the grid's centre (0, 0 once it faces front), so the
-               glow can sit behind the cube rather than behind the grid
-   skip() drops the intro at once: cells home, shutter gone. */
+     reveal    0 -> 1 from the cube's arrival, for the hero's content
+     offX/offY where the grid should be translated to, in px (the cube
+               starts at screen centre and glides to the grid's place)
+     cx, cy    where the cube's silhouette is centred, in px from the
+               (translated) grid's centre, so the glow sits behind the cube
+   skip() drops the intro at once: cells home, shutter gone.
+
+   Performance: per frame, each dot only has its transform and opacity
+   written. Colour, shadow and z-index are written only when they actually
+   change: a spark passing, a dot landing, or a dot moving into a different
+   depth bucket. The glow is one filter on the grid (see BLOOM_ALPHA). */
 export function createCubeIntro(root, grid) {
   const cells = grid.cells;
   const orig = { transition: cells[0].style.transition, radius: cells[0].style.borderRadius };
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const charcoal = getComputedStyle(document.documentElement).getPropertyValue('--charcoal-rgb').trim() || '28, 26, 23';
   const sparks = planSparks(mulberry32((Math.random() * 4294967296) >>> 0));
-  const look = {}, tgt = {};
+  const sparkBg = [];
+  for (let k = 0; k <= SPARK_LEVELS; k++) { const c = mix3(RGB_AMBER, RGB_SPARK, 0.7 * k / SPARK_LEVELS); sparkBg.push('rgb(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ')'); }
 
   // The shutter covers the whole hero section, so its opaque blades (the
   // hero's own charcoal) have no edge inside the view. The hero becomes its
@@ -295,22 +299,33 @@ export function createCubeIntro(root, grid) {
   root.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
-  let cell = 11, pitch = 13, W = 0, Ht = 0, cx = 0, cy = 0;
+  let cell = 11, pitch = 13, W = 0, Ht = 0, cx = 0, cy = 0, startX = 0, startY = 0;
   let t0 = null, landed = false, finished = false;
   let silX = 0, silY = 0;
 
+  // Last written look per cell, so unchanged properties are never rewritten.
+  const lookKey = new Array(N * N).fill('');
+  const zNow = new Int8Array(N * N).fill(-1);
+
   for (const el of cells) el.style.transition = 'none';   // paint's .22s easing would smear the motion
+  let bloomNow = bloom(BLOOM_ALPHA);
+  grid.el.style.filter = bloomNow;
 
   function resize(c) {
     cell = c; pitch = c + 2;
     W = root.clientWidth; Ht = root.clientHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(Ht * dpr);
     canvas.style.width = W + 'px'; canvas.style.height = Ht + 'px';
-    // The shutter opens from the centre of the hero section: a fixed point
-    // that ignores the cube entirely. (The grid sits a little above it,
-    // because the copy below the grid shares the section's centred column.)
-    cx = W / 2;
-    cy = Ht / 2;
+    // The shutter opens, and the cube first appears, at the centre of the
+    // viewport: a fixed point, in the section's coordinates.
+    const rr = root.getBoundingClientRect();
+    cx = window.innerWidth / 2 - rr.left;
+    cy = window.innerHeight / 2 - rr.top;
+    // Where the grid sits in the hero layout (offsets ignore transforms),
+    // and so how far it must be translated for the cube to start at (cx, cy).
+    const gx = grid.el.offsetLeft + grid.el.offsetWidth / 2;
+    const gy = grid.el.offsetTop + grid.el.offsetHeight / 2;
+    startX = cx - gx; startY = cy - gy;
   }
 
   // The 8-blade iris, as vector geometry, centred on (cx, cy). The opening is a regular octagon;
@@ -411,7 +426,7 @@ export function createCubeIntro(root, grid) {
   // shimmer, and sparks. Perspective projection, x*f/(f - z).
   function cube(t, bright, tau, amp) {
     const buf = grid.buf;
-    const u = clamp((t - H) / D, 0, 1);
+    const u = clamp((t - TURN) / D, 0, 1);
     const settle = 1 - ease(clamp(u / 0.55, 0, 1));
     const yaw = (ROCK_DEG * Math.PI / 180) * Math.sin(TAU * t / ROCK_PERIOD) * settle;
     const tilt = (PITCH0 + SWAY * Math.sin(TAU * t / SWAY_PERIOD + 1.1)) * settle;
@@ -474,31 +489,50 @@ export function createCubeIntro(root, grid) {
         lit = smoothstep(0.8, 1, u);
         vis = 1 - smoothstep(0.1, 0.5, u);
       }
-      cubeLook(d, look);
-      look.op = (look.op * (1 + SHIMMER_LIGHT * n0) * (1 + 0.4 * glow) + SPARK_GAIN * spark) * vis;
-      look.scale *= P * (1 + 0.1 * glow + 0.3 * spark);
-      look.a = Math.max(look.a * (1 + 0.5 * glow), 0.75 * spark);
-      look.blur += 3 * glow + 8 * spark;
-      if (spark > 0.01) look.rgb = mix3(look.rgb, RGB_SPARK, 0.7 * spark);
-      paintTarget(clamp(buf[i] * bright, 0, 1), tgt);
-      drawDot(cells[i],
-        lerp(sx, 0, g), lerp(sy, 0, g),
-        lerp(look.scale, 1, g),
-        mix3(look.rgb, tgt.rgb, lit), lerp(look.op, tgt.op, lit),
-        lerp(look.blur, tgt.blur, lit), lerp(look.a, tgt.a, lit),
-        1 + Math.round(d * 100 * (1 - g)));
+
+      // Depth look: near dots larger and brighter (the grid's bloom glows
+      // brighter around brighter dots on its own).
+      const w = Math.pow(d, 1.3);
+      const cubeOp = (lerp(0.12, 1, w) * (1 + SHIMMER_LIGHT * n0) * (1 + 0.4 * glow) + SPARK_GAIN * spark) * vis;
+      const scale = lerp(0.3, 0.62, d) * P * (1 + 0.1 * glow + 0.3 * spark);
+
+      // Colour and shadow: the cube look (with a stepped spark tint) until
+      // the dot is half landed, then paint()'s look for its cell. Opacity
+      // carries the blend either side of that one switch.
+      const el = cells[i], st = el.style;
+      let op;
+      if (lit < 0.5) {
+        const lvl = Math.round(spark * SPARK_LEVELS);
+        const key = 'C' + lvl;
+        if (lookKey[i] !== key) { st.backgroundColor = sparkBg[lvl]; st.boxShadow = 'none'; lookKey[i] = key; }
+        op = lerp(cubeOp, landedLook(clamp(buf[i] * bright, 0, 1)).op, lit);
+      } else {
+        const tg = landedLook(clamp(buf[i] * bright, 0, 1));
+        if (lookKey[i] !== tg.key) { st.backgroundColor = tg.bg; st.boxShadow = tg.shadow; lookKey[i] = tg.key; }
+        op = lerp(cubeOp, tg.op, lit);
+      }
+
+      st.transform = 'translate(' + lerp(sx, 0, g).toFixed(2) + 'px,' + lerp(sy, 0, g).toFixed(2) + 'px) scale(' + lerp(scale, 1, g).toFixed(3) + ')';
+      st.opacity = clamp(op, 0, 1).toFixed(3);
+      // Depth order in 7 buckets, rewritten only when a dot changes bucket.
+      const z = Math.round(d * (1 - g) * 6);
+      if (zNow[i] !== z) { st.zIndex = 1 + z; zNow[i] = z; }
     }
   }
 
-  // Hand the cells back: makeGrid's own inline values, no transform, and a
-  // forced full repaint so paint() owns every cell from the next call.
+  // Hand the cells back: makeGrid's own inline values, no transform, no
+  // layer promotion, and a forced full repaint so paint() owns every cell
+  // from the next call.
   function handoff() {
     for (const el of cells) {
-      el.style.transform = '';
-      el.style.zIndex = '';
-      el.style.borderRadius = orig.radius;
-      el.style.transition = orig.transition;
+      const st = el.style;
+      st.transform = '';
+      st.zIndex = '';
+      st.borderRadius = orig.radius;
+      st.transition = orig.transition;
     }
+    grid.el.style.filter = '';
+    bloomNow = '';
     grid.prev.fill(-1);
     landed = true;
     silX = silY = 0;
@@ -519,14 +553,24 @@ export function createCubeIntro(root, grid) {
     const p = clamp(t / AP, 0, 1);
     if (!landed) {
       if (t >= SETTLE) handoff();
-      else cube(t, bright, tau, amp);
+      else {
+        cube(t, bright, tau, amp);
+        // The shared bloom fades out over the end of the Turn, as each
+        // landed dot takes on paint()'s own glow.
+        const b = bloom(BLOOM_ALPHA * (1 - smoothstep(TURN + 0.6 * D, SETTLE, t)));
+        if (b !== bloomNow) { grid.el.style.filter = b; bloomNow = b; }
+      }
     }
     shutter(p, bright);
     if (t >= END && !finished) { finished = true; canvas.remove(); }
+    // The glide: from screen centre to the grid's own place, eased in and
+    // out, starting on the lub at H. The heart and the rocking run through it.
+    const away = 1 - ease(clamp((t - H) / MOVE_SECONDS, 0, 1));
     return {
       landed, finished, pulse,
       glowMul: lerp(0.12, 1, smoothstep(0, 0.9, p)),
-      reveal: smoothstep(SETTLE - 0.4, SETTLE + 0.6, t),
+      reveal: smoothstep(TURN, TURN + 0.8, t),
+      offX: startX * away, offY: startY * away,
       cx: silX, cy: silY,
     };
   }
