@@ -24,7 +24,8 @@ import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 // rocking-and-heartbeat hold before the glide.
 const ENABLE_HEARTBEAT = true;
 const BPM = 96;                          // heartbeat: one lub-dub every 60/96 = 0.625s
-const HOLD_SECONDS = 1.5;                // the cube thinks at screen centre for this long after the shutter
+const HOLD_BEATS = 3;                    // the cube thinks at screen centre for exactly this many
+                                          // complete lub-dub cycles, back to back, then moves on
 const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
 // --------------------
 
@@ -34,7 +35,6 @@ const TAU = Math.PI * 2;
 const AP = 0.9;                          // the shutter opens over 0.9s
 const D = 2.2;                           // the Turn
 const BEAT = 60 / BPM;
-const QUICKEN = 0.15;                    // over the hold's last beat the heart speeds up by 15%
 const ROCK_DEG = 25;                     // yaw sway, +/- degrees
 const ROCK_PERIOD = 6;                   // one left-right-left swing per 6s (independent of the heart)
 const SWAY_PERIOD = ROCK_PERIOD / 1.618; // pitch sway, a golden-ratio period so the two never line up
@@ -65,26 +65,27 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
 /* ---------------------------------------------------------------------
    Timeline, in seconds from the first frame (defaults in brackets):
      0 .. AP             the shutter opens at screen centre [0 - 0.9]
-     AP .. H             the cube thinks at screen centre [0.9 - 2.4]
-     QS .. H             its heart quickens over the hold's last beat
-     H                   a lub lands exactly here: the glide starts on it
-     H .. TURN           the glide up into the face's place [2.4 - 3.1]
-     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.1 - 5.3]
+     AP .. H             the cube thinks at screen centre: HOLD_BEATS complete
+                         lub-dub cycles, back to back, at a constant pace [0.9 - 2.775]
+     H                   the HOLD_BEATS-th lub lands exactly here: the glide starts on it
+     H .. TURN           the glide up into the face's place [2.775 - 3.475]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.475 - 5.675]
      TURN + D/2 .. END   the beat decays over about one beat as the face
-                         lands, leaving the breathing underneath [4.2 - 5.93]
+                         lands, leaving the breathing underneath [4.575 - 6.3]
 
-   The heart's phase is an exact function of t (the integral of its rate),
-   anchored so that phase(H) = 0: a lub always lands on H, whatever BPM and
-   HOLD_SECONDS are. The rate ramps up with a smoothstep over [QS, H]; the
-   integral of a smoothstep over [0, 1] is x^3 - x^4/2.
+   The heart's phase is linear in t and anchored at AP, so the hold's first
+   lub lands the moment the cube appears (t = AP) and every later one lands
+   exactly BEAT seconds after the last, with no acceleration: the HOLD_BEATS-
+   th lub falls precisely on H = AP + HOLD_BEATS * BEAT by construction, and
+   the transition happens the instant it does, whatever BPM or HOLD_BEATS
+   are. The same constant-rate phase carries on past H, so the beat already
+   visible at the Turn continues at that pace while beatAmp() fades it out.
    --------------------------------------------------------------------- */
-const H = AP + (ENABLE_HEARTBEAT ? HOLD_SECONDS : 0);
+const H = AP + (ENABLE_HEARTBEAT ? HOLD_BEATS * BEAT : 0);
 const TURN = H + MOVE_SECONDS;
 const SETTLE = TURN + D;
 const END = ENABLE_HEARTBEAT ? SETTLE + BEAT : SETTLE;   // with no beat there is nothing left to decay
 export const INTRO_SECONDS = END;        // from the first frame until the beat has fully decayed
-const QW = BEAT;
-const QS = H - QW;
 
 const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
@@ -96,15 +97,15 @@ const mulberry32 = (a) => () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math
 const RGB_AMBER = hex(AMBER);
 const RGB_SPARK = [255, 238, 196];       // a spark warms dots towards a paler, hotter amber
 
+// Counts whole beats since AP: an integer exactly at every lub, so the
+// HOLD_BEATS-th one coincides exactly with H (see the timeline above).
 function heartPhase(t) {
-  const x = clamp((t - QS) / QW, 0, 1);
-  return (t - QS) / BEAT + (QUICKEN / BEAT) * (QW * (x * x * x - x * x * x * x / 2) + Math.max(0, t - H))
-    - (QW / BEAT) * (1 + QUICKEN / 2);
+  return (t - AP) / BEAT;
 }
 // Seconds since the most recent lub.
 function sinceLub(t) {
   const ph = heartPhase(t);
-  return (ph - Math.floor(ph)) * BEAT / (1 + QUICKEN * smoothstep(QS, H, t));
+  return (ph - Math.floor(ph)) * BEAT;
 }
 function beatAmp(t) {
   if (!ENABLE_HEARTBEAT) return 0;
