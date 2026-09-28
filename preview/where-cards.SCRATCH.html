@@ -1,0 +1,236 @@
+---
+permalink: /preview/where-cards/
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<!--
+  SCRATCH / THROWAWAY. Side-by-side (stacked) comparison for the home page's
+  "Four things worth knowing" section: the current text cards, then the
+  proposed headline + diagram + caption cards with a "Read more" disclosure.
+  Not linked from anywhere; changes nothing on the live home page. The
+  proposed CSS lives in the <style> block below and moves into
+  css/components.css only once the design is approved. Delete this file
+  to remove it.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Where cards preview (scratch)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/components.css">
+<style>
+  .scratch-bar { background: var(--charcoal); color: var(--ink-on-charcoal); padding: 14px 24px; font: 400 11px/1.6 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+  .scratch-bar strong { color: var(--amber); font-weight: 400; }
+  .scratch-divider { border-top: 3px solid var(--charcoal); }
+
+  /* ---- Proposed: to move into css/components.css on approval ---- */
+
+  /* The card row: each card is a subgrid of five rows (label, headline,
+     diagram, caption, disclosure), so headlines, diagrams and captions
+     line up across a row even when a headline wraps to two lines. */
+  .where-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    column-gap: var(--grid-col-gap);
+    row-gap: 36px;
+  }
+  .where-card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+    row-gap: 12px;
+    align-content: start;
+  }
+  .where-card__caption {
+    margin: 0;
+    font: 400 16px/1.5 var(--font-sans);
+    color: var(--ink-body);
+  }
+  .where-card__more summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    cursor: pointer;
+    list-style: none;
+    font: 400 10px/1.6 var(--font-mono);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-eyebrow);
+  }
+  .where-card__more summary::-webkit-details-marker { display: none; }
+  .where-card__more summary::after { content: '+'; font-size: 13px; line-height: 1; }
+  .where-card__more[open] summary::after { content: '\2212'; }
+  .where-card__more[open] summary { margin-bottom: 10px; }
+
+  /* Diagrams: one visual language for all four. Same 260x96 canvas, 1.25px
+     strokes that stay 1.25px at any size, 20px rounded-2 nodes, 9px mono
+     labels. Filled = done, outlined = in progress / not yet, dashed =
+     planned; status is always also written out. Amber marks Pulse itself,
+     as a fill only: amber text on bone would be unreadable. */
+  .wd { display: block; width: 100%; max-width: 320px; height: auto; overflow: visible; }
+  .wd-ln { fill: none; stroke: var(--ink-primary); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+  .wd-node { fill: var(--bone); stroke: var(--ink-primary); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+  .wd-node--done { fill: var(--ink-primary); }
+  .wd-node--pulse { fill: var(--amber); stroke: var(--amber-deep); }
+  .wd-dash { stroke-dasharray: 4 3; }
+  .wd-lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; fill: var(--ink-primary); }
+  .wd-lbl--inv { fill: var(--bone); }
+  .wd-lbl--muted { fill: var(--ink-muted); }
+  .wd-lbl--pulse { fill: var(--ink-eyebrow); }
+  .wd-lbl--status { fill: var(--ink-eyebrow); }
+</style>
+</head>
+<body>
+<p class="scratch-bar" style="margin:0">Scratch · not linked from the site · <strong>Current</strong> (live home page today)</p>
+  <section aria-labelledby="where-title-current" style="padding:88px 24px;position:relative;overflow:hidden">
+    <img src="/assets/wireframes/wf-torus-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-180px;bottom:-160px;width:560px;opacity:0.07;pointer-events:none" />
+    <div class="wrap" style="position:relative">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span class="eyebrow__label">WHERE THINGS STAND</span>
+      </span>
+      <h2 id="where-title-current" style="margin:0 0 20px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <p style="margin:0 0 56px;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse is a device that watches over bedridden patients in the hours between carer rounds. A CNN-LSTM pipeline reads facial pain expression over time, a separate pose model tracks movement out of bed, and planned environmental sensors will add a fuller read on patient state, so problems are caught continuously instead of at the next check.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:var(--grid-col-gap);row-gap:36px">
+        <div class="stat-block">
+          <span class="metadata">01 · THE PROBLEM</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Up to four hours can pass between rounds for a patient who can't call for help. We're aiming to close that gap to closer to forty-one seconds.</p>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">02 · THE APPROACH</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Two branches: a face, or a body.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so Pulse reads the face. Out of bed, a pose model reads 17 body keypoints instead. Environmental sensors, planned next, add context from the room itself for a fuller read on patient state.</p>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">03 · WHERE IT IS NOW</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
+          <ul class="status-list">
+            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">Face and pose detection</span></li>
+            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">CNN trained on pain expressions</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">LSTM pain score</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">Live pipeline into the carer dashboard</span></li>
+            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">The 8cm cube, hardware arrived for assembly</span></li>
+          </ul>
+        </div>
+        <div class="stat-block">
+          <span class="metadata">04 · WHAT'S NEXT</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Live video in, alerts out.</h3>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Before the 7 October showcase: finish the LSTM and wire everything into one live loop. After that: environmental sensors, and testing how a clinic dataset holds up in a dark bedroom.</p>
+        </div>
+      </div>
+      <a href="/project.html" class="link-action" style="margin-top:44px">
+        <span>Read the full project</span>
+        <span aria-hidden="true" class="link-action__arrow">→</span>
+      </a>
+      <p style="margin:32px 0 0;max-width:68ch;font:400 14px/1.6 var(--font-sans);color:var(--ink-muted)">We'd rather show the project at this stage than wait for one that looks finished.</p>
+    </div>
+  </section>
+<div class="scratch-divider"></div>
+<p class="scratch-bar" style="margin:0">Scratch · <strong>Proposed</strong>: headline, diagram, one-line caption, read more</p>
+  <section aria-labelledby="where-title-proposed" style="padding:88px 24px;position:relative;overflow:hidden">
+    <img src="/assets/wireframes/wf-torus-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-180px;bottom:-160px;width:560px;opacity:0.07;pointer-events:none" />
+    <div class="wrap" style="position:relative">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
+        <span class="eyebrow__label">WHERE THINGS STAND</span>
+      </span>
+      <h2 id="where-title-proposed" style="margin:0 0 20px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+      <p style="margin:0 0 56px;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse is a device that watches over bedridden patients in the hours between carer rounds. A CNN-LSTM pipeline reads facial pain expression over time, a separate pose model tracks movement out of bed, and planned environmental sensors will add a fuller read on patient state, so problems are caught continuously instead of at the next check.</p>
+      <div class="where-grid">
+        <div class="stat-block where-card">
+          <span class="metadata">01 · THE PROBLEM</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
+          <svg class="wd" viewBox="0 0 260 96" role="img" aria-labelledby="wd1-t"><title id="wd1-t">Timeline between two carer rounds, up to four hours apart. Pulse raises an alert about 41 seconds into the gap.</title><defs><marker id="wd1-a" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0.5 0.5 L5.5 3 L0.5 5.5" class="wd-ln" /></marker></defs><line x1="10" y1="50" x2="250" y2="50" class="wd-ln" />
+<rect x="4" y="44" width="12" height="12" rx="2" class="wd-node wd-node--done" />
+<rect x="244" y="44" width="12" height="12" rx="2" class="wd-node wd-node--done" />
+<rect x="40" y="44" width="12" height="12" rx="2" class="wd-node wd-node--pulse" />
+<text x="36" y="34" class="wd-lbl wd-lbl--pulse">PULSE ~41 SEC</text>
+<text x="4" y="74" class="wd-lbl">ROUND</text>
+<text x="256" y="74" text-anchor="end" class="wd-lbl">ROUND</text>
+<text x="146" y="74" text-anchor="middle" class="wd-lbl wd-lbl--muted">UP TO 4 HRS</text></svg>
+          <p class="where-card__caption">Pulse closes the gap between rounds.</p>
+          <details class="where-card__more">
+            <summary>Read more</summary>
+            <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Up to four hours can pass between rounds for a patient who can't call for help. We're aiming to close that gap to closer to forty-one seconds.</p>
+          </details>
+        </div>
+        <div class="stat-block where-card">
+          <span class="metadata">02 · THE APPROACH</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A face, a body, and the room.</h3>
+          <svg class="wd" viewBox="0 0 260 96" role="img" aria-labelledby="wd2-t"><title id="wd2-t">Face and body inputs, and a planned room input, feed into Pulse, which sends an alert.</title><defs><marker id="wd2-a" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0.5 0.5 L5.5 3 L0.5 5.5" class="wd-ln" /></marker></defs><rect x="4" y="2" width="78" height="20" rx="2" class="wd-node" /><text x="43" y="15.5" text-anchor="middle" class="wd-lbl">FACE</text>
+<rect x="4" y="30" width="78" height="20" rx="2" class="wd-node" /><text x="43" y="43.5" text-anchor="middle" class="wd-lbl">BODY</text>
+<rect x="4" y="58" width="78" height="20" rx="2" class="wd-node wd-dash" /><text x="43" y="71.5" text-anchor="middle" class="wd-lbl">ROOM</text>
+<text x="43" y="92" text-anchor="middle" class="wd-lbl wd-lbl--muted">PLANNED</text>
+<line x1="82" y1="12" x2="122" y2="36" class="wd-ln" />
+<line x1="82" y1="40" x2="122" y2="40" class="wd-ln" />
+<line x1="82" y1="68" x2="122" y2="44" class="wd-ln wd-dash" />
+<rect x="122" y="30" width="52" height="20" rx="2" class="wd-node wd-node--pulse" /><text x="148" y="43.5" text-anchor="middle" class="wd-lbl">PULSE</text>
+<line x1="174" y1="40" x2="199" y2="40" class="wd-ln" marker-end="url(#wd2-a)" />
+<rect x="202" y="30" width="54" height="20" rx="2" class="wd-node" /><text x="229" y="43.5" text-anchor="middle" class="wd-lbl">ALERT</text></svg>
+          <p class="where-card__caption">Face in bed, body out of bed, room context next.</p>
+          <details class="where-card__more">
+            <summary>Read more</summary>
+            <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so Pulse reads the face. Out of bed, a pose model reads 17 body keypoints instead. Environmental sensors, planned next, add context from the room itself for a fuller read on patient state.</p>
+          </details>
+        </div>
+        <div class="stat-block where-card">
+          <span class="metadata">03 · WHERE IT IS NOW</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
+          <svg class="wd" viewBox="0 0 260 96" role="img" aria-labelledby="wd3-t"><title id="wd3-t">Pipeline from camera to detection to CNN, all done, then LSTM and dashboard, both in progress.</title><defs><marker id="wd3-a" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0.5 0.5 L5.5 3 L0.5 5.5" class="wd-ln" /></marker></defs><g transform="translate(0 12)">
+<rect x="4" y="0" width="48" height="20" rx="2" class="wd-node wd-node--done" /><text x="28" y="13.5" text-anchor="middle" class="wd-lbl wd-lbl--inv">CAMERA</text>
+<line x1="52" y1="10" x2="61" y2="10" class="wd-ln" marker-end="url(#wd3-a)" />
+<rect x="64" y="0" width="66" height="20" rx="2" class="wd-node wd-node--done" /><text x="97" y="13.5" text-anchor="middle" class="wd-lbl wd-lbl--inv">DETECTION</text>
+<line x1="130" y1="10" x2="139" y2="10" class="wd-ln" marker-end="url(#wd3-a)" />
+<rect x="142" y="0" width="34" height="20" rx="2" class="wd-node wd-node--done" /><text x="159" y="13.5" text-anchor="middle" class="wd-lbl wd-lbl--inv">CNN</text>
+<text x="188" y="13.5" class="wd-lbl wd-lbl--status">DONE</text>
+<path d="M159 20 V32 H24 V45" class="wd-ln" marker-end="url(#wd3-a)" />
+<rect x="4" y="48" width="40" height="20" rx="2" class="wd-node" /><text x="24" y="61.5" text-anchor="middle" class="wd-lbl">LSTM</text>
+<line x1="44" y1="58" x2="53" y2="58" class="wd-ln" marker-end="url(#wd3-a)" />
+<rect x="56" y="48" width="70" height="20" rx="2" class="wd-node" /><text x="91" y="61.5" text-anchor="middle" class="wd-lbl">DASHBOARD</text>
+<text x="188" y="61.5" class="wd-lbl wd-lbl--status">IN PROGRESS</text>
+</g></svg>
+          <p class="where-card__caption">Detection and CNN done; LSTM and dashboard underway.</p>
+          <details class="where-card__more">
+            <summary>Read more</summary>
+            <ul class="status-list">
+              <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">Face and pose detection</span></li>
+              <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">CNN trained on pain expressions</span></li>
+              <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">LSTM pain score</span></li>
+              <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">Live pipeline into the carer dashboard</span></li>
+              <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">The 8cm cube, hardware arrived for assembly</span></li>
+            </ul>
+          </details>
+        </div>
+        <div class="stat-block where-card">
+          <span class="metadata">04 · WHAT'S NEXT</span>
+          <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Live video in, alerts out.</h3>
+          <svg class="wd" viewBox="0 0 260 96" role="img" aria-labelledby="wd4-t"><title id="wd4-t">Timeline from now, to the 7 October showcase, to planned work after it.</title><defs><marker id="wd4-a" viewBox="0 0 6 6" refX="5.5" refY="3" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0.5 0.5 L5.5 3 L0.5 5.5" class="wd-ln" /></marker></defs><rect x="4" y="30" width="48" height="20" rx="2" class="wd-node" /><text x="28" y="43.5" text-anchor="middle" class="wd-lbl">NOW</text>
+<line x1="52" y1="40" x2="97" y2="40" class="wd-ln" marker-end="url(#wd4-a)" />
+<rect x="100" y="30" width="60" height="20" rx="2" class="wd-node wd-node--pulse" /><text x="130" y="43.5" text-anchor="middle" class="wd-lbl">7 OCT</text>
+<text x="130" y="66" text-anchor="middle" class="wd-lbl wd-lbl--muted">SHOWCASE</text>
+<line x1="160" y1="40" x2="205" y2="40" class="wd-ln wd-dash" marker-end="url(#wd4-a)" />
+<rect x="208" y="30" width="48" height="20" rx="2" class="wd-node wd-dash" /><text x="232" y="43.5" text-anchor="middle" class="wd-lbl">AFTER</text>
+<text x="232" y="66" text-anchor="middle" class="wd-lbl wd-lbl--muted">PLANNED</text></svg>
+          <p class="where-card__caption">Live demo at the showcase, then real rooms.</p>
+          <details class="where-card__more">
+            <summary>Read more</summary>
+            <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Before the 7 October showcase: finish the LSTM and wire everything into one live loop. After that: environmental sensors, and testing how a clinic dataset holds up in a dark bedroom.</p>
+          </details>
+        </div>
+      </div>
+      <a href="/project.html" class="link-action" style="margin-top:44px">
+        <span>Read the full project</span>
+        <span aria-hidden="true" class="link-action__arrow">→</span>
+      </a>
+      <p style="margin:32px 0 0;max-width:68ch;font:400 14px/1.6 var(--font-sans);color:var(--ink-muted)">We'd rather show the project at this stage than wait for one that looks finished.</p>
+    </div>
+  </section>
+</body>
+</html>

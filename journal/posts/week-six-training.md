@@ -2,7 +2,7 @@
 layout: post.njk
 permalink: "journal/posts/week-six-training.html"
 title: "Week six: training the CNN for the first time, and the LSTM that should have beaten it"
-description: "The CNN had never been trained: its backbone was fully frozen. I trained it, then the LSTM on top of it. The LSTM currently trails the CNN on the test set, and I don't know why yet."
+description: "The CNN had never been trained: its backbone was fully frozen. I trained it, then the LSTM on top of it. The LSTM trails the CNN on the test set, and figuring out why is the next thing I'm digging into."
 ogDescription: "Pulse journal · Engineering · 27 September 2026 · Nay Chi"
 category: "ENGINEERING"
 date: 2026-09-27T18:00:00Z
@@ -38,7 +38,7 @@ So I trained it, with three changes:
 
 Over 10 epochs, validation MSE settled between 0.5 and 0.6, with the best checkpoint at epoch 7 (0.519). Training MSE stayed noisier the whole way through. That is expected: the weighted loss makes each rare pain frame count for much more, so how many of them land in a given batch swings the batch loss a lot.
 
-On the test set, the best checkpoint landed at **[TODO: CNN TEST MSE, UNCONFIRMED]**.
+The CNN's test MSE is still being confirmed.
 
 ## The LSTM, and the gap
 
@@ -53,4 +53,4 @@ Right now it doesn't. On the test set, the LSTM trails the CNN's frame-level num
 
 On validation the two are close, and the LSTM is slightly ahead: 0.502 against the CNN's 0.519. On test the order flips. A chart with only train and validation curves would hide the most important thing about this model right now, so I'm saying it here.
 
-I haven't explained the gap yet. My leading suspicion is the split rather than the model. With 25 subjects, [which people end up in the test set moves the number a lot](/journal/posts/shape-of-pain.html), and a small test split can make a reasonable model look bad (or a bad one look reasonable). But that is a hypothesis, not a finding, and I'm still working through it. Until I can say which it is, the honest summary is: the LSTM currently underperforms the CNN, and I don't know why.
+I haven't explained the gap yet. My leading suspicion is the split rather than the model. With 25 subjects, [which people end up in the test set moves the number a lot](/journal/posts/shape-of-pain.html), and a small test split can make a reasonable model look bad (or a bad one look reasonable). But that is a hypothesis, not a finding, and I'm still working through it. Until I can say which it is, the honest summary is: the LSTM currently underperforms the CNN, and pinning down why is what I'm working on now.

@@ -18,6 +18,11 @@
 import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 
 // ---- Tune these ----
+// false: no thinking stage. The shutter opens straight onto the glide and
+// the Turn, with no hold, no heartbeat and no sparks; everything else (the
+// shutter, the glide, the Turn, the glow) is unchanged. true: the full
+// rocking-and-heartbeat hold before the glide.
+const ENABLE_HEARTBEAT = true;
 const BPM = 72;                          // heartbeat: one lub-dub every 60/72 = 0.83s
 const HOLD_SECONDS = 2;                  // the cube thinks at screen centre for this long after the shutter
 const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
@@ -73,10 +78,10 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
    HOLD_SECONDS are. The rate ramps up with a smoothstep over [QS, H]; the
    integral of a smoothstep over [0, 1] is x^3 - x^4/2.
    --------------------------------------------------------------------- */
-const H = AP + HOLD_SECONDS;
+const H = AP + (ENABLE_HEARTBEAT ? HOLD_SECONDS : 0);
 const TURN = H + MOVE_SECONDS;
 const SETTLE = TURN + D;
-const END = SETTLE + BEAT;
+const END = ENABLE_HEARTBEAT ? SETTLE + BEAT : SETTLE;   // with no beat there is nothing left to decay
 export const INTRO_SECONDS = END;        // from the first frame until the beat has fully decayed
 const QW = BEAT;
 const QS = H - QW;
@@ -102,6 +107,7 @@ function sinceLub(t) {
   return (ph - Math.floor(ph)) * BEAT / (1 + QUICKEN * smoothstep(QS, H, t));
 }
 function beatAmp(t) {
+  if (!ENABLE_HEARTBEAT) return 0;
   const a = TURN + 0.5 * D;
   if (t <= a) return 1;
   if (t >= END) return 0;

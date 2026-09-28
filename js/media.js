@@ -14,7 +14,7 @@ function applyFilter(type) {
   });
   groups.forEach((g) => {
     const anyVisible = Array.from(g.querySelectorAll('.media-item')).some((li) => !li.hidden);
-    g.hidden = !anyVisible;
+    g.hidden = type !== 'ALL' && !anyVisible;   // a group with prose but no items (Week 4) still shows under Everything
   });
 }
 
