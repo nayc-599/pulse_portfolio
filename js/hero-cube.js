@@ -23,9 +23,10 @@ import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 // shutter, the glide, the Turn, the glow) is unchanged. true: the full
 // rocking-and-heartbeat hold before the glide.
 const ENABLE_HEARTBEAT = true;
-const BPM = 96;                          // heartbeat: one lub-dub every 60/96 = 0.625s
+const BPM = 40;                          // slow and deliberate: one lub-dub every 1.5s
 const HOLD_BEATS = 3;                    // the cube thinks at screen centre for exactly this many
-                                          // complete lub-dub cycles, back to back, then moves on
+                                          // complete lub-dub cycles, back to back, then moves on:
+                                          // one paced motion segment per beat, see holdMotion() below
 const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
 // --------------------
 
@@ -35,11 +36,9 @@ const TAU = Math.PI * 2;
 const AP = 0.9;                          // the shutter opens over 0.9s
 const D = 2.2;                           // the Turn
 const BEAT = 60 / BPM;
-const ROCK_DEG = 25;                     // yaw sway, +/- degrees
-const ROCK_PERIOD = 6;                   // one left-right-left swing per 6s (independent of the heart)
-const SWAY_PERIOD = ROCK_PERIOD / 1.618; // pitch sway, a golden-ratio period so the two never line up
+const ROCK_DEG = 25;                     // peak yaw swing in a rotate or rock motion segment, +/- degrees
 const PITCH0 = 14 * Math.PI / 180;       // fixed downward look so the top face shows
-const SWAY = 3.5 * Math.PI / 180;        // pitch sway on top of that
+const SWAY = 3.5 * Math.PI / 180;        // peak pitch nod added in the beat-3 mix segment
 const CUBE_SIZE = 1.1;                   // cube half-width, in half-widths of the 12-cell front block
 const FOCAL = 6;                         // camera distance, in cube half-widths
 
@@ -66,12 +65,15 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
    Timeline, in seconds from the first frame (defaults in brackets):
      0 .. AP             the shutter opens at screen centre [0 - 0.9]
      AP .. H             the cube thinks at screen centre: HOLD_BEATS complete
-                         lub-dub cycles, back to back, at a constant pace [0.9 - 2.775]
-     H                   the HOLD_BEATS-th lub lands exactly here: the glide starts on it
-     H .. TURN           the glide up into the face's place [2.775 - 3.475]
-     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.475 - 5.675]
+                         lub-dub cycles, back to back, at a slow, constant
+                         pace, each one paired with its own motion segment
+                         in holdMotion() below [0.9 - 5.4]
+     H                   the HOLD_BEATS-th beat and its motion both finish
+                         exactly here, at rest: the glide starts on it
+     H .. TURN           the glide up into the face's place [5.4 - 6.1]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [6.1 - 8.3]
      TURN + D/2 .. END   the beat decays over about one beat as the face
-                         lands, leaving the breathing underneath [4.575 - 6.3]
+                         lands, leaving the breathing underneath [7.2 - 9.8]
 
    The heart's phase is linear in t and anchored at AP, so the hold's first
    lub lands the moment the cube appears (t = AP) and every later one lands
@@ -423,20 +425,45 @@ export function createCubeIntro(root, grid) {
     }
   }
 
-  // The cube: thinking, then the Turn. Yaw and pitch sway; at the Turn both
-  // are multiplied by an ease-in-out envelope that reaches 0 over the first
-  // 55% of it, so the rocking arrives at rest with zero velocity. Front
-  // dots then fly home centre-out; back and side dots fade, travel unseen
-  // and land as whatever paint() will draw there. On each dot, before
-  // rotation: the heartbeat's radial push and light (delayed by distance
-  // from the front face's centre, so each beat ripples back over the cube),
-  // shimmer, and sparks. Perspective projection, x*f/(f - z).
+  // The whole-cube orientation during the hold: three motion segments, one
+  // per heartbeat, each exactly BEAT seconds long and paired with the lub
+  // that opens it (segment k spans [AP + k*BEAT, AP + (k+1)*BEAT)):
+  //   beat 1 (k=0) rotate   a single decisive yaw turn, out and back
+  //   beat 2 (k=1) rock     one full side-to-side yaw rock
+  //   beat 3 (k=2) both     a smaller rotate and a smaller rock together,
+  //                         plus a nod on the pitch axis
+  // rotatePulse and rockCycle are each individually at rest, zero position
+  // and zero velocity, at both ends of their own segment (sin(pi*ease(u))
+  // and ease(u) share that property at u=0 and u=1; sin(TAU*u)*sin(pi*u)
+  // does too, since sin(TAU*1)=0 kills its end derivative same as its
+  // start). So segments splice together with no jump, and the third beat's
+  // motion is already sitting at rest exactly when it lands on H, with
+  // nothing left to decay: the glide can start the instant it does.
+  function holdMotion(t) {
+    const s = t - AP;
+    if (s < 0 || s >= HOLD_BEATS * BEAT) return { yaw: 0, tiltSway: 0 };
+    const seg = Math.min(HOLD_BEATS - 1, Math.floor(s / BEAT));
+    const u = (s - seg * BEAT) / BEAT;
+    const rotatePulse = Math.sin(Math.PI * ease(u));
+    const rockCycle = Math.sin(TAU * u) * Math.sin(Math.PI * u);
+    const deg = ROCK_DEG * Math.PI / 180;
+    if (seg === 0) return { yaw: deg * rotatePulse, tiltSway: 0 };
+    if (seg === 1) return { yaw: deg * rockCycle, tiltSway: 0 };
+    return { yaw: deg * (0.5 * rotatePulse + 0.6 * rockCycle), tiltSway: SWAY * rockCycle };
+  }
+
+  // The cube: thinking, then the Turn. Front dots then fly home centre-out;
+  // back and side dots fade, travel unseen and land as whatever paint()
+  // will draw there. On each dot, before rotation: the heartbeat's radial
+  // push and light (delayed by distance from the front face's centre, so
+  // each beat ripples back over the cube), shimmer, and sparks. Perspective
+  // projection, x*f/(f - z).
   function cube(t, bright, tau, amp) {
     const buf = grid.buf;
     const u = clamp((t - TURN) / D, 0, 1);
     const settle = 1 - ease(clamp(u / 0.55, 0, 1));
-    const yaw = (ROCK_DEG * Math.PI / 180) * Math.sin(TAU * t / ROCK_PERIOD) * settle;
-    const tilt = (PITCH0 + SWAY * Math.sin(TAU * t / SWAY_PERIOD + 1.1)) * settle;
+    const { yaw, tiltSway } = holdMotion(t);
+    const tilt = PITCH0 * settle + tiltSway;
     const cY = Math.cos(yaw), sY = Math.sin(yaw), cP = Math.cos(tilt), sP = Math.sin(tilt);
     const h = 6 * pitch * CUBE_SIZE, f = FOCAL * h;
     const live = liveSparks(sparks, t);
