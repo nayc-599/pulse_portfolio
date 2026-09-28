@@ -23,8 +23,8 @@ import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 // shutter, the glide, the Turn, the glow) is unchanged. true: the full
 // rocking-and-heartbeat hold before the glide.
 const ENABLE_HEARTBEAT = true;
-const BPM = 72;                          // heartbeat: one lub-dub every 60/72 = 0.83s
-const HOLD_SECONDS = 2;                  // the cube thinks at screen centre for this long after the shutter
+const BPM = 96;                          // heartbeat: one lub-dub every 60/96 = 0.625s
+const HOLD_SECONDS = 1.5;                // the cube thinks at screen centre for this long after the shutter
 const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
 // --------------------
 
@@ -65,13 +65,13 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
 /* ---------------------------------------------------------------------
    Timeline, in seconds from the first frame (defaults in brackets):
      0 .. AP             the shutter opens at screen centre [0 - 0.9]
-     AP .. H             the cube thinks at screen centre [0.9 - 2.9]
+     AP .. H             the cube thinks at screen centre [0.9 - 2.4]
      QS .. H             its heart quickens over the hold's last beat
      H                   a lub lands exactly here: the glide starts on it
-     H .. TURN           the glide up into the face's place [2.9 - 3.6]
-     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.6 - 5.8]
+     H .. TURN           the glide up into the face's place [2.4 - 3.1]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.1 - 5.3]
      TURN + D/2 .. END   the beat decays over about one beat as the face
-                         lands, leaving the breathing underneath [4.7 - 6.63]
+                         lands, leaving the breathing underneath [4.2 - 5.93]
 
    The heart's phase is an exact function of t (the integral of its rate),
    anchored so that phase(H) = 0: a lub always lands on H, whatever BPM and
