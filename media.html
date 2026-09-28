@@ -113,7 +113,37 @@ extraScripts:
       <span class="metadata">MILESTONE · WEEK 4</span>
       <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 4: reading the data</h2>
     </div>
-    <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Week 4 was mostly reading the dataset before anything was trained: indexing every frame, and plotting how pain intensity rises and falls across a sequence. Pain turned out to build and hold rather than spike, which told us the sequence model was the right shape. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></p>
+    <p style="margin:0 0 24px;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Week 4 was mostly reading the dataset before anything was trained: indexing every frame, and plotting how pain intensity rises and falls across a sequence. Pain turned out to build and hold rather than spike, which told us the sequence model was the right shape. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></p>
+    <ul class="media-grid">
+      <li class="media-item" data-type="CHARTS" style="min-width:0">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button type="button" class="media-item__open" data-type="CHART" data-date="13 SEP 2026" data-ratio="1289 / 390" data-slot="CHART · PSPI DISTRIBUTION" data-caption="How pain intensity is distributed across all 48,398 frames: almost all of them score zero, on both a linear and a log scale." data-src="/media/pspi_info.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+            <span class="media-thumb hover-lift">
+              <img src="/media/pspi_info.png" alt="Two histograms of pain intensity across all frames, linear and log scale, both dominated by a large bar at zero." />
+            </span>
+          </button>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">How pain intensity is distributed across all frames: almost all of them score zero. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></span>
+            <span class="metadata">13 SEP 2026</span>
+          </span>
+        </div>
+      </li>
+      <li class="media-item" data-type="CHARTS" style="min-width:0">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button type="button" class="media-item__open" data-type="CHART" data-date="13 SEP 2026" data-ratio="1189 / 440" data-slot="CHART · SELF-REPORT VS FACIAL SIGNAL" data-caption="How closely a patient's own pain report, and a trained observer's rating, agree with what the facial signal shows." data-src="/media/VAS_OPR_vs_facial_signal.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
+            <span class="media-thumb hover-lift">
+              <img src="/media/VAS_OPR_vs_facial_signal.png" alt="Two scatter plots comparing peak facial pain signal against patient self-report and against a trained observer's rating." />
+            </span>
+          </button>
+          <span style="display:flex;flex-direction:column;gap:6px">
+            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
+            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">What a patient reports against what their face shows: the two only agree moderately, even by a trained observer's reading. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></span>
+            <span class="metadata">13 SEP 2026</span>
+          </span>
+        </div>
+      </li>
+    </ul>
   </section>
 
   <section class="media-group" aria-label="Week 6: models trained, hardware arrives" style="flex-direction:column;gap:24px">

@@ -13,6 +13,8 @@ excerpt: "What UNBC-McMaster actually contains, and the honest distance between 
 motif: ring
 listMotif: scatter
 chainOrder: 3
+thumb: /media/pspi_info.png
+thumbAlt: "Two histograms of how pain intensity is distributed across all frames in the dataset, linear and log scale, both dominated by a large bar at zero."
 ---
 Every number we report at the showcase will have been measured on video of seated adults in a physiotherapy clinic, in good light, facing the camera, in acute pain that a clinician provoked on purpose. Our target is a person lying down, in the dark, at an oblique angle, possibly in pain that has lasted for weeks.
 

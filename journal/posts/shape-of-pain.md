@@ -13,6 +13,8 @@ excerpt: "Before training anything, I plotted 48,398 frames of the dataset. One 
 motif: scatter
 listMotif: scatter
 chainOrder: 2
+thumb: /media/VAS_OPR_vs_facial_signal.png
+thumbAlt: "Two scatter plots comparing peak facial pain signal per sequence against patient self-report and against a trained observer's rating."
 ---
 Dataset access came through on Monday. The first thing I did was not train anything.
 
