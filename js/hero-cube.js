@@ -22,7 +22,7 @@ import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 // the Turn, with no hold, no heartbeat and no sparks; everything else (the
 // shutter, the glide, the Turn, the glow) is unchanged. true: the full
 // rocking-and-heartbeat hold before the glide.
-const ENABLE_HEARTBEAT = true;
+const ENABLE_HEARTBEAT = false;
 const BPM = 96;                          // heartbeat: one lub-dub every 60/96 = 0.625s
 const HOLD_BEATS = 3;                    // the cube thinks at screen centre for exactly this many
                                           // complete lub-dub cycles, back to back, then moves on
