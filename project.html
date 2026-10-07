@@ -2,7 +2,7 @@
 layout: layout.njk
 permalink: "project.html"
 title: "The Project: Pulse"
-description: "How Pulse works: two branches for in bed and out of bed. Face and pose detection both run on their own, and integrating them into one pipeline feeding the dashboard is under way; the CNN is complete and the LSTM that scores pain is in development. The device, the dataset, its limits, and the roadmap to the showcase."
+description: "How Pulse works: two branches for in bed and out of bed. As of the 7 October 2026 showcase, Pulse is a working prototype with a live carer dashboard, and the camera cube is in progress. The device, the dataset, its limits, and the roadmap."
 ogTitle: "The Project: Pulse"
 ogDescription: "Two branches, one threshold, and an honest account of what a five-person student project can and cannot do."
 extraScripts:
@@ -408,7 +408,7 @@ extraScripts:
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a diagnosis. Pulse says a face looks like pain, at a confidence. A carer decides what that means.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a replacement for a carer, and never a reason to check on someone less often.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not reading meaning into posture yet. The pose branch tracks 17 body keypoints, but nothing classifies those into a fall or a limp.</li>
-          <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built. Week 8 is a software demo. We're not pretending otherwise.</li>
+          <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built yet. The camera cube is still in progress, so the working prototype doesn't run on it. We're not pretending otherwise.</li>
         </ul>
       </section>
 
@@ -417,8 +417,8 @@ extraScripts:
           <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
           <span class="eyebrow__label">08 · ROADMAP</span>
         </span>
-        <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started. We're four of them in.</h2>
-        <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week six" style="margin-top:8px">
+        <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started. We're eight of them in.</h2>
+        <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week eight" style="margin-top:8px">
           <svg class="roadmap-timeline__svg" data-roadmap-svg aria-hidden="true" focusable="false">
             <path class="roadmap-timeline__path--upcoming" data-path-upcoming />
             <path class="roadmap-timeline__path--done" data-path-done />
@@ -464,6 +464,22 @@ extraScripts:
                 <span class="metadata" style="color:var(--ink-muted)">DONE</span>
               </div>
             </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="right">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 6</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Wiring the pieces together: frame storage for the CNN pipeline, webcam integration, LSTM development, patient detection refinement</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
+            <li class="roadmap-timeline__row" data-status="done" data-side="left">
+              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
+              <div class="roadmap-timeline__content">
+                <span class="metadata">WEEK 7</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Integration: one live inference loop</p>
+                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+              </div>
+            </li>
             <li class="roadmap-timeline__row" data-status="current" data-side="right">
               <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
               <div class="roadmap-timeline__content">
@@ -471,25 +487,9 @@ extraScripts:
                   <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:10px;height:10px;display:block" />
                   <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--purple-500)">WE ARE HERE</span>
                 </span>
-                <span class="metadata">WEEK 6</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Wiring the pieces together: frame storage for the CNN pipeline, webcam integration, LSTM development, patient detection refinement</p>
-                <span class="metadata" style="color:var(--purple-500)">IN PROGRESS</span>
-              </div>
-            </li>
-            <li class="roadmap-timeline__row" data-status="planned" data-side="left">
-              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
-              <div class="roadmap-timeline__content">
-                <span class="metadata">WEEK 7</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Integration: one live inference loop</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
-              </div>
-            </li>
-            <li class="roadmap-timeline__row" data-status="planned" data-side="right">
-              <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
-              <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 8</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Showcase: live video in, alerts out</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Showcase: live video in, alerts out</p>
+                <span class="metadata" style="color:var(--purple-500)">REACHED · SHOWCASED 7 OCT 2026</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="planned" data-side="left">

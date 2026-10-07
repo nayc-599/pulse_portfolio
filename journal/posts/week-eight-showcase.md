@@ -1,23 +1,25 @@
 ---
 layout: post.njk
-permalink: "journal/posts/week-seven-dashboard.html"
-title: "Week seven: building the carer dashboard"
-description: "The carer dashboard is now a React and FastAPI web app with a real alert engine, a look borrowed from bedside monitors, and the pose team's work wired in."
+permalink: "journal/posts/week-eight-showcase.html"
+title: "Week 8: Showcase day"
+description: "This week we presented Pulse at the Monash DeepNeuron showcase. Where the project stands: a React and FastAPI carer dashboard, a real alert engine, a look borrowed from bedside monitors, and the pose team's work wired in."
 ogDescription: "Pulse journal · Build log · 7 October 2026 · Nay Chi"
 category: "BUILD LOG"
 date: 2026-10-07
 author: "Nay Chi"
 authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
 readTime: 5
-excerpt: "We rebuilt the carer dashboard as a proper web app, gave it an alert engine, and redesigned it to look less like a website and more like a bedside monitor."
+excerpt: "This week we presented Pulse at the Monash DeepNeuron showcase. Here is where it stands: a carer dashboard with an alert engine, redesigned to look less like a website and more like a bedside monitor."
 motif: lattice
 listMotif: lattice
 chainOrder: -5
-thumb: /media/week7-dashboard-redesign.png
+thumb: /media/week8-dashboard-redesign.png
 thumbAlt: "A design board of dark dashboard mockups in six rows, versions A to F: ward overviews with four bed cards, live views with a stick-figure skeleton and a red high pain alert banner, a night's history chart, and a settings page."
 thumbPos: "center bottom"
 ---
-Last week we decided to move the carer dashboard off Streamlit. This week we built what replaces it.
+This is the week we presented Pulse at the Monash DeepNeuron showcase, on 7 October 2026. This post covers where the project stands: the carer dashboard, its alerts, the redesign, the pose work, the hardware, and what comes next.
+
+In week six we decided to move the carer dashboard off Streamlit. Since then we have built what replaces it.
 
 ## The dashboard
 
@@ -43,7 +45,7 @@ The dashboard also records how long each incident took from alert to acknowledge
 The first version looked like a generic web app. It worked, but nothing about it said "this is watching a patient." So we redesigned it, using bedside monitors as the reference instead of websites.
 
 <figure>
-<img src="/media/week7-dashboard-redesign.png" alt="A design board of dark dashboard mockups in six rows, labelled Version A to Version F. The rows show ward overviews with four bed cards, a ward board list, camera views with stick-figure skeletons over a bed, a live view with a red high pain detected banner and an acknowledge button, a night's history chart for bed 01, and a thresholds and settings page. The bottom row, Version F, is labelled Final." loading="lazy" style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
+<img src="/media/week8-dashboard-redesign.png" alt="A design board of dark dashboard mockups in six rows, labelled Version A to Version F. The rows show ward overviews with four bed cards, a ward board list, camera views with stick-figure skeletons over a bed, a live view with a red high pain detected banner and an acknowledge button, a night's history chart for bed 01, and a thresholds and settings page. The bottom row, Version F, is labelled Final." loading="lazy" style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
 <figcaption>FIGURE 1 · THE REDESIGN BOARD. SIX VERSIONS OF THE DASHBOARD, A TO F. THE BOTTOM ROW, VERSION F, IS THE ONE WE BUILT.</figcaption>
 </figure>
 
@@ -65,11 +67,15 @@ The dashboard now shows the pose team's work alongside the pain score:
 
 The camera cube is being set up to stream video to the laptop running the dashboard, and the LCD pixel faces on the cube are in progress. Both are still being worked on, and we will write them up properly once they run reliably.
 
-## After the showcase
+## What comes next
 
-The showcase is the end of this stretch, not the end of the project. What comes next:
+The showcase is the end of this stretch, not the end of the project. After it:
 
 - **Calibration with more people**, so the thresholds hold up across a wider range of people.
 - **Closing the domain gap.** Our data comes from a lab, not a bedroom at night. [We wrote about that gap](/journal/posts/domain-gap.html) early on, and it is still the biggest open question.
 - **Room sensors**, to add information the camera can't give us.
 - **A browser-only demo of the dashboard**, so anyone can try it without our camera, our backend or our laptop.
+
+## From the showcase floor
+
+<!-- add photos and reflections after the event -->
