@@ -75,10 +75,10 @@ extraScripts:
           <span class="eyebrow__label">03 · HOW IT WORKS</span>
         </span>
         <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Two branches, because in bed and out of bed aren't the same problem.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch would read facial expression: a CNN, now complete, and an LSTM, in development in week six, scoring pain from the last 32 frames. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. Both detectors already run, each on its own, and the current work is bringing them into one live pipeline that feeds the carer dashboard. Beyond that, the next stage on either side is interpretation: the LSTM that would turn the CNN's features into a pain score, in development now, and whatever decides that a particular set of keypoints is a fall or a limp.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch reads facial expression: a CNN with a ResNet18 backbone extracts features from each aligned face crop, and an LSTM reads 30-frame windows of those features to predict a PSPI pain score from 0 to 16. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. The pipeline runs live, end to end: camera, face detection and alignment, the CNN and LSTM pain score, pose, posture and movement, the alert engine, and the carer dashboard. Fall detection is the one part that is still experimental: a prototype behind a Settings toggle that is off by default.</p>
 
         <figure style="margin:24px 0 0;padding:30px 26px;background:var(--bone-2);overflow-x:auto">
-          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH DETECTORS RUN STANDALONE, NEITHER INTERPRETATION LAYER DOES</figcaption>
+          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH RUN LIVE, END TO END</figcaption>
           <div style="display:flex;flex-direction:column;min-width:max-content">
             <div style="display:flex;align-items:center;gap:18px;padding:22px 0">
               <span class="pipeline-stage">
@@ -112,29 +112,29 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">03</span>
                   <span class="pipeline-stage__name">CNN</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">COMPLETE · WEEK 5</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">TRAINED · RUNS LIVE</span>
                 </span>
               </span>
               <span class="pipeline-arrow">&#8594;</span>
               <span class="pipeline-stage">
-                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:7px">
+                <span class="pixel-grid" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">04</span>
                   <span class="pipeline-stage__name">LSTM</span>
-                  <span class="pipeline-stage__state">IN PROGRESS · WEEK 6</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">TRAINED · RUNS LIVE</span>
                 </span>
               </span>
               <span class="pipeline-arrow">&#8594;</span>
               <span class="pipeline-stage">
-                <span class="pixel-grid pipeline-stage__glyph--planned" data-pixel-grid data-pattern="ring" data-n="7" style="padding:7px">
+                <span class="pixel-grid" data-pixel-grid data-pattern="ring" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">05</span>
                   <span class="pipeline-stage__name">Alert decision</span>
-                  <span class="pipeline-stage__state">PLANNED · WEEK 7</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">DONE · RUNS LIVE</span>
                 </span>
               </span>
             </div>
@@ -147,7 +147,7 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">06</span>
                   <span class="pipeline-stage__name">Patient detection (pose)</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS STANDALONE</span>
+                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS LIVE</span>
                 </span>
               </span>
             </div>
@@ -173,7 +173,7 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face and crops it out. This part works and runs on its own today. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are built for: the CNN is complete, and the LSTM is in development this week. If there is no face, that usually means the patient is out of bed, which is the pose model's case. Each detector runs standalone, and the current work is connecting both into one live pipeline that feeds the carer dashboard, including that handoff between them. After that comes the layer that decides what each one is looking at; until then, nothing downstream acts on a detected face or body.</p>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face, aligns it and crops it out. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are built for. If there is no face, that usually means the patient is out of bed, which is the pose model's case. We connected both detectors into one live pipeline that feeds the carer dashboard, including the handoff between them, and the alert engine downstream acts on what each one finds.</p>
               <span class="metadata">FRAME → FACE CROP</span>
             </div>
           </li>
@@ -184,8 +184,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Complete as of week five. A convolutional network turns each crop into 512 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector. Training surfaced a class imbalance issue, which is now resolved.</p>
-              <span class="metadata">COMPLETE · WEEK 5</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A convolutional network with a ResNet18 backbone turns each aligned face crop into 512 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector. Training surfaced a class imbalance issue, which is resolved.</p>
+              <span class="metadata">TRAINED · RUNS LIVE</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -195,8 +195,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The CNN now generates these vectors, one per frame. Storing them frame by frame for the live pipeline is part of this week's work, and each one goes into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
-              <span class="metadata">IN PROGRESS · WEEK 6</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The CNN generates these vectors, one per frame. We built the step that stores them frame by frame for the live pipeline, and each one goes into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
+              <span class="metadata">DONE · RUNS LIVE</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -206,8 +206,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In development this week, not trained yet. The idea is a recurrent model that reads the last 32 vectors, about 1.1 seconds of video, and returns one confidence value between 0 and 1: change over time, not a snapshot.</p>
-              <span class="metadata">IN PROGRESS · WEEK 6</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A recurrent model reads 30-frame windows of feature vectors, about one second of video, and predicts a PSPI pain score from 0 to 16: change over time, not a snapshot. While the window is still filling, the CNN's score is used on its own as a fallback.</p>
+              <span class="metadata">TRAINED · RUNS LIVE</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -217,8 +217,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one works and runs on its own, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame. Bringing it and face detection into one pipeline that feeds the carer dashboard is the current work. Deciding what those keypoints mean is the next stage. There is no fall detection, no limp detection, nothing that turns a moving skeleton into an alert. That interpretation layer is the next piece of this branch to be written.</p>
-              <span class="metadata">17 KEYPOINTS · RUNS STANDALONE</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs live in the dashboard, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame, and the dashboard shows posture and movement from them. The pose team has also built a prototype fall detector. It scores evidence such as downward motion, a change in orientation and a transition into lying. It is integrated behind a Settings toggle that is off by default, and it is not clinically validated.</p>
+              <span class="metadata">17 KEYPOINTS · RUNS LIVE</span>
             </div>
           </li>
           <li>
@@ -228,8 +228,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Planned for week seven, alongside the rest of integration. The idea is a confidence compared against a threshold: above it, an alert goes out, below it, the room stays quiet. At this stage nothing feeds it: the face branch produces a confidence once the LSTM is trained on the CNN's output, and the pose branch produces keypoints rather than a decision about them.</p>
-              <span class="metadata">PLANNED · WEEK 7</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Done, and running live. The alert engine turns pain, movement, posture and camera status into OK, CHECK and URGENT patient alarms, plus technical alarms for when the camera is lost or the light is too low. An alert stays on screen until a carer acknowledges it, the audio pauses once they do, and the alert clears once readings stay back in range. The thresholds are demo defaults set through a calibration step, not clinical thresholds.</p>
+              <span class="metadata">DONE · RUNS LIVE</span>
             </div>
           </li>
         </ul>
@@ -242,7 +242,7 @@ extraScripts:
         </span>
         <h2 id="thr-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Above threshold, and only above threshold, an alert goes out.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below it, the room stays quiet. False alarms cost trust. A carer who is woken three times a night by a sneeze stops trusting the fourth alert, and the fourth alert is the one that matters. Everything about this decision is a trade.</p>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones: real numbers here will come from the LSTM, in development this week. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up. In the working dashboard, the LSTM predicts a PSPI pain score from 0 to 16, and the thresholds are demo defaults set through a calibration step, not clinical thresholds.</p>
 
         <figure style="margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:24px">
           <figcaption class="metadata">FIGURE 2 · THRESHOLD DEMO · 20 ILLUSTRATIVE CONFIDENCE VALUES</figcaption>
@@ -304,7 +304,7 @@ extraScripts:
             <span class="eyebrow__label">05 · THE DEVICE</span>
           </span>
           <h2 id="dev-h" style="margin:0;max-width:24ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A concept, not a product. We should say that plainly.</h2>
-          <p style="margin:0;max-width:60ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Right now Pulse is software running on a laptop with a webcam. This cube is where we're heading: a Raspberry Pi 5, a wide camera, and a round display, in about 8cm of warm plastic on a bedside table. Nothing clipped to the patient, no wires across the bed.</p>
+          <p style="margin:0;max-width:60ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Right now Pulse is software running on a laptop with a webcam. The camera cube is in progress, and it is where we're heading: a Raspberry Pi 5, a wide camera, and a round display, in about 8cm of warm plastic on a bedside table. Nothing clipped to the patient, no wires across the bed.</p>
           <span class="not-built-pill">CAD STAGE · NOT YET BUILT</span>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));column-gap:32px;row-gap:26px;margin-top:12px">
             <div class="stat-block" style="padding-top:18px">
@@ -321,7 +321,7 @@ extraScripts:
             </div>
             <div class="stat-block" style="padding-top:18px">
               <span class="metadata">SENSOR ARRAY</span>
-              <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Thermal, motion, distance, air quality. Roadmap, not demo.</p>
+              <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Room sensors for thermal, motion, distance and air quality. Planned, not built yet.</p>
             </div>
           </div>
         </div>
@@ -379,7 +379,7 @@ extraScripts:
         </span>
         <h2 id="data-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We train on a physiotherapy clinic and aim at a bedroom.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Our models are trained on a published clinical pain-expression dataset: video of adult patients in a clinical setting, with pain intensity coded frame by frame. It is licensed for non-commercial research and teaching only, and we use it under those terms.</p>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">The domain gap is real and we are not going to talk around it. That footage is seated adults, lit clinically, facing the camera, in acute pain provoked on purpose. Our target is a person lying down, in a dark room, at an oblique angle, possibly in chronic pain. We align faces before the CNN and augment with rotation and angle jitter. That narrows the gap. It does not close it, and no result we get at the showcase should be read as if it did.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">The domain gap is real and we are not going to talk around it. That footage is seated adults, lit clinically, facing the camera, in acute pain provoked on purpose. Our target is a person lying down, in a dark room, at an oblique angle, possibly in chronic pain. We align faces before the CNN and augment with rotation and angle jitter. That narrows the gap. It does not close it, and no result from our demo should be read as if it did.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px;margin-top:8px;max-width:820px">
           <div class="stat-block" style="padding-top:16px">
             <span class="metadata">SOURCE</span>
@@ -407,7 +407,7 @@ extraScripts:
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not clinically validated. Our numbers come from a research dataset, not from patients in a bedroom.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a diagnosis. Pulse says a face looks like pain, at a confidence. A carer decides what that means.</li>
           <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a replacement for a carer, and never a reason to check on someone less often.</li>
-          <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not reading meaning into posture yet. The pose branch tracks 17 body keypoints, but nothing classifies those into a fall or a limp.</li>
+          <li class="rule-top" style="padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not a reliable fall detector. Our fall detection is an unvalidated prototype, behind a Settings toggle that is off by default.</li>
           <li class="rule-top" style="border-bottom:1px solid var(--rule-bone-16);padding:16px 0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Not built yet. The camera cube is still in progress, so the working prototype doesn't run on it. We're not pretending otherwise.</li>
         </ul>
       </section>
