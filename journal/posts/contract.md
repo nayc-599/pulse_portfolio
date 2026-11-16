@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/contract.html"
 title: "Writing the contract between our CNN and our LSTM, before either exists"
 description: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the one-page contract we wrote to catch that before it costs us a debugging afternoon."
-ogDescription: "Pulse journal, Engineering, 28 August 2026, Nay Chi"
+ogDescription: "Pulse journal · Engineering · 28 August 2026 · Nay Chi"
 category: "ENGINEERING"
 date: 2026-08-28
 author: "Nay Chi"
-authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
+authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
 readTime: 10
 excerpt: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the contract we wrote to catch that in advance."
 motif: scatter
@@ -50,12 +50,12 @@ So we wrote one page now, ahead of training either model. Not a design document:
     assert window.shape == (WINDOW, FEATURE_DIM)
     assert abs(window.mean()) &lt; 0.5      <span style="color:var(--amber-dim)"># catches un-normalised input</span>
     return window</code></pre>
-<figcaption><span class="fig-num">FIGURE 1</span> The whole contract. Testing against it starts when the models are trained in weeks five and six.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · The whole contract. Testing against it starts when the models are trained in weeks five and six.</figcaption>
 </figure>
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/contract.png" alt="Excerpt from our planning document: a pipeline overview running raw frame to face detection, CNN, feature vector, LSTM, alert system and dashboard, above a table showing the CNN sees raw pixels and trains per frame while the LSTM never sees pixels and trains on windows of feature vectors." />
-<figcaption><span class="fig-num">FIGURE 2</span> The pipeline overview the contract sits inside: which stage sees pixels, and what each one is trained on.</figcaption>
+<figcaption><span class="fig-num">Figure 2</span> · The pipeline overview the contract sits inside: which stage sees pixels, and what each one is trained on.</figcaption>
 </figure>
 
 The assertion on the mean is the one I expect to matter most. It is crude, since a normalised window can legitimately drift, but the idea is that it should catch the un-normalised case within seconds instead of after an afternoon of staring at a flat line, assuming we actually remember to call it once there is code to call it on.

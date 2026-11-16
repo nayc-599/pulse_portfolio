@@ -8,7 +8,8 @@
     "featured: shown in the Showcase night block instead of the gallery. mosaic: a number gives its slice order in the banner (one per group where possible).",
     "people: team members shown, used in captions and labels. Nobody outside the team, no UNBC-McMaster content, no QR codes except our own poster's.",
     "fit: \"contain\" shows the whole image inside the 4:3 tile (charts, documents, diagrams) instead of cropping it.",
-    "order: lower comes first within a group (ties fall back to week). Current scheme: videos and photos of people or hardware (10s-20s), then screenshots, then charts and diagrams. The first 6 in a group show by default (3 on phones); the rest sit behind Show all."
+    "order: lower comes first within a group (ties fall back to week). Current scheme: videos and photos of people or hardware (10s-20s), then screenshots, then charts and diagrams. The first 6 in a group show by default (3 on phones); the rest sit behind Show all.",
+    "frame: true puts a chart or document with a white background in a 1px frame with 12px padding on the raised surface colour, in the tile and the viewer, so it doesn't glare in dark mode."
   ],
   "groups": [
     {
@@ -76,7 +77,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 30
+      "order": 30,
+      "frame": true
     },
     {
       "id": "pose-demo",
@@ -146,7 +148,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 30
+      "order": 30,
+      "frame": true
     },
     {
       "id": "ward-view",
@@ -163,7 +166,8 @@
       ],
       "featured": false,
       "mosaic": 3,
-      "order": 20
+      "order": 20,
+      "frame": true
     },
     {
       "id": "poster",
@@ -174,7 +178,7 @@
       "pdfSize": "1.6 MB",
       "width": 991,
       "height": 1400,
-      "caption": "Our poster for the MDN showcase",
+      "caption": "Our poster for the Monash DeepNeuron showcase",
       "week": 8,
       "alt": "The Pulse showcase poster, A3 portrait, on a purple Monash DeepNeuron background. Left column: an Aim section, a Progress report on the facial and pose models, the camera-module prototype and the dashboard demo, and Future goals on room sensors and the domain gap. A Results section shows a dashboard screenshot and two renders of the camera module. Right column: round photos of the team at the time, with names and roles, and a QR code linking to this website.",
       "people": [
@@ -213,7 +217,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 60
+      "order": 60,
+      "frame": true
     },
     {
       "id": "contract",
@@ -229,7 +234,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 40
+      "order": 40,
+      "frame": true
     },
     {
       "id": "skeletal-code",
@@ -245,7 +251,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 50
+      "order": 50,
+      "frame": true
     },
     {
       "id": "pspi-info",
@@ -261,7 +268,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 70
+      "order": 70,
+      "frame": true
     },
     {
       "id": "class-balance",
@@ -277,7 +285,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 80
+      "order": 80,
+      "frame": true
     },
     {
       "id": "training-curves",
@@ -293,7 +302,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 30
+      "order": 30,
+      "frame": true
     }
   ],
   "postsTodo": "TODO: add our LinkedIn showcase post here, e.g. { \"date\": \"2026-10-08\", \"title\": \"...\", \"source\": \"LinkedIn\", \"url\": \"https://www.linkedin.com/...\" }. The section stays hidden while this list is empty.",

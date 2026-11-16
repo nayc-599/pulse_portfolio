@@ -1,309 +1,230 @@
-# Pulse — Brand Kit
+# Pulse brand kit
 
-Reference for building new pages and surfaces that must match the Pulse site.
+The device direction. The site is dark-first and looks like the cube's own pixel screen. This file is the source of truth for `css/tokens.css` and `css/device.css`; if the two disagree, fix the code or update this file in the same change.
 
 ---
 
-## 1. Colour
+## 1. Personality
 
-### Core tokens
+**A calm night-light with a face.**
 
-| Token | Hex | Use |
-|---|---|---|
-| `--bone` | `#F4F1EA` | Default page background. The device shell colour. |
-| `--bone-2` | `#E8E3D8` | Alternating band background, form panels, figure plates, inline `code` fill. |
-| `--charcoal` | `#1C1A17` | Dark sections, footer, code blocks, figures, primary ink on bone, dark buttons. |
-| `--amber` | `#F5C86B` | The device's LED. Lit pixels, primary CTA fill, progress bar, focus ring. |
-| `--amber-dim` | `#8A7043` | Unlit-pixel base, arrows and separators inside charcoal figures. |
-| `--amber-deep` | `#6B5528` | Eyebrow text on bone, quote border, active nav rule. |
-| `--signal` | `#A03A1E` | Errors, invalid inputs, "not built" warnings, false-alarm figures. |
+Pulse sits on a bedside table in a dark room and watches so a carer doesn't have to. It should feel like something you'd be fine leaving on all night: warm, quiet, a little alive. It is not a medical console, a security camera or a tech demo.
 
-### Text on bone
+- Calm before clever. Nothing flashes, nothing competes for attention.
+- One warm light in a dark room. Amber is the only colour that glows.
+- Honest about what it is. A student research prototype, said plainly and often.
+- Alive, not busy. The face blinks and glances. Nothing else moves for the sake of moving.
 
-| Colour | Hex | Use | Contrast on `#F4F1EA` |
+---
+
+## 2. Colour
+
+The site has two modes with identical layouts; only colours change.
+
+- **Light** is the original cream scheme (`css/tokens.css`): cream background `#F4F1EA`, headings and primary text in warm charcoal `#2B2925` (12.9:1, not black), body `#4A453D` (8.4:1), muted `#5C574D` (6.4:1), the original amber. The home hero stays a dark band so the face sits on charcoal, as on the original site.
+- **Dark** is the device palette below (`css/device.css`, on `html.theme-device`).
+- **Choosing:** the system setting by default; a choice made with the switch overrides it and is saved in localStorage. A small script in `<head>` applies it before CSS paints, so there is no flash of the wrong mode.
+- **The switch:** an iOS-style toggle in the nav, right of the links: a 46 × 28px pill with a 24px white knob that slides in 200ms (no animation with reduced motion). Grey track `#8f897d` (3.1:1 against the cream header) with the knob left = light; honey track with the knob right = dark. A muted "Dark" label beside it. It is a real `<button role="switch" aria-checked>` labelled "Dark mode", with a 44px tap area and a visible focus ring.
+- Banners, photos and dashboard screenshots look the same in both modes.
+- Charts and documents with a white background (in posts and on Media) sit in a 1px line-colour frame with 12px padding on the raised surface colour, in both modes, so they don't glare in dark mode. On Media, mark them with `"frame": true` in `_data/media.json`; in posts, use `<figure class="figure--framed">`.
+
+### Dark palette
+
+| Name | Hex | Role | Contrast |
 |---|---|---|---|
-| Primary | `#1C1A17` | Headings, lead paragraphs, table keys | 15.2:1 |
-| Body | `#4A453D` | Body copy, list items, captions in prose | 8.3:1 |
-| Muted | `#5C574D` | Mono metadata labels, figcaptions, table headers | 6.4:1 |
-| Eyebrow | `#6B5528` | Section eyebrows, numbered labels | 6.3:1 |
-| Signal | `#A03A1E` | Validation messages | 6.1:1 |
+| Background | `#1b1a17` | Page background, footer, and the end of every banner fade. Warm charcoal, not black. | |
+| Surface | `#24221e` | Raised: figure panels, cards, strips, LED plates | |
+| Line | `#302d28` | Quiet lines: header and footer rules | |
+| Line 2 | `#423d35` | Frames, list rules, the Figure 1 connector | |
+| Heading | `#e6e0d4` | Headings, a step brighter than body so they lead | 13.2:1 on background, 12.1:1 on surface |
+| Body text | `#d9d2c5` | Body text and links (underlined) | 11.6:1 on background, 10.6:1 on surface |
+| Muted | `#9a9387` | Labels, captions, status lines, role lines, figure step numbers | 5.7:1 on background, 5.2:1 on surface |
+| Honey (accent) | `#e9bb63` | Only: the pixel face and figure icons, the small square markers, links on hover, focus rings, the active nav underline, the switch track when on. | 9.7:1 on background |
+| Dim pixel | `#998256` | Unlit pixels (at 12% opacity), so the grid stays faint but visible | |
+| Status red | `#e07a5f` | "Not built yet" flags and false alarms in the threshold demo | 5.9:1 on background |
+| Alarm colours | dashboard palette | Only where the dashboard itself is shown (screenshots). Never in site chrome. | |
 
-### Text on charcoal
+Rules:
 
-Alpha values are over `#1C1A17`.
-
-| Colour | Use | Contrast on `#1C1A17` |
-|---|---|---|
-| `#F4F1EA` | Headings, primary copy | 15.2:1 |
-| `rgba(244,241,234,0.86)` | Lead paragraph / hero subcopy | 11.5:1 |
-| `rgba(244,241,234,0.62)` | Secondary body, code comments area | 6.4:1 |
-| `rgba(244,241,234,0.55)` | Mono metadata, figcaptions, legal line | 5.3:1 |
-| `#F5C86B` | Figure step numbers, threshold readout | 10.9:1 |
-| `#A996FE` | Eyebrows and attribution copy on charcoal | 6.9:1 |
-
-### MDN purple ramp
-
-| Token | Hex | Use | Contrast |
-|---|---|---|---|
-| `--purple-700` | `#5433DB` | Link hover on bone | 6.5:1 on bone |
-| `--purple-500` | `#6845F0` | Links, MDN mark on bone, current-week marker | 5.1:1 on bone |
-| `--purple-400` | `#7854FC` | MDN lockup tint + attribution border/glow on charcoal | 3.7:1 — non-text only |
-| `--purple-300` | `#A996FE` | Eyebrows and attribution text on charcoal | 6.9:1 on charcoal |
-
-### Colour rules
-
-**Amber** means *the device is doing something*. It is the LED: lit pixels, the primary CTA, the reading-progress bar, the focus ring. Never as body text on bone (1.4:1) and never as a page or section background.
-
-**MDN purple** is identity only — links, the MDN mark, the footer attribution block, the single current-week marker. Never for device state, alerts, or as a section background.
-
-**Signal** `#A03A1E` is reserved for error, invalid, and not-built. Never decorative; never on charcoal (use `#F4F1EA` there and carry the meaning in the copy).
-
-Maximum two background colours per surface: `--bone` plus one of `--bone-2` or `--charcoal`.
+- The accent (honey `#e9bb63` in dark mode, the original amber in light mode) is rare. It marks the device (the face, figure icons, the square markers) and interaction (hover, focus, the active page). Paragraphs, labels, status lines, step numbers and role lines are never in the accent; they are Text or Muted.
+- Links are body text with an underline and turn the accent colour on hover.
+- There is no purple anywhere on the site. Links to Monash DeepNeuron look like every other link.
+- The Monash DeepNeuron mark is used as supplied, never recoloured: the official white mark in dark mode and in the footer. Light mode still uses the purple file until an official dark (charcoal) mark is supplied.
+- Text is Text or Muted. No alpha-muted text below the ratios above.
+- Lines and connectors in figures use Line 2, not the accent.
+- Banners fade to the background colour: page heroes behind their text, and the home closing banner fully over its bottom 35%, so it runs into the footer with no edge, border or gap. Text on the fade measures at least 5.1:1 (heading, large text) and 7.0:1 (links) at 375, 768 and 1440px.
+- The footer is the background colour, and the footer's pixel face sits straight on it with no plate.
 
 ---
 
-## 2. Typography
+## 3. Type
 
-| Family | Role | Source |
-|---|---|---|
-| General Sans (400, 500, 600) | Headings, body | `https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap` |
-| Space Mono (400, 700) | Metadata, eyebrows, labels, code, figcaptions | `https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap` |
+| Font | Role |
+|---|---|
+| Pixelify Sans 600 | The "Pulse" wordmark only. Never headings, never body. |
+| General Sans 400 / 500 | Headings, body, labels, buttons, navigation. Headings at 500, never heavier. |
+| Space Mono 400 | Real data only: figure numbers, week labels, timestamps, live dashboard values, code. |
 
-Stacks: `'General Sans', system-ui, sans-serif` · `'Space Mono', monospace`
-
-### Scale
-
-| Element | Size | Weight | Letter-spacing | Family |
-|---|---|---|---|---|
-| Page h1 (hero) | `clamp(40px,6vw,60px)/1.06` | 500 | `-0.03em` | Sans |
-| Page h1 (section hero) | `clamp(38px,5.4vw,58px)/1.07` | 500 | `-0.03em` | Sans |
-| Article h1 | `clamp(32px,5vw,48px)/1.1` | 500 | `-0.03em` | Sans |
-| h2 | `clamp(28px,3.6vw,38px)/1.15` | 500 | `-0.02em` | Sans |
-| Article h2 | `clamp(24px,3vw,30px)/1.2` | 500 | `-0.02em` | Sans |
-| h3 | `22px/1.3` | 500 | `-0.015em` | Sans |
-| Card title | `21–23px/1.25` | 500 | `-0.015em` | Sans |
-| Lead paragraph | `19px/1.65–1.7` | 400 | — | Sans |
-| Body | `17px/1.7` | 400 | — | Sans |
-| Body small | `15–16px/1.7` | 400 | — | Sans |
-| Stat numeral | `30px/1` | 500 | — | Sans |
-| Eyebrow | `11px/1` | 400 | `0.2em` | Mono, uppercase |
-| Metadata label | `10px/1–1.6` | 400 | `0.14em` | Mono, uppercase |
-| Nav item | `13px/1` | 400 | `0.1em` | Mono, uppercase |
-| Button | `12–13px/1` | 400 | `0.1–0.14em` | Mono, uppercase |
-| Filter label | `14px/1.2` | 400 | — | Sans, sentence case |
-| Table cell | `16px/1.5` | 400 | — | Sans |
-| Table cell (value) | `13px/1.6` | 400 | `0.06em` | Mono |
-| Code block | `13px/1.75` | 400 | — | Mono |
-| Inline code | `15px/1.4` | 400 | — | Mono, `#E8E3D8` fill, `2px 6px` pad |
-| Scroll cue | `10px/1` | 400 | `0.24em` | Mono, uppercase |
-
-### Body copy rules
-
-- Line-height `1.7` for body, `1.65` for lead, `1.15–1.3` for headings.
-- Measure: `68ch` article body · `52ch` hero and lead · `60ch` closing notes · `26ch` headline max · `30ch` footer blurb.
-- `text-wrap: pretty` on all `p`.
-- Headings never above weight 500. Bold inside body copy is weight 500 with `color:#1C1A17`, not 700.
-- Mono is never used for running prose — labels, data and code only.
+- Mono is data, not decoration. Section labels, eyebrows, status words and subheadings are General Sans in sentence case.
+- Figure captions are one line of General Sans, muted, sentence case: `Figure 1 · Two branches · both run live, end to end`. No spaced mono for the figure number.
+- Use ` · ` between parts of a label or metadata line (`Build log · 7 Oct 2026 · 5 min read`). Use normal punctuation in sentences.
+- Eyebrows are short page or section names only ("The project", "Build log", "Team", "Media"), never an organisation name. Same style everywhere: 8px marker, 14px General Sans 500, sentence case, heading colour, 9px gap, 18px above the heading.
+- Dates: "7 October 2026" in prose and headings; "7 Oct 2026" in compact meta lines, cards and labels (three-letter months, so "Sep").
+- Weeks: "Week 8" in text and labels; "WK 8" only on Media tiles.
+- Units: a space before the unit, lower case: "8 cm", "30 fps", "400 ms".
+- Quotes: curly ’ “ ” in visible text. The build converts them (`eleventy.config.js`, smartQuotes), leaving code, scripts and attributes alone.
+- Names: "Monash DeepNeuron" in full in visible text (never "MDN" or "Deep Neuron"); "Pulse"; page names Home, Project, Journal, Media, Team everywhere.
+- Long reading on dark: body at 18px or more, line-height about 1.6, about 70 characters per line.
+- Headline scale: `clamp(36px, 4.6vw, 54px)` for the home hero, `-0.03em` tracking, `text-wrap: balance`.
 
 ---
 
-## 3. Spacing and layout
+## 4. The face
 
-| Measure | Value |
-|---|---|
-| Content max-width | `1160px` |
-| Article max-width | `760px` |
-| Page gutter | `24px` |
-| Dark hero padding | `76–96px 24px 40–72px` |
-| Light section padding | `88px 24px` |
-| Main padding | `56–72px 24px 96px` |
-| Stack gap between major sections | `80px` (article), `56–64px` (page) |
-| Grid column gap | `40px` · row gap `36–44px` |
-| Card grid gap | `28px` |
-| Figure padding | `26–28px 22–24px 20–22px` |
-| Header padding | `12px 24px` |
-| Sticky offset | `top:88–96px` |
+The face is the brand. It lives on a 24 × 24 grid of square pixels (11 × 11 and 5 × 5 for small uses), drawn by `face()` in `js/pixel-grid.js`. The examples below were rendered from that function at 11 × 11 (`#` lit, `+` half-lit, `.` unlit).
 
-### Breakpoints
+**Happy** (resting)
+```
+. . . . . . . . . . .
+. . # # # . # # # . .
+. . # # # . # # # . .
+. . # # # . # # # . .
+. . . # . . . . # . .
+. . . + # # # # + . .
+. . . . . + + . . . .
+```
 
-No media queries. Everything reflows on intrinsic rules:
+**Blink** (every 3.5 to 8 s)
+```
+. . . . . . . . . . .
+. . . . . . . . . . .
+. . # # # . # # # . .
+. . . . . . . . . . .
+. . . # . . . . # . .
+. . . + # # # # + . .
+. . . . . + + . . . .
+```
 
-| Pattern | Rule |
-|---|---|
-| Card grids | `repeat(auto-fill,minmax(min(100%,280px),1fr))` |
-| Content blocks | `repeat(auto-fit,minmax(min(100%,200–260px),1fr))` |
-| Two-column sections | `display:flex; flex-wrap:wrap` with `flex:1 1 320–380px` |
-| Article + sidebar | sidebar `flex:0 1 200px`, body `flex:1 1 560px` |
-| Every flex/grid child | `min-width:0` |
-| Wide tables | wrapper `overflow-x:auto`, table `min-width:460–520px` |
+**Glance** (eyes move up to 2 cells; occasional, under a second)
+```
+. . . . . . . . . . .
+. # # # . # # # . . .
+. # # # . # # # . . .
+. # # # . # # # . . .
+. . . # . . . . # . .
+. . . + # # # # + . .
+. . . . . + + . . . .
+```
 
-Sibling groups always use `display:flex`/`grid` + `gap`, never margins or inline whitespace.
+**Sleepy** (eyes mostly closed and low, mouth flattening)
+```
+. . . . . . . . . . .
+. . . . . . . . . . .
+. . # # # . # # # . .
+. . . . . . . . . . .
+. . . + . . . . + . .
+. . . # # # # # # . .
+. . . . . + + . . . .
+```
+
+**Concerned** (eyes open, mouth flat)
+```
+. . . . . . . . . . .
+. . # # # . # # # . .
+. . # # # . # # # . .
+. . # # # . # # # . .
+. . . + + + + + + . .
+. . . # # # # # # . .
+. . . . . . . . . . .
+```
+
+**Heartbeat** (motion, not a still): a lub-dub at 96 bpm. On each beat the lit pixels brighten by up to 16%, the face scales by up to 2% and the glow by up to 60%; the dub lands just after the lub at 55% strength. Used only in the home hero intro.
+
+Grid rules:
+
+- Grids sit on a Surface plate (`#24221e`, 2px radius), except the footer's small face, which sits straight on the background.
+- Lit pixels are the accent with a soft glow in the same colour; unlit pixels are the dim pixel colour at 12%.
+- Pixels are square with a 1px radius. No circles, no gradients inside a pixel.
 
 ---
 
-## 4. Components
+## 5. Shape
 
-### LED pixel grid
-
-Square cells on a fixed grid. Lit = `#F5C86B` at opacity 1; unlit = `rgba(138,112,67,0.22)` (or `#F5C86B` at opacity `0.06` on charcoal plates). Cell `border-radius:1px`.
-
-| Property | Value |
-|---|---|
-| Glow (lit, component) | `0 0 max(2px, cell×0.8) rgba(245,200,107,0.34)` |
-| Glow (lit, hero) | `0 0 6px rgba(245,200,107,0.32)` |
-| Transition | `background 900ms`, `box-shadow 900ms` |
-| Mouth arc | `y = round(0.64n + 0.065n · sin(πt))`, span `0.24n → n−1−0.24n` |
-| Eyes | 3×3 blocks at `x = 0.22n` and `0.62n`, `y = 0.26n` |
-
-| Size | Cell / gap / pad | Use |
-|---|---|---|
-| 24 × 24 | 11 / 2 / — | Hero face (height-clamped to 6–11px) |
-| 14 × 14 | 14 / 3 / 22px | Large device portrait |
-| 14 × 14 | 9 / 3 / 18px | Featured journal entry |
-| 11 × 11 | 12 / 3 / 20px | 404 face |
-| 11 × 11 | 7 / 2 / 0 | Cube display |
-| 11 × 11 | 6 / 2 / 12px | Form success state |
-| 11 × 11 | 5 / 1 / 7px | Scale-figure device |
-| 7 × 7 | 6 / 2 / 9px | List motifs, team avatars |
-| 7 × 7 | 4 / 1 / 6px | Byline avatar |
-| 7 × 7 | 3 / 1 / 5px | Footer wordmark |
-| 5 × 5 | 3 / 1 / 4px | Header wordmark |
-
-Patterns: `face`, `neutral`, `asleep`, `lattice`, `scatter`, `ring`, `staircase`, `iris`. Non-face patterns are decorative motifs and take `aria-hidden`.
-
-**Charcoal plate rule:** every pixel grid sits on a `#1C1A17` plate with `border-radius:2px`. A grid never sits directly on bone — the unlit cells need the dark ground to read as a display. On charcoal sections the plate is the background itself.
-
-### Section eyebrows
-
-```
-[sparkle 11×11] [12px gap] EYEBROW TEXT
-```
-`display:flex; align-items:center; gap:9px`, margin-bottom `16–20px`.
-
-| Background | Glyph | Text |
-|---|---|---|
-| Bone / bone-2 | `assets/sparkle-purple.png` | `#6B5528` |
-| Charcoal | `assets/sparkle-p300.png` | `#A996FE` |
-
-Numbered form: `01 · THE PROBLEM`. Glyph is `aria-hidden` with empty alt.
-
-### Hairlines and dividers
-
-| Context | Value |
-|---|---|
-| On bone — block divider | `1px solid rgba(28,26,23,0.16)` |
-| On bone — list rows | `1px solid rgba(28,26,23,0.18)` |
-| On bone — table head, baselines | `1px solid rgba(28,26,23,0.3)` |
-| On bone — table rows | `1px solid rgba(28,26,23,0.14)` |
-| On charcoal | `1px solid rgba(244,241,234,0.14–0.18)` |
-| Header underline | `1px solid rgba(28,26,23,0.12)` |
-| Blockquote | `2px solid #6B5528`, `padding-left:24px` |
-| Not-built pill | `1px dashed #A03A1E`, `border-radius:999px`, `9px 16px` |
-
-Lists rule top-and-bottom: `border-top` on every `li` plus a closing empty `div` with `border-top`.
-
-### Buttons and links
-
-| Variant | Spec | Hover |
-|---|---|---|
-| Primary (dark bg) | `#F5C86B` fill, `#1C1A17` text, `15px 22px`, mono 13px/`0.1em` upper | `translateY(-3px)` |
-| Primary action (light bg) | no box. Sans 15px `#1C1A17`, `1px solid rgba(28,26,23,0.3)` bottom rule, `padding-bottom:5px`, `→` at `gap:10px` | `#6845F0` text + rule, arrow `translateX(4px)` |
-| Form submit (light bg) | transparent, `1px solid rgba(28,26,23,0.3)`, `#1C1A17`, `15px 22px` | `#6845F0` text + border |
-| Secondary (dark bg) | transparent, `1px solid rgba(244,241,234,0.4)`, `#F4F1EA` | border `#F5C86B`, `translateY(-3px)` |
-| Filter, unselected | no box. 8px LED marker `rgba(138,112,67,0.55)` + Sans 14px `rgba(244,241,234,0.6)`, `gap:10px`, row `gap:28px` | text `#F4F1EA` |
-| Filter, selected | 8px marker `#F5C86B` with `0 0 7px rgba(245,200,107,0.5)` + Sans 14px `#F4F1EA` | — |
-| Nav item | mono 13px/`0.1em`, `#4A453D`, `9px 12px`, `border-bottom:2px solid transparent` | `#1C1A17`, border `rgba(28,26,23,0.35)` |
-| Nav active | `#1C1A17`, `border-bottom:2px solid #6B5528` | — |
-| Inline link | `#6845F0` | `#5433DB` |
-| Standalone link | `#1C1A17`, `1px solid rgba(28,26,23,0.3)` underline | `#6845F0` both |
-| Text link (light on dark) | `#F4F1EA` | `#F5C86B` |
-| Ghost link | mono 12px/`0.14em` upper, `#4A453D`, `1px` bottom rule, `padding-bottom:4px` | `#1C1A17` both |
-
-All button transitions `900ms cubic-bezier(0.37,0,0.63,1)`. Buttons are square — no radius except the dashed pill. Small controls (filters, pagination, lightbox controls) carry no border or fill: state is an 8px LED marker, ink weight, or a bottom hairline.
-
-### Metadata labels and tags
-
-Mono, uppercase, `0.14em`, `10px`. Separator is ` · `. Standard forms:
-
-- `ENGINEERING · 28 AUG 2026 · 11 MIN READ`
-- `WEEK 8 · INTEGRATION`
-- `FIGURE 1 · INFERENCE PIPELINE`
-- `01 · THE PROBLEM`
-
-Colour: `#5C574D` on bone, `#6B5528` when it carries the eyebrow role, `rgba(244,241,234,0.55)` on charcoal.
-
-### MDN header lockup
-
-```
-[MDN mark 26px] [1px × 28px rule rgba(28,26,23,0.18)] [5×5 pixel grid] [Pulse / A DEEPNEURON PROJECT]
-```
-`gap:14px`. "Pulse" is Sans 19px/500 `-0.02em`; the sub-line is Mono 10px `0.14em` `#5C574D`. Header is `position:sticky; top:0; z-index:50`, `rgba(244,241,234,0.94)` + `backdrop-filter:blur(8px)`.
-
-### Footer attribution block
-
-Last cell of the footer grid: `assets/mdn-lockup-white.png` alone, `height:36px`, linked to deepneuron.org, alt "Monash Deep Neuron". No caption, border, glow or purple; `opacity:0.86` → `1` on hover. The footer is always charcoal, so no dark variant is needed.
-
-Footer shell: `#1C1A17`, `padding:72px 24px 40px`, grid `repeat(auto-fit,minmax(220px,1fr))`, `gap:48px`; legal strip `margin-top:56px`, `border-top:1px solid rgba(244,241,234,0.14)`.
+- **The pixel marker:** a single 8px square pixel in the accent colour (1px radius) in front of eyebrows and the hero kicker. It replaces the old sparkle everywhere.
+- **No buttons for links.** Anything that takes you somewhere is a plain text link: Text-colour text, 1px underline about 4px below, no background, border or padding box. On hover the text and underline turn amber. Only real form buttons (the contact form's submit) keep a box: a square 1px outline that turns amber on hover.
+- **Square corners.** Frames and cards have no radius. Pixels keep their 1px radius.
+- **Layout is unchanged from the cream site.** The device direction is a colour and type change; every page keeps its original sections and order. The one layout change is the home hero: face on the left, text on the right (stacked under 768px).
 
 ---
 
-## 5. Motion
+## 6. Photography
 
-Single easing curve: `cubic-bezier(0.37,0,0.63,1)`.
+- Real photos and real footage only, never illustrations or stock. Our own hardware, our own dashboard, us.
+- **Grade: neutral-warm.** Slightly desaturated (about 94%), a touch warm (red up about 3%, blue down about 7%), no crush. It replaces the earlier cool, dark grade so photos sit with the amber instead of fighting it.
+- Banners keep a the background gradient at the text edge so Text-colour text stays at AA or better.
+- Privacy before everything: no UNBC-McMaster frames, faces or data; nobody outside the team without their say; blur IDs, labels, addresses, other people's QR codes and screens; strip EXIF and XMP; originals stay in `uploads/originals/`, which is never published.
+
+---
+
+## 7. Motion
+
+One easing curve: `cubic-bezier(0.37, 0, 0.63, 1)`.
+
+**Home hero intro** (`js/hero-cube.js`, driven by `js/hero.js`): an eight-blade shutter opens at screen centre onto a dot cube, which glides from the centre to the face's place on the left, turns to face you and settles into the resting face; the hero text fades in as it arrives (2.4 s). About 4 s in all. The cube's heartbeat hold (a lub-dub at 96 bpm before the glide) is built but switched off with `ENABLE_HEARTBEAT = false`.
+
+**Resting face:** eyes follow the pointer (up to 2 cells across, 1.5 down), a blink every 4 to 8 s, brightness and glow breathing on a 10 s cycle, eyes close after 30 s with no input. On later visits in a session the face starts asleep and wakes on the first input or after 4.5 s; the text is shown at once.
 
 | Duration | Use |
 |---|---|
-| `260ms` | Lightbox fade-in |
-| `400ms` | Nav colour and rule |
-| `900ms` | Hover lifts, borders, pixel transitions |
-| `2400ms` | Hero copy fade-in |
-| `10s` | Breath cycle (glow, brightness, scroll cue) |
+| 260ms | Lightbox fade-in |
+| 400ms | Nav colour and rule |
+| 900ms | Hover colour and underline changes |
+| 2400ms | Hero copy fade-in |
+| 10 s | Breath cycle (glow, brightness, scroll cue) |
 
-Hero face constants: wake on first pointer/scroll/key, auto-wake `4500ms`; blink every `4000–8000ms` random, lid eased at `0.16`/frame, closed `130ms`; idle after `30000ms` of no input (brightness `0.34`, eyes closed); asleep `0.30`, awake `0.86–1.00` on the breath. Eye lerp `0.055`/frame, travel ±2 cells x, ±1.5 cells y — do not raise the range or lower the lag.
-
-Device cube: `rotateX(-14deg) rotateY(-60deg → +50deg)` linked to viewport progress.
-
-**Allowed:** hover lifts and colour transitions; the hero face (breath, blink, tracking, wake/idle); pixel-grid glances on hover; the reading-progress bar; the cube's scroll rotation; lightbox fade.
-
-**Not allowed:** scroll-driven narrative or reveal sequences, parallax, entrance animations on content, autoplay, looping background motion, animated gradients, spinners, marquees, count-ups. Total interactive count on the site is four: hero face, pipeline accordion, threshold slider, media lightbox.
+- The intro plays once per browser session; later visits start in the final state. Add `?intro=1` to the URL to replay it, ignoring the session and reduced motion (for checking and demos).
+- Any scroll, click, key press or resize during the intro skips to the end.
+- **Reduced motion:** the final state immediately: face awake and static, no tracking, blinks or glow animation.
+- **Allowed:** the face, hover changes, the threshold slider, the media viewer, the cube's scroll rotation.
+- **Not allowed:** parallax, scroll-driven reveals, autoplaying video with sound, looping background motion, animated gradients, spinners, count-ups.
 
 ---
 
-## 6. Assets
+## 8. Voice
 
-| File | Use |
-|---|---|
-| `assets/mdn-mark-white.png` | MDN mark on charcoal, when purple is too low-contrast |
-| `assets/mdn-mark-purple.png` | MDN mark on bone — header, team intro |
-| `assets/mdn-lockup-white.png` | Full MDN + AI lockup in white, footer credit only |
-| `assets/mdn-lockup-purple.png` | Full MDN + AI lockup in purple (currently unused) |
-| `assets/sparkle-purple.png` | Eyebrow glyph on bone / bone-2 |
-| `assets/sparkle-p300.png` | Eyebrow glyph on charcoal |
+Write the way a student would explain the project to a friend.
 
-Wireframe graphics — decorative only, `aria-hidden`, `pointer-events:none`, `position:absolute`, bleeding off one edge at `opacity 0.06–0.10`, never behind body text:
-
-| File | Tint | Use |
-|---|---|---|
-| `assets/wf-sphere-white.png` | bone | Charcoal heroes |
-| `assets/wf-net2-white.png` | bone | Footer |
-| `assets/wf-torus-white.png` | bone | Charcoal sections |
-| `assets/wf-net1-purple.png` | `#7854FC` | Charcoal heroes (Project, Journal) |
-| `assets/wf-orb-purple.png` | `#7854FC` | Charcoal heroes (Media) |
-| `assets/wf-melt-purple.png` | `#7854FC` | 404 |
-| `assets/wf-sphere-purple.png` | `#7854FC` | Spare |
-| `assets/wf-torus-purple.png` | `#7854FC` | Bone sections |
-| `assets/wf-net3-purple.png` | `#7854FC` | Spare |
-
-Image placeholders use `repeating-linear-gradient(135deg,#E8E3D8 0 8px,#DFD9CC 8px 16px)` on bone, `repeating-linear-gradient(135deg,#232120 0 10px,#2B2825 10px 20px)` on charcoal, with a Mono 10px `0.14em` `#5C574D` label naming what goes there.
+- First person plural: "we". Short, normal sentences. Specific facts and numbers.
+- Say what it is plainly: a research prototype built by students, not a medical device, not tested with patients.
+- No wordplay, aphorisms, setups and payoffs, "not X but Y" turns, rhetorical questions or lists of three for rhythm.
+- Avoid: journey, unlock, seamless, empower, leverage, robust, cutting-edge, delve, game-changer, at its core, it's worth noting, under the hood.
+- No em-dashes.
+- Use ` · ` between parts of a label or metadata line. Use normal punctuation in sentences.
 
 ---
 
-## 7. Accessibility
+## 9. Accessibility
 
-**Focus ring:** `:focus-visible { outline: 2px solid #F5C86B; outline-offset: 3px; }` — global, never removed, on both backgrounds.
+- Text at 4.5:1 or better everywhere; non-text boundaries at 3:1 where they carry meaning. The lowest text ratio on any page is 5.8:1 (Muted on Surface).
+- Focus ring: 2px outline in the accent colour, 3px offset, with a gap in the background colour, so it shows on the background, the surface and photos.
+- One `h1` per page, no skipped heading levels, every section labelled.
+- No sideways scroll at 375px.
 
-**Contrast minimums:** 4.5:1 for text, 3:1 for headline-scale type and non-text boundaries. Full-opacity ink only — no `color-mix` or alpha-muted type below the values tabulated in §1. `#F5C86B` and `#7854FC` are never text on bone.
+---
 
-**Reduced motion** (`prefers-reduced-motion: reduce`): hero face renders static — eyes open, full brightness, no tracking, no blink, no glow animation — and the copy is present immediately; the cube holds its initial rotation with no scroll listener; pixel grids do not blink or glance. Hover colour changes and the focus ring are retained.
+## 10. Don'ts
 
-**Structure:** one `h1` per page, no skipped heading levels. Every `section` carries `aria-labelledby` or `aria-label`. Accordions are `<button aria-expanded>`; the lightbox is `role="dialog" aria-modal="true"` with Escape and arrow-key handling. Decorative images take `alt=""` + `aria-hidden`. Form fields have real `<label for>`, `aria-invalid` on error, and error text in `#A03A1E` at 11px Mono. Visually hidden text uses `clip:rect(0 0 0 0)` with `1px` box, never `display:none`.
+- Don't use purple. Don't recolour the Monash DeepNeuron mark.
+- Don't add a second accent colour. Amber is the only one.
+- Don't use alarm colours (red, orange, green status colours) outside the dashboard.
+- Don't use Pixelify Sans for anything but the "Pulse" wordmark.
+- Don't use uppercase letter-spaced mono for labels that aren't data.
+- Don't put a pixel grid straight on the background (except the footer face); use the Surface plate.
+- Don't style links as buttons. Only real form buttons get a box.
+- Don't round frames or cards.
+- Don't put white charts or screenshots straight on the background; frame them.
+- Don't use illustrations, stock photos or AI-generated images.
+- Don't animate on scroll, add parallax or add entrance animations outside the home hero.
+- Don't change page layouts for the theme; it is colours and type only.
+- Don't call Pulse a medical device, imply it has been tested with patients, or overstate what runs live.
+- Don't write em-dashes.

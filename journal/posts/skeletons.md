@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/skeletons.html"
 title: "Skeletons before data: writing the loop ahead of the models"
 description: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
-ogDescription: "Pulse journal, Build log, 27 August 2026, Christopher"
+ogDescription: "Pulse journal · Build log · 27 August 2026 · Christopher"
 category: "BUILD LOG"
 date: 2026-08-27
 author: "Christopher"
-authorRole: "COMPUTER VISION · DATA"
+authorRole: "COMPUTER VISION · FACE & DATA"
 readTime: 5
 excerpt: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 motif: staircase
@@ -35,21 +35,21 @@ It felt like procrastination. It was the most useful ten days of the project so 
 
 <span style="color:var(--amber)">def</span> confidence(window):
     <span style="color:var(--amber)">return</span> float(np.clip(np.random.normal(<span style="color:var(--amber)">0.4</span>, <span style="color:var(--amber)">0.2</span>), <span style="color:var(--amber)">0</span>, <span style="color:var(--amber)">1</span>))</code></pre>
-<figcaption><span class="fig-num">FIGURE 1</span> Three functions that know nothing and still found four bugs.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · Three functions that know nothing and still found four bugs.</figcaption>
 </figure>
 
 The one decision worth copying is the **1 in 8 frames has no face** line. A stub that always succeeds tests nothing. A stub that fails at a realistic rate turns the missing-face path from a hypothetical into something you trip over on the first run.
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/skeletal_code.png" alt="Screenshot of a Colab notebook cell titled Transforms, defining train_transform with RandomHorizontalFlip, RandomRotation of 10 degrees, ColorJitter and Normalize, and a val_transform that only normalises." />
-<figcaption><span class="fig-num">FIGURE 2</span> The preprocessing the real models will slot into: augmentation on train, normalisation only on validation.</figcaption>
+<figcaption><span class="fig-num">Figure 2</span> · The preprocessing the real models will slot into: augmentation on train, normalisation only on validation.</figcaption>
 </figure>
 
 ## What it caught
 
 - **The buffer never drained.** On a missing face we skipped the frame but also skipped the buffer eviction, so the window silently held frames from ten seconds earlier.
 - **Alerts fired every frame.** Above threshold, we sent a notification per frame, thirty per second. We now debounce to one alert per 30-second window unless confidence rises materially.
-- **Timestamps came from the wrong clock.** The alert carried the time the notification was built, not the time of the frame that triggered it. Off by up to 400ms, which sounds small until a carer asks what happened when.
+- **Timestamps came from the wrong clock.** The alert carried the time the notification was built, not the time of the frame that triggered it. Off by up to 400 ms, which sounds small until a carer asks what happened when.
 - **Startup lied.** For the first 32 frames the window is not full, and we were happily returning a confidence for a partial window. It now reports `warming_up` instead.
 
 <blockquote class="pull-quote"><p>None of these are model bugs. All four would have looked like model bugs if we had found them a week later, with real weights in the loop.</p></blockquote>

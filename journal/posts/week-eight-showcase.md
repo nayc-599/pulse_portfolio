@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/week-eight-showcase.html"
 title: "Week 8: Showcase day"
 description: "This week we presented Pulse at the Monash DeepNeuron showcase. Where the project stands: a React and FastAPI carer dashboard, a real alert engine, a look borrowed from bedside monitors, and the pose team's work wired in."
-ogDescription: "Pulse journal, Build log, 7 October 2026, Nay Chi"
+ogDescription: "Pulse journal · Build log · 7 October 2026 · Nay Chi"
 category: "BUILD LOG"
 date: 2026-10-07
 author: "Nay Chi"
-authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
+authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
 readTime: 5
 excerpt: "This week we presented Pulse at the Monash DeepNeuron showcase. Here is where it stands: a carer dashboard with an alert engine, redesigned to look less like a website and more like a bedside monitor."
 motif: lattice
@@ -20,7 +20,7 @@ This is the week we presented Pulse at the Monash DeepNeuron showcase, on 7 Octo
 
 <figure>
 <img src="/media/showcase-team-demo.jpg" width="1800" height="1200" alt="Pulse team members talking with a visitor at the showcase booth, the Pulse carer dashboard visible on a large monitor behind them." decoding="async" style="width:100%;height:auto;aspect-ratio:3 / 2;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption><span class="fig-num">FIGURE 1</span> Explaining Pulse to visitors at the Monash DeepNeuron showcase, with the live dashboard running behind us.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · Explaining Pulse to visitors at the Monash DeepNeuron showcase, with the live dashboard running behind us.</figcaption>
 </figure>
 
 In week six we decided to move the carer dashboard off Streamlit. Since then we have built what replaces it.
@@ -48,9 +48,9 @@ The dashboard also records how long each incident took from alert to acknowledge
 
 The first version looked like a generic web app. It worked, but nothing about it said "this is watching a patient." So we redesigned it, using bedside monitors as the reference instead of websites.
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/week8-dashboard-redesign.png" alt="A design board of dark dashboard mockups in six rows, labelled Version A to Version F. The rows show ward overviews with four bed cards, a ward board list, camera views with stick-figure skeletons over a bed, a live view with a red high pain detected banner and an acknowledge button, a night's history chart for bed 01, and a thresholds and settings page. The bottom row, Version F, is labelled Final." loading="lazy" style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption><span class="fig-num">FIGURE 2</span> The redesign board. Six versions of the dashboard, A to F. The bottom row, version F, is the one we built.</figcaption>
+<figcaption><span class="fig-num">Figure 2</span> · The redesign board. Six versions of the dashboard, A to F. The bottom row, version F, is the one we built.</figcaption>
 </figure>
 
 What changed:

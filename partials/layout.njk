@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ title }}</title>
+<script>
+/* Light or dark, before any CSS paints: the visitor's saved choice, else the
+   system setting. Dark adds .theme-device (css/device.css). */
+(function(){var t=null;try{t=localStorage.getItem('pulse-theme')}catch(e){}
+var d=t==='dark'||(t!=='light'&&!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches));
+if(d)document.documentElement.classList.add('theme-device');})();
+</script>
+<title>{% if layout == "post.njk" %}{{ title | replace(r/[.]$/, "") }}: Pulse{% else %}{{ title }}{% endif %}</title>
 <meta name="description" content="{{ description }}">
 <meta property="og:title" content="{{ ogTitle or title }}">
 <meta property="og:description" content="{{ ogDescription or description }}">
@@ -14,6 +21,7 @@
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/components.css">
+<link rel="stylesheet" href="/css/device.css">
 <!-- Vercel Web Analytics (served by Vercel's edge at /_vercel/insights) -->
 <script>
 window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };

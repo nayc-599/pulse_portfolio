@@ -2,7 +2,7 @@
 // the real rendered position of each .roadmap-timeline__node rather than a
 // fixed viewBox, so it stays correct regardless of how tall any row's copy
 // turns out to be, and it re-measures on resize. The path is static: both
-// runs render in full, purple up to the current week and muted after it.
+// runs render in full, accent up to the current marker and muted after it.
 
 const root = document.querySelector('[data-roadmap-timeline]');
 

@@ -1,4 +1,34 @@
 export default function (eleventyConfig) {
+  // Curly quotes in visible text, at build time: ' -> ’ (or ‘ at the start
+  // of a quote), " -> “ ”. Only text between tags is touched; tag
+  // attributes (alt, aria-label, href...), and the contents of <script>,
+  // <style>, <pre>, <code> and <textarea>, are left exactly as written.
+  eleventyConfig.addTransform("smartQuotes", function (content) {
+    if (!(this.page.outputPath || "").endsWith(".html")) return content;
+    const parts = content.split(/(<[^>]*>)/);
+    let skip = 0;
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      if (part.startsWith("<")) {
+        const m = part.match(/^<(\/?)(script|style|pre|code|textarea)\b/i);
+        if (m) skip += m[1] ? -1 : 1;
+        if (skip < 0) skip = 0;
+        continue;
+      }
+      if (skip) continue;
+      // Templates and markdown write quotes as entities; decode those first
+      // (the curly forms need no escaping).
+      const text = part.replace(/&#39;|&#x27;|&apos;/g, "'").replace(/&quot;|&#34;|&#x22;/g, '"');
+      if (!/['"]/.test(text)) continue;
+      parts[i] = text
+        .replace(/(^|[\s(\[{\u2014\u2013-])'/g, "$1\u2018")
+        .replace(/'/g, "\u2019")
+        .replace(/(^|[\s(\[{\u2014\u2013-])"/g, "$1\u201C")
+        .replace(/"/g, "\u201D");
+    }
+    return parts.join("");
+  });
+
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("assets");
@@ -13,12 +43,15 @@ export default function (eleventyConfig) {
     md.renderer.rules.table_close = () => '</table>\n</div>\n';
   });
 
-  eleventyConfig.addFilter("dateDisplay", (value) => {
+  // One compact date format for meta lines and cards: "7 Oct 2026" (three-
+  // letter months, so September is "Sep", not en-GB's "Sept"). Prose writes
+  // dates out in full ("7 October 2026") by hand.
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const compactDate = (value) => {
     const d = value instanceof Date ? value : new Date(value + "T00:00:00Z");
-    return d
-      .toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" })
-      .toUpperCase();
-  });
+    return d.getUTCDate() + " " + MONTHS[d.getUTCMonth()] + " " + d.getUTCFullYear();
+  };
+  eleventyConfig.addFilter("dateDisplay", compactDate);
 
   // Display order (journal index, home page preview): newest date first.
   eleventyConfig.addCollection("posts", (collectionApi) =>
@@ -35,10 +68,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("findIndexByUrl", (arr, url) => arr.findIndex((p) => p.url === url));
   eleventyConfig.addFilter("limit", (arr, n) => arr.slice(0, n));
   // "BUILD LOG" -> "Build log": sentence case for labels stored in capitals.
-  eleventyConfig.addFilter("dateText", (value) => {
-    const d = value instanceof Date ? value : new Date(value + "T00:00:00Z");
-    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-  });
+  eleventyConfig.addFilter("dateText", compactDate);
   eleventyConfig.addFilter("sentence", (s) => {
     const t = String(s ?? "").toLowerCase();
     return t.charAt(0).toUpperCase() + t.slice(1);

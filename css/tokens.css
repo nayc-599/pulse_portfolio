@@ -29,7 +29,7 @@
   --placeholder-charcoal-alt: #2B2825;
 
   /* Text on bone */
-  --ink-primary: #1C1A17;
+  --ink-primary: #2B2925;              /* headings and primary text: warm charcoal, not black (12.9:1 on bone) */
   --ink-body: #4A453D;
   --ink-body-rgb: 74, 69, 61;
   --ink-muted: #5C574D;
@@ -43,13 +43,6 @@
   --ink-on-charcoal-55: rgba(var(--bone-rgb), 0.55);
   --amber-on-charcoal: #F5C86B;
 
-  /* MDN purple ramp */
-  --purple-700: #5433DB;
-  --purple-500: #6845F0;
-  --purple-400: #7854FC;
-  --purple-400-rgb: 120, 84, 252;
-  --purple-300: #A996FE;
-  --purple-300-rgb: 169, 150, 254;
 
   /* Hairlines and dividers (Brand Kit §4) */
   --rule-bone-16: rgba(var(--charcoal-rgb), 0.16);

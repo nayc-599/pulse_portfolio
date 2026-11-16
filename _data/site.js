@@ -1,6 +1,6 @@
 export default {
   // Single source for the header status line - edit here, it updates everywhere.
-  headerStatus: 'Week 8, prototype, showcased 7 Oct 2026',
+  headerStatus: 'Prototype · showcased 7 Oct 2026',
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Project', href: '/project.html' },
@@ -10,7 +10,7 @@ export default {
   ],
   footerNav: [
     { label: 'Home', href: '/' },
-    { label: 'The Project', href: '/project.html' },
+    { label: 'Project', href: '/project.html' },
     { label: 'Journal', href: '/journal/' },
     { label: 'Media', href: '/media.html' },
     { label: 'Team', href: '/team.html' },

@@ -25,7 +25,7 @@ extraScripts:
     <div class="page-hero__head">
       <span class="eyebrow" style="margin-bottom:18px">
         <span class="pixel-mark pixel-mark--on-dark" aria-hidden="true"></span>
-        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Build log, Monash DeepNeuron</span>
+        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Build log</span>
       </span>
       <h1 id="j-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">What we tried, what broke, what stayed.</h1>
     </div>
@@ -53,10 +53,10 @@ extraScripts:
       <a href="{{ featured.url }}" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:var(--ink-primary)">
         {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
         <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
-          <span class="metadata" style="color:var(--ink-eyebrow)"><span class="is-plain">Featured, {{ featured.data.category | lower }}</span>&nbsp;&nbsp;{{ featured.data.date | dateDisplay }}</span>
+          <span class="metadata" style="color:var(--ink-eyebrow)"><span class="is-plain">Featured · {{ featured.data.category | sentence }}</span> · {{ featured.data.date | dateDisplay }}</span>
           <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
           <span style="font:400 17px/1.7 var(--font-sans);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
-          <span class="metadata is-plain">{{ featured.data.author }}, {{ featured.data.readTime }} min read</span>
+          <span class="metadata is-plain">{{ featured.data.author }} · {{ featured.data.readTime }} min read</span>
           <span class="link-action" style="margin-top:6px">
             <span>Read the entry</span>
             <span aria-hidden="true" class="link-action__arrow">→</span>
@@ -66,7 +66,7 @@ extraScripts:
     </div>
   </section>
 
-  <section aria-label="All entries" class="wrap" style="padding:56px 24px 24px">
+  <section aria-label="All entries" class="wrap" style="padding:88px 24px 24px">
     <span data-entry-count class="metadata is-plain" style="display:block;margin-bottom:26px"></span>
     <ul style="list-style:none;margin:0;padding:0">
       {% for post in collections.posts %}
@@ -74,11 +74,11 @@ extraScripts:
         <a href="{{ post.url }}" class="journal-entry__link hover-shift">
           {{ journalThumb(post, 7, 6, 2) }}
           <span style="display:flex;flex-direction:column;gap:9px;min-width:0">
-            <span class="metadata"><span class="is-plain">{{ post.data.category | sentence }}</span>&nbsp;&nbsp;{{ post.data.date | dateDisplay }}</span>
+            <span class="metadata"><span class="is-plain">{{ post.data.category | sentence }}</span> · {{ post.data.date | dateDisplay }}</span>
             <span style="font:500 23px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
             <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body);max-width:70ch">{{ post.data.excerpt }}</span>
           </span>
-          <span class="metadata is-plain" style="text-align:right">{{ post.data.author }}, {{ post.data.readTime }} min</span>
+          <span class="metadata is-plain" style="text-align:right">{{ post.data.author }} · {{ post.data.readTime }} min</span>
         </a>
       </li>
       {% endfor %}

@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/three-models.html"
 title: "Three models, not one: our plan for splitting the pipeline"
 description: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
-ogDescription: "Pulse journal, Engineering, 19 August 2026, Aaron"
+ogDescription: "Pulse journal · Engineering · 19 August 2026 · Aaron"
 category: "ENGINEERING"
 date: 2026-08-19
 author: "Aaron"
-authorRole: "COMPUTER VISION · ALERTS"
+authorRole: "COMPUTER VISION · POSE & ALERTS"
 readTime: 6
 excerpt: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
 motif: lattice
@@ -20,9 +20,9 @@ The obvious architecture is one network: video in, pain confidence out, trained 
 
 The plan is three models instead: a face detector, a CNN feature extractor, and an LSTM over a rolling window, trained separately and frozen at inference once each one exists. Face detection is running already. The CNN and LSTM are weeks five and six on the roadmap, so this is the argument for the split, written down before either of them is trained rather than after.
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/workflow.png" alt="Flowchart on a dark background: Live Video Feed branches to Patient Detection and to CNN facial feature extraction, which feeds CNN plus RNN/LSTM pain detection; both branches flow into Alert System, then Dashboard / Frontend." />
-<figcaption><span class="fig-num">FIGURE 1</span> The planned flow. Pain detection is two models in series, not one, and it meets patient detection at the alert system.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · The planned flow. Pain detection is two models in series, not one, and it meets patient detection at the alert system.</figcaption>
 </figure>
 
 ## Why split
@@ -36,7 +36,7 @@ The plan is three models instead: a face detector, a CNN feature extractor, and 
 
 Two things, and I want them written down now rather than discovered by a judge in week eight.
 
-First, **the CNN will not be able to learn temporal cues.** It will see one frame at a time, so anything that only exists as motion, the speed a brow tightens, a wince that resolves in 200ms, has to survive being compressed into a per-frame description before the LSTM ever sees it. An end-to-end model could learn features specifically because they are useful over time. Ours will not be able to.
+First, **the CNN will not be able to learn temporal cues.** It will see one frame at a time, so anything that only exists as motion, the speed a brow tightens, a wince that resolves in 200 ms, has to survive being compressed into a per-frame description before the LSTM ever sees it. An end-to-end model could learn features specifically because they are useful over time. Ours will not be able to.
 
 Second, **two interfaces nobody will own yet.** A split pipeline has seams, and seams are where two reasonable people quietly disagree about normalisation if nobody catches it early. We do not have a fix for that beyond writing the interface down in advance and actually sticking to it, which is a weaker plan than I would like to admit.
 
@@ -48,7 +48,7 @@ lstm.eval();
 
 <span style="color:var(--amber)">with</span> torch.no_grad():          <span style="color:var(--amber-dim)"># the device should not learn the patient</span>
     conf = lstm(window)</code></pre>
-<figcaption><span class="fig-num">FIGURE 2</span> The intended pattern, at design stage.</figcaption>
+<figcaption><span class="fig-num">Figure 2</span> · The intended pattern, at design stage.</figcaption>
 </figure>
 
 <blockquote class="pull-quote"><p>People will probably assume the device learns the patient over time. It won't. The plan is for the weights to be fixed before the device is ever switched on.</p></blockquote>

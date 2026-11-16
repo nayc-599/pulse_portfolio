@@ -27,7 +27,7 @@ extraScripts:
     <div class="page-hero__head">
       <span class="eyebrow" style="margin-bottom:18px">
         <span class="pixel-mark pixel-mark--on-dark" aria-hidden="true"></span>
-        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Media, Monash DeepNeuron</span>
+        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Media</span>
       </span>
       <h1 id="m-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">Proof it's not just slides.</h1>
     </div>
@@ -47,7 +47,7 @@ extraScripts:
       </button>
     </div>
     <div class="media-featured__text">
-      <span class="metadata is-plain" style="color:var(--ink-eyebrow)">Week {{ featured.week }}, 7 October 2026</span>
+      <span class="metadata is-plain" style="color:var(--ink-eyebrow)">Week {{ featured.week }} · 7 Oct 2026</span>
       <h2 id="featured-title" class="media-featured__line">We demoed Pulse live at the Monash DeepNeuron showcase.</h2>
       <a href="/journal/posts/week-eight-showcase.html" class="link-action">
         <span>Read about the night</span>
@@ -81,7 +81,7 @@ extraScripts:
       {% set thumb = it.poster if it.type == "video" else it.src %}
       {% set label = "Play video: " if it.type == "video" else "Open full size: " %}
       {% set who = (" Shows " + (it.people | join(" and ")) + ".") if (it.type == "video" and it.people | length) else "" %}
-      <li class="media-tile{% if it.height > it.width * 1.2 %} media-tile--tall{% endif %}{% if loop.index > 6 %} media-tile--extra{% elif loop.index > 3 %} media-tile--extra-sm{% endif %}" data-group="{{ g.id }}">
+      <li class="media-tile{% if it.frame %} media-tile--framed{% endif %}{% if it.height > it.width * 1.2 %} media-tile--tall{% endif %}{% if loop.index > 6 %} media-tile--extra{% elif loop.index > 3 %} media-tile--extra-sm{% endif %}" data-group="{{ g.id }}">
         <button type="button" class="media-tile__open" data-viewer-item="{{ it.id }}" aria-label="{{ label }}{{ it.caption }}{{ who }}">
           <span class="media-tile__media">
             {% if it.svg %}
@@ -94,7 +94,7 @@ extraScripts:
         </button>
         <span class="media-tile__meta">
           <span class="media-tile__caption" title="{{ it.caption }}">{{ it.caption }}</span>
-          <span class="media-tile__label">{% if it.type == "video" %}VIDEO {{ it.duration }}, {% endif %}WK {{ it.week }}</span>
+          <span class="media-tile__label">{% if it.type == "video" %}VIDEO · {{ it.duration }} · {% endif %}WK {{ it.week }}</span>
         </span>
       </li>
       {% endfor %}

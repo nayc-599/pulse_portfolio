@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/shape-of-pain.html"
 title: "We checked whether pain has a shape before we built a model that assumes it does"
 description: "Before training anything, I plotted 48,398 frames of the UNBC-McMaster dataset. What the filenames were hiding, what the shape of pain looks like, and the ceiling we cannot engineer past."
-ogDescription: "Pulse journal, Research, 13 September 2026, Nay Chi"
+ogDescription: "Pulse journal · Research · 13 September 2026 · Nay Chi"
 category: "RESEARCH"
 date: 2026-09-13
 author: "Nay Chi"
-authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
+authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
 readTime: 9
 excerpt: "Before training anything, I plotted 48,398 frames of the dataset. One finding validated our architecture. One we cannot engineer our way past."
 motif: scatter
@@ -38,16 +38,16 @@ It builds. Every one of the six highest-pain sequences shows the same shape: a r
 
 ## What is harder
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/pspi_info.png" alt="Two histograms of PSPI scores across all 48,398 frames, linear and log scale, both dominated by a large bar at PSPI 0." style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption><span class="fig-num">FIGURE 1</span> PSPI distribution across all 48,398 frames, linear and log.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · PSPI distribution across all 48,398 frames, linear and log.</figcaption>
 </figure>
 
 Most frames are neutral. On the linear axis almost everything else disappears into the floor; the log axis is the only reason you can see that pain exists in this dataset at all. The imbalance is structural. It is what pain looks like on video, not a preprocessing problem, and no amount of augmentation manufactures pain that was not there in the first place.
 
-<figure>
+<figure class="figure--framed">
 <img src="/media/class_balance.png" alt="Line chart of positive rate at each PSPI threshold from 1 to 5, plotted for frame-level, window max-rule, and window sustained-rule labelling." style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption><span class="fig-num">FIGURE 2</span> Positive rate at each PSPI threshold, under two labelling rules.</figcaption>
+<figcaption><span class="fig-num">Figure 2</span> · Positive rate at each PSPI threshold, under two labelling rules.</figcaption>
 </figure>
 
 Pick threshold 1 and a quarter of our windows are positive. Pick threshold 5 and it's under 5%. That is a modelling choice with real consequences for precision, recall, and what an "alert" ends up meaning at the showcase, and we have not settled it.

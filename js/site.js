@@ -16,3 +16,35 @@ if (progressFill) {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }
+
+// Light/dark switch. The <head> script has already applied the saved choice
+// or the system setting; this keeps the switch in step, saves a choice when
+// it's made, and follows the system while no choice has been saved.
+const THEME_KEY = 'pulse-theme';
+const root = document.documentElement;
+const switchEl = document.querySelector('[data-theme-switch]');
+const isDark = () => root.classList.contains('theme-device');
+function setTheme(dark) {
+  if (dark === isDark()) return;
+  root.classList.toggle('theme-device', dark);
+  window.dispatchEvent(new CustomEvent('pulse:themechange', { detail: { dark } }));
+  sync();
+}
+function sync() { if (switchEl) switchEl.setAttribute('aria-checked', String(isDark())); }
+sync();
+if (switchEl) {
+  switchEl.addEventListener('click', () => {
+    const dark = !isDark();
+    try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch { /* not saved: fine */ }
+    setTheme(dark);
+  });
+}
+if (window.matchMedia) {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const follow = (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch { /* none */ }
+    if (!saved) setTheme(e.matches);
+  };
+  if (mq.addEventListener) mq.addEventListener('change', follow);
+}

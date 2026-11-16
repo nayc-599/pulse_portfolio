@@ -1,0 +1,366 @@
+/*
+  Device direction: dark-first, styled like the cube's own pixel screen.
+  Everything here is scoped to html.theme-device, which a page opts into
+  with `theme: device` in its front matter (layout.njk). Pages without it
+  keep the cream theme, so the restyle can roll out one page at a time.
+
+  Palette: warm charcoal, not black (contrast against background / surface):
+    Background #1b1a17  page, footer, banner fades
+    Surface    #24221e  raised: figure panels, cards, strips, LED plates
+    Line       #302d28  quiet lines (header, footer)
+    Line 2     #423d35  frames, list rules, the Figure 1 connector
+    Heading    #e6e0d4                                13.2 / 12.1
+    Body text  #d9d2c5  also links (underlined)       11.6 / 10.6
+    Muted      #9a9387  labels, captions, roles        5.7 /  5.2
+    Honey #e9bb63 (9.7 / 8.9): only the pixel face and figure icons, the small
+      square markers, link hover, focus rings and the active nav underline
+      Never paragraphs, labels or status lines.
+    Status red #e07a5f (5.9 / 5.4)
+*/
+
+html.theme-device {
+  --night: #1b1a17;
+  --night-rgb: 27, 26, 23;
+  --shelf: #24221e;
+  --line: #302d28;
+  --line-2: #423d35;
+  --paper: #d9d2c5;                  /* body text: 11.6:1, gentler than near-white */
+  --heading: #e6e0d4;                 /* headings: 13.2:1, a step brighter so they lead */
+  --dust: #9a9387;                    /* muted: 5.7:1 on background, 5.2:1 on surface */
+  --ember: #24221e;
+  --glow: #6b5428;
+  --btn-outline: #4a443a;
+
+  /* The existing tokens, remapped so every component follows. */
+  --bone: var(--night);
+  --bone-2: var(--shelf);
+  --bone-rgb: 235, 229, 217;          /* used for light-on-dark alphas: now Text */
+  --amber-dim: #998256;               /* unlit pixels: the honey hue, desaturated, so the grid stays faintly visible */
+  --amber-dim-rgb: 153, 130, 86;
+  --charcoal: var(--night);
+  --charcoal-rgb: 27, 26, 23;
+  --amber: #e9bb63;                  /* honey: options #e9bb63 / #e6b456 / #edc373 */
+  --amber-rgb: 233, 187, 99;
+  --amber-on-charcoal: #e9bb63;
+  --signal: #e07a5f;                  /* status red, lifted for dark: 5.9:1 */
+  --signal-rgb: 224, 122, 95;
+  --ink-signal: #e07a5f;
+
+  --ink-primary: var(--heading);
+  --ink-body: var(--paper);
+  --ink-muted: var(--dust);
+  --ink-eyebrow: var(--dust);         /* everything that used the amber ink is muted now */
+  --ink-on-charcoal: var(--paper);
+  --ink-on-charcoal-86: var(--paper);
+  --ink-on-charcoal-62: var(--dust);
+  --ink-on-charcoal-55: var(--dust);
+
+  --rule-bone-12: var(--line);
+  --rule-bone-14: var(--line);
+  --rule-bone-16: var(--line-2);
+  --rule-bone-18: var(--line-2);
+  --rule-bone-28: var(--line-2);
+  --rule-bone-30: var(--line-2);
+  --rule-charcoal-14: var(--line);
+  --rule-charcoal-18: var(--line-2);
+
+  color-scheme: dark;
+  background: var(--night);
+}
+html.theme-device body { background: var(--night); color: var(--paper); }
+html.theme-device h1, html.theme-device h2, html.theme-device h3,
+html.theme-device h4, html.theme-device h5, html.theme-device h6,
+html.theme-device .dhero__title { color: var(--heading); }
+
+/* Links: text colour, accent on hover, Monash DeepNeuron links included. */
+html.theme-device a:not([class]) { color: var(--paper); }
+html.theme-device a:hover { color: var(--amber); }
+html.theme-device .link-standalone:hover,
+html.theme-device .social-link:hover,
+html.theme-device .media-section__more:hover { color: var(--amber); border-bottom-color: var(--amber); }
+
+/* Focus: a 2px amber ring with a Night gap, so it shows on Night, Shelf,
+   photos and amber buttons alike. */
+html.theme-device :focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--night);
+}
+
+/* ---------------------------------------------------------------- chrome */
+html.theme-device header {
+  background: rgba(var(--night-rgb), 0.92) !important;
+  border-bottom-color: var(--line) !important;
+}
+html.theme-device .nav-link:hover { border-bottom-color: var(--line-2); }
+html.theme-device .nav-link[aria-current="page"] { border-bottom-color: var(--amber); }
+/* The footer is the page background, so the home banner can fade straight
+   into it with no edge, border or gap. */
+html.theme-device footer { background: var(--night) !important; border-top: 0; margin-top: 0; }
+html.theme-device footer .pixel-grid { background: transparent; }   /* the face sits straight on the background */
+.footer-quiet { margin: 0; font: 400 14px/1.5 var(--font-sans); color: var(--ink-on-charcoal-62); }
+
+/* LED plates sit on Ember, a step above Night, so a grid never vanishes. */
+html.theme-device .pixel-grid { background: var(--ember); }
+/* MDN marks: the official white mark in dark mode. Light mode has no
+   official dark mark yet, so it keeps the purple file until one is supplied. */
+html:not(.theme-device) .mdn-mark--dark { display: none !important; }
+html.theme-device .mdn-mark--light { display: none !important; }
+
+/* Links inside photo heroes (Team's "Monash DeepNeuron") take the hero's
+   text colour and turn the accent on hover. */
+.page-hero a:not([class]) { color: inherit; }
+.page-hero a:not([class]):hover { color: var(--amber); }
+@media (max-width: 767px) {
+  html:not(.theme-device) .page-hero a:not([class]):hover { color: var(--ink-eyebrow); }
+}
+
+/* ---------------------------------------------------------------- pixel language */
+/* The Pulse marker: one 8px amber pixel. */
+html.theme-device .pixel-mark,
+html.theme-device .pixel-mark--on-dark {
+  width: 8px;
+  height: 8px;
+  margin: 1.5px;
+  border-radius: 1px;
+  background: var(--amber);
+}
+html.theme-device .eyebrow__label,
+html.theme-device .eyebrow__label--on-charcoal { color: var(--heading); }
+
+/* Links that used to be buttons are plain text links: Paper text with a 1px
+   underline 4px below; text and underline turn amber on hover. Only real
+   form buttons (the contact form's submit) keep a box. */
+.text-link {
+  display: inline;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: 500 16px/1.4 var(--font-sans);
+  color: var(--paper, inherit);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: currentColor;
+  transition: color var(--dur-hover) var(--ease);
+}
+html.theme-device .btn-form-submit { border-radius: 0; color: var(--paper); border-color: var(--btn-outline); }
+html.theme-device .btn-form-submit:hover { color: var(--amber); border-color: var(--amber); }
+
+/* ---------------------------------------------------------------- home hero
+   Final layout: face left, text right, 96px apart, vertically centred;
+   stacked and centred under 768px. hero.js sizes the grid cells (13 / 9 / 7px,
+   2px gap: the cube intro assumes a 2px gap), sets the section's height and
+   padding, and runs the original intro and resting loop. */
+.dhero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.dhero__inner {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 520px);
+  justify-content: center;
+  align-items: center;
+  column-gap: 96px;
+}
+.dhero__face { position: relative; }
+.dhero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(24, 13px);
+  grid-auto-rows: 13px;
+  gap: 2px;
+}
+.hero__glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 460px;
+  height: 460px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(var(--amber-rgb), 0.22) 0%, rgba(var(--amber-rgb), 0.10) 38%, rgba(var(--amber-rgb), 0) 70%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.hero__copy { transition: opacity var(--dur-copy) var(--ease); }
+.hero-intro .hero__copy { opacity: 0; }
+.dhero__text { display: flex; flex-direction: column; align-items: flex-start; }
+.dhero__kicker { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; font: 500 14px/1.4 var(--font-sans); color: var(--heading, var(--paper)); }
+.dhero__title { margin: 0 0 20px; font: 500 clamp(38px, 5.4vw, 58px)/1.07 var(--font-sans); letter-spacing: -0.03em; color: var(--paper); text-wrap: balance; }
+.dhero__lede { margin: 0 0 28px; max-width: 46ch; font: 400 18px/1.6 var(--font-sans); color: var(--paper); }
+.dhero__actions { display: flex; flex-wrap: wrap; gap: 14px 32px; }
+.dhero__quiet { margin: 28px 0 0; max-width: 46ch; font: 400 14px/1.5 var(--font-sans); color: var(--dust); }
+.dhero__lede-short { display: none; }
+.hero__cue {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.3;
+}
+.hero__cue-rule { display: block; width: 1px; height: 46px; background: linear-gradient(180deg, rgba(var(--bone-rgb), 0.55), rgba(var(--bone-rgb), 0)); }
+
+@media (max-width: 767px) {
+  .dhero__inner { grid-template-columns: minmax(0, 1fr); row-gap: 36px; justify-items: center; }
+  .dhero__text { align-items: center; text-align: center; }
+  .dhero__kicker { display: block; }
+  html.theme-device .dhero__kicker .pixel-mark { display: inline-block; vertical-align: 0; margin: 0 8px 0 0; }
+  .dhero__lede-long { display: none; }
+  .dhero__lede-short { display: block; }
+  .dhero__actions { justify-content: center; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dhero__inner { column-gap: 56px; grid-template-columns: auto minmax(0, 1fr); }
+}
+
+/* ---------------------------------------------------------------- photo banners
+   The closing banner fades fully into the background over its bottom 35%,
+   so photo, fade and footer are one colour where they meet. Its text sits
+   on the content column's left edge. */
+html.theme-device .photo-banner { margin-bottom: 0; border: 0; }
+html.theme-device .photo-banner::after {
+  background: linear-gradient(to top,
+    rgb(var(--night-rgb)) 0%,
+    rgba(var(--night-rgb), 0.86) 14%,
+    rgba(var(--night-rgb), 0.6) 35%,
+    rgba(var(--night-rgb), 0.32) 70%,
+    rgba(var(--night-rgb), 0.2) 100%);
+}
+html.theme-device .photo-banner__content { max-width: calc(var(--content-max) + 48px); }
+
+/* ---------------------------------------------------------------- figures
+   One caption style everywhere: "Figure 1 · Two branches · ..." in the body
+   font, muted, sentence case. */
+html.theme-device .fig-num {
+  font: inherit;
+  letter-spacing: 0;
+  color: inherit;
+  margin-right: 0;
+}
+html.theme-device .fig-cap,
+html.theme-device .article-body figcaption { color: var(--ink-muted); }
+
+/* Figure 1: the 06 -> 05 connector in Line 2, not amber. */
+html.theme-device .pipe__link::before,
+html.theme-device .pipe__link-end::before { border-top-color: var(--line-2); }
+html.theme-device .pipe__link-end::after { border-left-color: var(--line-2); }
+html.theme-device .pipe__head { border-bottom-color: var(--line-2); }
+
+/* ---------------------------------------------------------------- light/dark switch
+   An iOS-style switch in the nav: a 46x28 pill with a 24px white knob that
+   slides across in 200ms. Off (light): grey track, knob left. On (dark):
+   honey track, knob right. The button itself is the 44px tap area. */
+.theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  margin-left: 12px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 400 13px/1 var(--font-sans);
+  color: var(--ink-muted);
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-switch__track {
+  position: relative;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 28px;
+  border-radius: 14px;
+  background: #8f897d;                 /* off: 3.1:1 against the cream header */
+  transition: background-color 200ms ease;
+}
+.theme-switch__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.06);
+  transition: transform 200ms ease;
+}
+.theme-switch[aria-checked="true"] .theme-switch__track { background: var(--amber); box-shadow: none; }
+.theme-switch[aria-checked="true"] .theme-switch__knob { transform: translateX(18px); }
+.theme-switch:focus-visible { outline: 2px solid var(--ink-eyebrow); outline-offset: 2px; border-radius: 4px; }
+html.theme-device .theme-switch:focus-visible { outline-color: var(--amber); }
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch__track, .theme-switch__knob { transition: none; }
+}
+
+/* ---------------------------------------------------------------- light mode
+   The cream theme is the original site's tokens (tokens.css). Only what the
+   device work added needs a light version here. */
+
+/* The hero is a dark band in light mode, as on the original site, so the
+   face, its intro and its glow sit on charcoal. */
+html:not(.theme-device) .dhero {
+  background: var(--charcoal);
+  color: var(--ink-on-charcoal);
+  --paper: var(--ink-on-charcoal);
+  --dust: #a39b8c;                      /* 6.3:1 on charcoal */
+  --ink-muted: #a39b8c;
+}
+html:not(.theme-device) .dhero .pixel-mark { background: var(--amber); }
+html:not(.theme-device) .dhero .text-link:hover { color: var(--amber); }
+
+/* Text links: hover in the dark amber text tone on cream (6.3:1); the light
+   amber is only 1.4:1 there. Dark mode hovers in honey. */
+.text-link:hover { color: var(--ink-eyebrow); }
+html.theme-device .text-link:hover { color: var(--amber); }
+
+/* One caption style in both modes: "Figure 1 · ..." in the body font,
+   muted, sentence case. */
+.fig-num { font: inherit !important; letter-spacing: 0 !important; color: inherit !important; margin-right: 0 !important; }
+.fig-cap, .article-body figcaption { color: var(--ink-muted); }
+
+/* Text links on a dark band in light mode (the 404 page) hover in amber. */
+.text-link--on-dark:hover { color: var(--amber) !important; }
+
+/* ---------------------------------------------------------------- framed charts
+   Charts and documents with a white background (posts and Media) sit in a
+   1px line-colour frame with 12px of raised-surface padding, in both modes,
+   so they don't glare on the dark background. */
+.figure--framed img,
+.lightbox-stage.is-framed img {
+  box-sizing: border-box;
+  background: var(--bone-2);
+  padding: 12px;
+  border: 1px solid var(--rule-bone-16);
+}
+.media-tile--framed .media-tile__media { border: 1px solid var(--rule-bone-16); }
+.media-tile--framed .media-tile__media picture { inset: 12px; width: auto; height: auto; }
+
+/* ---------------------------------------------------------------- one link style
+   Every link in running content (prose links, "Read more →" actions,
+   standalone links, Team profile links, the footer's underlined links) is
+   underlined the same way: 1px, 4px below the text. Hover turns text and
+   underline the accent: honey in dark mode, the dark amber text tone on cream. */
+.link-action, .link-standalone, .link-on-dark--underline, .social-link,
+main a:not([class]), article a:not([class]) {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: currentColor;
+  border-bottom: 0 !important;
+  padding-bottom: 0;
+}
+main a:not([class]), article a:not([class]) { color: var(--ink-primary); }
+main a:not([class]):hover, article a:not([class]):hover { color: var(--ink-eyebrow); }
+html.theme-device main a:not([class]), html.theme-device article a:not([class]) { color: var(--paper); }
+html.theme-device main a:not([class]):hover, html.theme-device article a:not([class]):hover { color: var(--amber); }

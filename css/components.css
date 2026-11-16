@@ -9,9 +9,9 @@
 .eyebrow__label {
   font: 400 11px/1 var(--font-mono);
   letter-spacing: 0.2em;
-  color: var(--ink-eyebrow);
+  color: var(--ink-primary);              /* eyebrows read in the heading colour; the marker carries the accent */
 }
-.eyebrow__label--on-charcoal { color: var(--amber); }
+.eyebrow__label--on-charcoal { color: var(--ink-on-charcoal); }
 
 /* Metadata label: mono, uppercase, 0.14em, 10px. Separator " · ". */
 .metadata {
@@ -932,7 +932,7 @@ main section[id] { scroll-margin-top: 74px; }
 }
 .page-hero__intro { margin-top: 22px; }
 .page-hero__lede { margin: 0; max-width: 52ch; font: 400 19px/1.65 var(--font-sans); color: var(--ink-on-charcoal-86); }
-.page-hero__accent { color: var(--purple-300); }
+.page-hero__accent { color: inherit; }
 /* Mono subline that sits with the intro, so on phones it moves below the banner with it.
    On the photo it sits 14px under the heading, matching Team's caption. */
 .page-hero__subline { display: block; margin: -8px 0 22px; color: var(--ink-on-charcoal-86); }
@@ -964,7 +964,6 @@ main section[id] { scroll-margin-top: 74px; }
     padding: 36px 24px 0;
   }
   .page-hero__lede { color: var(--ink-body); font-size: 18px; }
-  .page-hero__accent { color: var(--purple-700); }
   .page-hero__subline { margin: 0 0 14px; color: var(--ink-muted); }
   .page-hero__on-photo { display: none; }
   .page-hero__on-page { display: block; }
@@ -1013,7 +1012,7 @@ main section[id] { scroll-margin-top: 74px; }
 }
 .media-featured__img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 .media-featured__text { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-.media-featured__line { margin: 0; font: 500 clamp(22px, 2.4vw, 28px)/1.25 var(--font-sans); letter-spacing: -0.015em; }
+.media-featured__line { margin: 0; font: 500 clamp(24px, 2.6vw, 30px)/1.25 var(--font-sans); letter-spacing: -0.015em; }
 @media (max-width: 767px) {
   .media-featured { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 28px 0; }
 }
@@ -1234,9 +1233,9 @@ main section[id] { scroll-margin-top: 74px; }
 .pixel-mark {
   display: block;
   flex: 0 0 auto;
-  width: 9px;
-  height: 9px;
-  margin: 1px;                 /* sits in the same 11px slot the sparkle used */
+  width: 8px;
+  height: 8px;
+  margin: 1.5px;               /* 8px marker in the same 11px slot the sparkle used, in both modes */
   border-radius: 1px;
   background: var(--amber-dim);
 }

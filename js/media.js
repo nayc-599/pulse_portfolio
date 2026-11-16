@@ -62,6 +62,11 @@ function visibleButtons() {
   return [...document.querySelectorAll('.media-section:not([hidden]) [data-viewer-item]')];
 }
 
+// Captions come from the JSON as written; the build curls quotes in the
+// page's own text, so the viewer does the same for consistency.
+const curly = (t) => t.replace(/(^|[\s(\[])'/g, '$1\u2018').replace(/'/g, '\u2019')
+  .replace(/(^|[\s(\[])"/g, '$1\u201C').replace(/"/g, '\u201D');
+
 function el(tag, attrs = {}) {
   const node = document.createElement(tag);
   Object.entries(attrs).forEach(([k, v]) => { if (v !== undefined && v !== null) node.setAttribute(k, v); });
@@ -71,6 +76,7 @@ function el(tag, attrs = {}) {
 function render() {
   const it = byId[list[index].dataset.viewerItem];
   stage.replaceChildren();
+  stage.classList.toggle('is-framed', !!it.frame);
   if (it.type === 'video') {
     const video = el('video', {
       controls: '', playsinline: '', muted: '', preload: 'metadata',
@@ -91,8 +97,8 @@ function render() {
     stage.append(pic);
   }
   const people = it.type === 'video' && it.people && it.people.length ? ' Shows ' + it.people.join(' and ') + '.' : '';
-  captionEl.textContent = it.caption + people;
-  weekEl.textContent = (it.type === 'video' ? 'VIDEO ' + it.duration + ', ' : '') + 'WK ' + it.week;
+  captionEl.textContent = curly(it.caption + people);
+  weekEl.textContent = (it.type === 'video' ? 'VIDEO · ' + it.duration + ' · ' : '') + 'WK ' + it.week;
   countEl.textContent = list.length > 1 ? index + 1 + ' / ' + list.length : '';
   pdfEl.hidden = !it.pdf;
   if (it.pdf) {

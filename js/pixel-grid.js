@@ -11,9 +11,25 @@ function cssVar(name, fallback) {
   return value || fallback;
 }
 
-export const AMBER = cssVar('--amber', '#F5C86B');
-export const AMBER_DIM = cssVar('--amber-dim', '#8A7043');
-export const AMBER_RGB = cssVar('--amber-rgb', '245, 200, 107');
+// `let`, not `const`: the light/dark switch changes them at runtime, and ES
+// module bindings are live, so importers see the new values.
+export let AMBER = cssVar('--amber', '#F5C86B');
+export let AMBER_DIM = cssVar('--amber-dim', '#8A7043');
+export let AMBER_RGB = cssVar('--amber-rgb', '245, 200, 107');
+
+// Every grid on the page, so a theme change can repaint them all in the new
+// colours. paint() remembers each grid's last brightness for that.
+const GRIDS = [];
+export function refreshColours() {
+  AMBER = cssVar('--amber', '#F5C86B');
+  AMBER_DIM = cssVar('--amber-dim', '#8A7043');
+  AMBER_RGB = cssVar('--amber-rgb', '245, 200, 107');
+  for (const g of GRIDS) {
+    g.prev.fill(-1);
+    paint(g, g.buf, g.lastBright == null ? 1 : g.lastBright);
+  }
+}
+if (typeof window !== 'undefined') window.addEventListener('pulse:themechange', refreshColours);
 export const EASE = cssVar('--ease', 'cubic-bezier(0.37,0,0.63,1)');
 
 export const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
@@ -40,11 +56,14 @@ export function makeGrid(el, n, glow) {
     el.appendChild(d);
     cells.push(d);
   }
-  return { el, n, cells, prev: new Float32Array(n * n), buf: new Float32Array(n * n), glow: glow !== false };
+  const g = { el, n, cells, prev: new Float32Array(n * n), buf: new Float32Array(n * n), glow: glow !== false, lastBright: null };
+  GRIDS.push(g);
+  return g;
 }
 
 export function paint(g, buf, bright) {
   if (!g) return;
+  g.lastBright = bright;
   const cells = g.cells, prev = g.prev;
   for (let i = 0; i < cells.length; i++) {
     const v = clamp(buf[i] * bright, 0, 1);

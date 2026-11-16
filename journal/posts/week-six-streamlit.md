@@ -1,13 +1,13 @@
 ---
 layout: post.njk
 permalink: "journal/posts/week-six-streamlit.html"
-title: "Week six: moving the dashboard off Streamlit"
+title: "Week 6: moving the dashboard off Streamlit"
 description: "Streamlit can't handle the latency and alert timing a hospital needs, so the carer dashboard is moving to a proper frontend and a backend API."
-ogDescription: "Pulse journal, Engineering, 26 September 2026, Nay Chi"
+ogDescription: "Pulse journal · Engineering · 26 September 2026 · Nay Chi"
 category: "ENGINEERING"
 date: 2026-09-26
 author: "Nay Chi"
-authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
+authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
 readTime: 2
 excerpt: "A decision, not a writeup: the carer dashboard is moving off Streamlit, because an alert that arrives late is worse than no alert."
 motif: lattice

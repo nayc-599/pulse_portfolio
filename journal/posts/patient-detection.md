@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/patient-detection.html"
 title: "The other branch: what patient detection does when the face isn't enough"
 description: "Pulse has a second branch for when the patient is out of bed. It reads the body, not the face. Here is what the demo shows today, and what it doesn't."
-ogDescription: "Pulse journal, Engineering, 17 September 2026, Aaron"
+ogDescription: "Pulse journal · Engineering · 17 September 2026 · Aaron"
 category: "ENGINEERING"
 date: 2026-09-17
 author: "Aaron"
-authorRole: "COMPUTER VISION · ALERTS"
+authorRole: "COMPUTER VISION · POSE & ALERTS"
 readTime: 5
 excerpt: "Pulse has a second branch for when the patient is out of bed. It reads the body instead of the face. Here is what the demo shows today, and what it doesn't yet."
 motif: lattice
@@ -38,7 +38,7 @@ There is finally a recording worth putting up, so here it is.
 <source src="/media/video/pose-demo.webm" type="video/webm" />
 <source src="/media/video/pose-demo.mp4" type="video/mp4" />
 </video>
-<figcaption><span class="fig-num">FIGURE 1</span> One minute of live webcam input. One person, one room, standing and sitting only.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · One minute of live webcam input. One person, one room, standing and sitting only.</figcaption>
 </figure>
 
 Three things are happening on screen:

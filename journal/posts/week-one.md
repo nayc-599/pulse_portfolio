@@ -1,13 +1,13 @@
 ---
 layout: post.njk
 permalink: "journal/posts/week-one.html"
-title: "Week one: we argued our way from falls to pain"
+title: "Week 1: we argued our way from falls to pain"
 description: "Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful."
-ogDescription: "Pulse journal, Build log, 12 August 2026, Nay Chi"
+ogDescription: "Pulse journal · Build log · 12 August 2026 · Nay Chi"
 category: "BUILD LOG"
 date: 2026-08-12
 author: "Nay Chi"
-authorRole: "PROJECT LEAD · DEEP LEARNING · WEB"
+authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
 readTime: 5
 excerpt: "Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful."
 motif: scatter

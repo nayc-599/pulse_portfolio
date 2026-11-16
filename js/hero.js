@@ -1,38 +1,32 @@
 // Home page hero: wake-on-input, blink, idle, and mouse-tracking face.
 // Builds on the shared pixel-grid primitives rather than re-implementing them.
 //
-// When someone arrives at the home page fresh, or reloads it (and only
-// without reduced motion), the face arrives through the cube intro in
-// hero-cube.js: a shutter opens at screen centre onto a beating dot cube,
-// which glides up into the face's place, turns and settles into the face,
-// awake, as the rest of the hero fades in. Scrolling, clicking or pressing
-// a key during it skips straight to that final state. Coming from another page on the site, or
-// back/forward, shows the resting face directly, asleep until the first
-// input as before.
+// The intro (hero-cube.js: a shutter opens at screen centre onto the dot
+// cube, which glides into the face's place, turns and settles into the
+// face) plays once per browser session. Scrolling, clicking, pressing a key
+// or resizing during it skips straight to the final state. Later visits in
+// the same session show the final layout at once: the text is there, and
+// the face rests asleep until the first input, as before. Reduced motion
+// shows the final state with no motion at all.
+//
+// Device layout: the face sits left of the text (stacked under 768px), so
+// the grid is sized by viewport width (13 / 9 / 7px cells) rather than by
+// the hero's height, and the cube glides from screen centre to the left.
 
 import { makeGrid, paint, face, clamp, lerp } from './pixel-grid.js';
 import { createCubeIntro, INTRO_SECONDS } from './hero-cube.js';
 
-// Whether this load of the page should play the intro:
-//   reload                               play
-//   back/forward                         skip
-//   navigate, no referrer                play (typed, bookmarked, new tab)
-//   navigate, referrer on another site   play (arriving from a link elsewhere)
-//   navigate, referrer on this site      skip (e.g. from Project or Journal)
-// A page restored from the back/forward cache never re-runs this script;
-// that case is handled by the pageshow listener below.
+// Debug override: ?intro=1 always plays the full intro, ignoring the
+// session flag and reduced motion. Harmless, so it stays in.
+let FORCE_INTRO = false;
+try { FORCE_INTRO = new URLSearchParams(window.location.search).get('intro') === '1'; } catch { /* old browser */ }
+
+const PLAYED_KEY = 'pulse-hero-played';
 function introWanted() {
-  const nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-  const type = nav ? nav.type : 'navigate';
-  if (type === 'reload') return true;
-  if (type === 'back_forward') return false;
-  const ref = document.referrer;
-  if (!ref) return true;
-  try {
-    return new URL(ref).origin !== window.location.origin;
-  } catch {
-    return true;
-  }
+  let played = false;
+  try { played = sessionStorage.getItem(PLAYED_KEY) === '1'; } catch { /* storage blocked: play */ }
+  try { sessionStorage.setItem(PLAYED_KEY, '1'); } catch { /* fine */ }
+  return FORCE_INTRO || !played;
 }
 
 // hero.js used to step by a fixed 1/60 per frame, which slows on low-fps
@@ -47,7 +41,7 @@ if (root) {
   const glowEl = root.querySelector('.hero__glow');
   const cueEl = root.querySelector('.hero__cue');
 
-  const rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rm = !FORCE_INTRO && !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const grid = makeGrid(gridEl, 24, true);
 
   const state = {
@@ -75,7 +69,8 @@ if (root) {
     root.style.paddingTop = (avail < 620 ? 30 : 48) + 'px';
     root.style.paddingBottom = (avail < 620 ? 96 : 132) + 'px';
 
-    const cell = clamp(Math.floor((avail * 0.42 - 46) / 24), 6, 11);
+    const vw = window.innerWidth;
+    const cell = vw < 768 ? 7 : vw < 1024 ? 9 : 13;
     if (cueEl) {
       const rule = cueEl.lastElementChild;
       if (rule) rule.style.height = (avail < 620 ? 28 : 46) + 'px';
@@ -85,7 +80,6 @@ if (root) {
       state.heroCell = cell;
       gridEl.style.gridTemplateColumns = 'repeat(24, ' + cell + 'px)';
       gridEl.style.gridAutoRows = cell + 'px';
-      if (copyEl) copyEl.style.marginTop = (cell < 10 ? 30 : 56) + 'px';
       if (glowEl) {
         const sz = Math.round(460 * (cell / 11));
         state.glowSize = sz;
@@ -248,6 +242,8 @@ if (root) {
         window.addEventListener(type, skipIntro, { passive: true });
       }
       gridEl.style.willChange = 'transform';
+      if (copyEl) copyEl.style.opacity = '0';
+      window.addEventListener('resize', skipIntro, { once: true });
 
       // The intro's face lands awake: eyes open, full resting brightness,
       // no blink until the beat has died away. The copy is revealed when the
@@ -257,6 +253,7 @@ if (root) {
       state.brightT = state.bright = 0.93;
       state.blinkAt = Date.now() + INTRO_SECONDS * 1000 + 4000 + Math.random() * 4000;
     } else {
+      if (copyEl) { copyEl.style.transition = 'none'; copyEl.style.opacity = '1'; requestAnimationFrame(() => requestAnimationFrame(() => { copyEl.style.transition = ''; })); }
       setTimeout(wake, 4500);
     }
 
@@ -267,3 +264,7 @@ if (root) {
     requestAnimationFrame(loop);
   }
 }
+
+// The head script hides the copy until this runs; from here the inline
+// styles above decide.
+document.documentElement.classList.remove('hero-intro');

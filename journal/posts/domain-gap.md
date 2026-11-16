@@ -3,11 +3,11 @@ layout: post.njk
 permalink: "journal/posts/domain-gap.html"
 title: "Our dataset is a physio clinic. Our room is a bedroom at 3am."
 description: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
-ogDescription: "Pulse journal, Research, 27 August 2026, Amelie"
+ogDescription: "Pulse journal · Research · 27 August 2026 · Amelie"
 category: "RESEARCH"
 date: 2026-08-27
 author: "Amelie"
-authorRole: "DEEP LEARNING · HARDWARE"
+authorRole: "DEEP LEARNING · FEATURE EXTRACTION"
 readTime: 7
 excerpt: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
 motif: ring
@@ -35,7 +35,7 @@ Even inside that one clinic, people vary a lot. When we broke the pain scores do
 
 We wrote the differences down as a list rather than a paragraph, because a list is harder to skim past:
 
-- **Angle.** A bedside cube looks up at a face from roughly 30–50°. Almost nothing in the training data looks like that.
+- **Angle.** A bedside cube looks up at a face from roughly 30 to 50°. Almost nothing in the training data looks like that.
 - **Occlusion.** Pillows, blankets, an arm across the face, a head turned into the mattress. In the clinic the face is always available.
 - **Light.** A dark room at 3am. Whatever we do at the showcase will be in a lit room, which flatters us.
 - **Duration.** Chronic pain may not produce the sharp onset the LSTM learned to look for. A face that has been in pain for an hour may be still.
@@ -54,7 +54,7 @@ aug = Compose([
     RandomBrightnessContrast(<span style="color:var(--amber)">0.3</span>, <span style="color:var(--amber)">0.3</span>),
     RandomOcclusion(max_frac=<span style="color:var(--amber)">0.25</span>),   <span style="color:var(--amber-dim)"># pillow, arm, blanket</span>
 ])</code></pre>
-<figcaption><span class="fig-num">FIGURE 1</span> Synthesising a bedroom out of a clinic. It is a guess, not a ground truth.</figcaption>
+<figcaption><span class="fig-num">Figure 1</span> · Synthesising a bedroom out of a clinic. It is a guess, not a ground truth.</figcaption>
 </figure>
 
 Perspective jitter is not the same as a camera actually being below someone. It moves pixels; it does not add the parts of a face you can only see from underneath. We are honest about that in the write-up and we will be honest about it on stage.
