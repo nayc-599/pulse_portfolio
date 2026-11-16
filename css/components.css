@@ -7,16 +7,16 @@
   gap: 9px;
 }
 .eyebrow__label {
-  font: var(--label-weight) 11px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 11px/1 var(--font-mono);
+  letter-spacing: 0.2em;
   color: var(--ink-eyebrow);
 }
 .eyebrow__label--on-charcoal { color: var(--purple-300); }
 
 /* Metadata label: mono, uppercase, 0.14em, 10px. Separator " · ". */
 .metadata {
-  font: var(--label-weight) 10px/1.6 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1.6 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-muted);
 }
 .metadata--on-charcoal { color: var(--ink-on-charcoal-55); }
@@ -40,8 +40,8 @@ blockquote.pull-quote {
    rule rather than an outlined container. */
 .not-built-pill {
   align-self: flex-start;
-  font: var(--label-weight) 10px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-signal);
   border-left: 2px solid var(--signal);
   padding: 3px 0 3px 12px;
@@ -51,7 +51,7 @@ blockquote.pull-quote {
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  font: 400 13px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 13px/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -67,7 +67,7 @@ blockquote.pull-quote {
 .btn-secondary {
   display: inline-flex;
   align-items: center;
-  font: 400 13px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 13px/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -82,7 +82,7 @@ blockquote.pull-quote {
 
 .btn-form-submit {
   align-self: flex-start;
-  font: 400 12px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 12px/1 var(--font-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   background: transparent;
@@ -100,7 +100,7 @@ blockquote.pull-quote {
   gap: 10px;
   align-self: flex-start;
   text-decoration: none;
-  font: 400 15px/1.4 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 15px/1.4 var(--font-sans);
   color: var(--ink-primary);
   border-bottom: 1px solid var(--rule-bone-30);
   padding-bottom: 5px;
@@ -134,7 +134,7 @@ blockquote.pull-quote {
 .link-on-dark--underline:hover { border-bottom-color: var(--amber); }
 
 .link-ghost {
-  font: 400 12px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 12px/1 var(--font-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-body);
@@ -149,7 +149,7 @@ blockquote.pull-quote {
 
 /* Nav item */
 .nav-link {
-  font: 400 13px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 13px/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -174,7 +174,7 @@ blockquote.pull-quote {
   border: 0;
   padding: 4px 0;
   cursor: pointer;
-  font: 400 14px/1.2 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 14px/1.2 var(--font-sans);
   color: rgba(var(--bone-rgb), 0.6);
   transition: color var(--dur-hover) var(--ease);
 }
@@ -297,7 +297,7 @@ blockquote.pull-quote {
   flex: 0 0 auto;
 }
 .lightbox__close {
-  font: 400 12px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 12px/1 var(--font-mono);
   letter-spacing: 0.14em;
   background: none;
   border: 0;
@@ -314,7 +314,7 @@ blockquote.pull-quote {
   min-height: 0;
 }
 .lightbox-nav {
-  font: 400 20px/1 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 20px/1 var(--font-mono);
   background: none;
   border: 0;
   padding: 14px 10px;
@@ -322,8 +322,8 @@ blockquote.pull-quote {
   flex: 0 0 auto;
 }
 .lightbox__slot {
-  font: var(--label-weight) 11px/1.7 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 11px/1.7 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-on-charcoal-62);
   text-align: center;
 }
@@ -334,7 +334,7 @@ blockquote.pull-quote {
   flex: 0 0 auto;
 }
 .lightbox__caption {
-  font: 400 14px/1.6 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 14px/1.6 var(--font-mono);
   color: var(--ink-on-charcoal);
   text-align: center;
   max-width: 60ch;
@@ -471,17 +471,17 @@ main section[id] { scroll-margin-top: 74px; }
   gap: 4px;
 }
 .pipeline-stage__num {
-  font: var(--label-weight) 10px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-eyebrow);
 }
 .pipeline-stage__name {
-  font: 500 15px/1.3 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 500 15px/1.3 var(--font-sans);
   color: var(--ink-primary);
 }
 .pipeline-stage__state {
-  font: var(--label-weight) 10px/1.5 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.1em;
   color: var(--ink-muted);
 }
 .pipeline-stage__state--live { color: var(--ink-eyebrow); }
@@ -489,12 +489,12 @@ main section[id] { scroll-margin-top: 74px; }
    the palette forbids alpha-muted type. */
 .pipeline-stage__glyph--planned { opacity: 0.45; }
 .pipeline-arrow {
-  font: var(--label-weight) 14px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums; letter-spacing: var(--label-track);
+  font: 400 14px/1 var(--font-mono);
   color: var(--ink-eyebrow);
 }
 .pipeline-branch {
-  font: var(--label-weight) 10px/1.5 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.1em;
   color: var(--ink-eyebrow);
   min-width: 132px;
 }
@@ -676,13 +676,13 @@ main section[id] { scroll-margin-top: 74px; }
 }
 .status-list li:first-child { border-top: 0; padding-top: 2px; }
 .status-list__state {
-  font: var(--label-weight) 10px/1.5 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1.5 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-muted);
 }
 .status-list__state--done { color: var(--ink-eyebrow); }
 .status-list__item {
-  font: 400 16px/1.5 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 16px/1.5 var(--font-sans);
   color: var(--ink-body);
 }
 
@@ -737,12 +737,12 @@ main section[id] { scroll-margin-top: 74px; }
   .header-status-wrap { display: none !important; }
 }
 .lockup__title {
-  font: 600 19px/1 var(--font-wordmark);
-  letter-spacing: normal;
+  font: 500 19px/1 var(--font-sans);
+  letter-spacing: -0.02em;
 }
 .lockup__sub {
-  font: var(--label-weight) 10px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums;
-  letter-spacing: var(--label-track);
+  font: 400 10px/1 var(--font-mono);
+  letter-spacing: 0.14em;
   color: var(--ink-muted);
 }
 
@@ -755,18 +755,18 @@ main section[id] { scroll-margin-top: 74px; }
 }
 
 /* Article body: prose styling for markdown-rendered journal post content */
-.article-body h2 { margin: 44px 0 16px; font: var(--heading-weight) clamp(19px,3vw,30px)/1.2 var(--font-sans); font-stretch: var(--heading-stretch); letter-spacing: var(--heading-track); }
-.article-body h3 { margin: 36px 0 14px; font: var(--heading-weight) clamp(18px,3.67vw,22px)/1.3 var(--font-sans); font-stretch: var(--heading-stretch); letter-spacing: var(--heading-track); }
-.article-body p { margin: 0 0 22px; font: 400 17px/1.7 var(--font-sans); font-stretch: var(--body-stretch); color: var(--ink-body); }
-.article-body > p:first-of-type { font: 400 19px/1.7 var(--font-sans); font-stretch: var(--body-stretch); color: var(--ink-primary); }
+.article-body h2 { margin: 44px 0 16px; font: 500 clamp(24px,3vw,30px)/1.2 var(--font-sans); letter-spacing: -0.02em; }
+.article-body h3 { margin: 36px 0 14px; font: 500 22px/1.3 var(--font-sans); letter-spacing: -0.015em; }
+.article-body p { margin: 0 0 22px; font: 400 17px/1.7 var(--font-sans); color: var(--ink-body); }
+.article-body > p:first-of-type { font: 400 19px/1.7 var(--font-sans); color: var(--ink-primary); }
 .article-body ul, .article-body ol { margin: 0 0 26px; padding-left: 22px; display: flex; flex-direction: column; gap: 12px; }
-.article-body li { font: 400 17px/1.7 var(--font-sans); font-stretch: var(--body-stretch); color: var(--ink-body); }
+.article-body li { font: 400 17px/1.7 var(--font-sans); color: var(--ink-body); }
 .article-body strong { font-weight: 500; color: var(--ink-primary); }
-.article-body code { font: 400 15px/1.4 var(--font-sans); font-stretch: var(--body-stretch); background: var(--bone-2); padding: 2px 6px; }
-.article-body pre { margin: 0; padding: 22px; background: var(--charcoal); color: var(--ink-on-charcoal); overflow-x: auto; font: 400 13px/1.75 var(--font-sans); font-stretch: var(--body-stretch); }
+.article-body code { font: 400 15px/1.4 var(--font-mono); background: var(--bone-2); padding: 2px 6px; }
+.article-body pre { margin: 0; padding: 22px; background: var(--charcoal); color: var(--ink-on-charcoal); overflow-x: auto; font: 400 13px/1.75 var(--font-mono); }
 .article-body pre code { background: none; padding: 0; font: inherit; }
 .article-body figure { margin: 0 0 28px; padding: 0; }
-.article-body figcaption { margin-top: 12px; font: var(--label-weight) 10px/1.6 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums; letter-spacing: var(--label-track); color: var(--ink-muted); }
+.article-body figcaption { margin-top: 12px; font: 400 10px/1.6 var(--font-mono); letter-spacing: 0.14em; color: var(--ink-muted); }
 /* See eleventy.config.js: every markdown table is wrapped in this so the
    min-width below scrolls within the block rather than widening the page.
    The two background pairs are the standard local/scroll shadow trick: the
@@ -787,9 +787,9 @@ main section[id] { scroll-margin-top: 74px; }
   background-attachment: local, local, scroll, scroll;
 }
 .article-body table { width: 100%; border-collapse: collapse; min-width: 460px; }
-.article-body th { text-align: left; font: var(--label-weight) 10px/1 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums; letter-spacing: var(--label-track); color: var(--ink-muted); padding: 0 16px 12px 0; border-bottom: 1px solid var(--rule-bone-30); }
-.article-body td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule-bone-14); font: 400 15px/1.6 var(--font-sans); font-stretch: var(--body-stretch); color: var(--ink-primary); }
-.article-body td:not(:first-child) { font: var(--label-weight) 13px/1.6 var(--font-sans); font-stretch: var(--label-stretch); font-variant-numeric: tabular-nums; letter-spacing: var(--label-track); color: var(--ink-muted); }
+.article-body th { text-align: left; font: 400 10px/1 var(--font-mono); letter-spacing: 0.14em; color: var(--ink-muted); padding: 0 16px 12px 0; border-bottom: 1px solid var(--rule-bone-30); }
+.article-body td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule-bone-14); font: 400 15px/1.6 var(--font-sans); color: var(--ink-primary); }
+.article-body td:not(:first-child) { font: 400 13px/1.6 var(--font-mono); color: var(--ink-muted); }
 
 /* Footer attribution card */
 .attribution-card {
@@ -809,7 +809,7 @@ main section[id] { scroll-margin-top: 74px; }
   box-shadow: 0 0 40px rgba(var(--purple-400-rgb), 0.42), inset 0 0 30px rgba(var(--purple-400-rgb), 0.24);
 }
 .attribution-card__copy {
-  font: 400 12px/1.7 var(--font-sans); font-stretch: var(--body-stretch);
+  font: 400 12px/1.7 var(--font-mono);
   letter-spacing: 0.08em;
   color: var(--purple-300);
 }

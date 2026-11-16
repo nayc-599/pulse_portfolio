@@ -61,25 +61,9 @@
   --rule-charcoal-14: rgba(var(--bone-rgb), 0.14);
   --rule-charcoal-18: rgba(var(--bone-rgb), 0.18);
 
-  /* Typography. Two families, both from Google Fonts (partials/layout.njk):
-     Archivo, variable with its width axis (62% to 125%), for all text, and
-     Pixelify Sans 600 only for the "Pulse" wordmark. Each role below sets the
-     width (font-stretch) and weight Archivo is used at. */
-  --font-sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-wordmark: 'Pixelify Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  /* Headings: h1 to h3, the hero line, section and journal titles. */
-  --heading-stretch: 125%;
-  --heading-weight: 700;
-  --heading-track: -0.02em;
-  /* Body text, navigation, buttons, captions: weights 400, 500, 600. */
-  --body-stretch: 100%;
-  /* Big numbers and stats. */
-  --num-stretch: 62%;
-  --num-weight: 600;
-  /* Small labels, eyebrows, dates, tags, week numbers, metadata. */
-  --label-stretch: 87%;
-  --label-weight: 600;
-  --label-track: 0.12em;
+  /* Typography (Brand Kit §2) */
+  --font-sans: 'General Sans', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
 
   /* Spacing and layout (Brand Kit §3) */
   --content-max: 1160px;

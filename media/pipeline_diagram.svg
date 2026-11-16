@@ -5,15 +5,15 @@
     .plate { fill: #E8E3D8; }
     .box { fill: #F4F1EA; stroke: #1C1A17; stroke-width: 1.5; }
     .box--end { fill: #1C1A17; }
-    .num { font: 600 13px Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; font-stretch: 87%; font-variant-numeric: tabular-nums; letter-spacing: 0.12em; fill: #6B5528; }
+    .num { font: 400 13px 'Space Mono', Menlo, monospace; letter-spacing: 0.14em; fill: #6B5528; }
     .num--end { fill: #F5C86B; }
-    .name { font: 500 22px Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; font-stretch: 100%; fill: #1C1A17; }
+    .name { font: 500 22px 'General Sans', 'Helvetica Neue', Arial, sans-serif; fill: #1C1A17; }
     .name--end { fill: #F4F1EA; }
-    .state { font: 600 12.5px Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; font-stretch: 87%; font-variant-numeric: tabular-nums; letter-spacing: 0.12em; fill: #5C574D; }
+    .state { font: 400 12.5px 'Space Mono', Menlo, monospace; letter-spacing: 0.08em; fill: #5C574D; }
     .state--end { fill: rgba(244,241,234,0.62); }
     .arrow { stroke: #1C1A17; stroke-width: 1.5; fill: none; }
     .head { fill: #1C1A17; }
-    .edge { font: 600 11px Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; font-stretch: 87%; font-variant-numeric: tabular-nums; letter-spacing: 0.12em; fill: #5C574D; }
+    .edge { font: 400 11px 'Space Mono', Menlo, monospace; letter-spacing: 0.1em; fill: #5C574D; }
   </style>
 
   <rect class="plate" x="0" y="0" width="560" height="580" />

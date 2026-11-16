@@ -5,7 +5,6 @@ body {
   background: var(--bone);
   color: var(--ink-primary);
   font-family: var(--font-sans);
-  font-stretch: var(--body-stretch);
   -webkit-font-smoothing: antialiased;
 }
 
