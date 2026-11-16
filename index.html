@@ -7,6 +7,7 @@ ogDescription: "A camera-based patient monitoring concept, built in public by fi
 ogType: website
 extraScripts:
   - /js/hero.js
+  - /js/device-cube.js
 ---
 <main>
   <section class="hero" aria-labelledby="hero-title" style="position:relative;min-height:100vh;background:var(--charcoal);color:var(--ink-on-charcoal);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px 132px;overflow:hidden">
@@ -20,55 +21,58 @@ extraScripts:
       <p style="margin:0;max-width:26ch;text-align:center;font:500 clamp(24px,3.4vw,34px)/1.25 var(--font-sans);letter-spacing:-0.025em">A camera that watches when carers can't.</p>
     </div>
 
-    <span class="hero__cue" aria-hidden="true" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0.3">
-      <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.24em;color:rgba(var(--bone-rgb),0.7)">SCROLL</span>
+    <span class="is-plain hero__cue" aria-hidden="true" style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0.3">
+      <span class="is-plain" style="color:rgba(var(--bone-rgb),0.7)">Scroll</span>
       <span style="display:block;width:1px;height:46px;background:linear-gradient(180deg,rgba(var(--bone-rgb),0.55),rgba(var(--bone-rgb),0))"></span>
     </span>
   </section>
 
   <section aria-label="Project status" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
     <div class="wrap" style="padding:18px 24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center">
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">WEEK 8</span>
-      <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-primary)">PROTOTYPE</span>
-      <span style="font:400 11px/1.6 var(--font-mono);color:var(--amber-dim)">·</span>
-      <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.2em;color:var(--ink-eyebrow)">SHOWCASED 7 OCT 2026</span>
+      <span class="is-plain" style="color:var(--ink-primary)">Week 8, prototype, showcased 7 Oct 2026</span>
     </div>
   </section>
 
   <section aria-labelledby="where-title" style="padding:88px 24px;position:relative;overflow:hidden">
     <img src="/assets/wireframes/wf-torus-purple.png" alt="" aria-hidden="true" style="position:absolute;left:-180px;bottom:-160px;width:560px;opacity:0.07;pointer-events:none" />
     <div class="wrap" style="position:relative">
-      <span class="eyebrow" style="margin-bottom:18px">
-        <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-        <span class="eyebrow__label">WHERE THINGS STAND</span>
-      </span>
-      <h2 id="where-title" style="margin:0 0 20px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
-      <p style="margin:0 0 56px;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse is a device that watches over bedridden patients in the hours between carer rounds. A CNN-LSTM pipeline reads facial pain expression over time, a separate pose model tracks movement out of bed, and planned environmental sensors will add a fuller read on patient state, so problems are caught continuously instead of at the next check.</p>
+      <div class="where-intro">
+        <div class="where-intro__text">
+          <span class="eyebrow" style="margin-bottom:18px">
+            <span class="pixel-mark" aria-hidden="true"></span>
+            <span class="is-plain eyebrow__label">Where things stand</span>
+          </span>
+          <h2 id="where-title" style="margin:0 0 20px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Four things worth knowing before you read further.</h2>
+          <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse is a device that watches over bedridden patients in the hours between carer rounds. A CNN-LSTM pipeline reads facial pain expression over time, a separate pose model tracks movement out of bed, and planned environmental sensors will add a fuller read on patient state, so problems are caught continuously instead of at the next check.</p>
+        </div>
+        <div class="where-intro__cube">
+          {% include "device-cube.njk" %}
+        </div>
+      </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));column-gap:var(--grid-col-gap);row-gap:36px">
         <div class="stat-block">
-          <span class="metadata">01 · THE PROBLEM</span>
+          <span class="is-plain metadata">01 The problem</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Nobody is in the room at 3am.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Up to four hours can pass between rounds for a patient who can't call for help. We're aiming to close that gap to closer to forty-one seconds.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Up to four hours can pass between rounds for a patient who can't call for help. We're aiming to close that gap to under a minute.</p>
         </div>
         <div class="stat-block">
-          <span class="metadata">02 · THE APPROACH</span>
+          <span class="is-plain metadata">02 The approach</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">Two branches: a face, or a body.</h3>
-          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so Pulse reads the face. Out of bed, a pose model reads 17 body keypoints instead. Environmental sensors, planned next, add context from the room itself for a fuller read on patient state.</p>
+          <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">In bed, a blanket hides the body, so Pulse reads the face. Out of bed, a pose model reads 33 body keypoints instead. Environmental sensors, planned next, add context from the room itself for a fuller read on patient state.</p>
         </div>
         <div class="stat-block">
-          <span class="metadata">03 · WHERE IT IS NOW</span>
+          <span class="is-plain metadata">03 Where it is now</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">A laptop, a webcam, and a CAD file.</h3>
           <ul class="status-list">
-            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">Face and pose detection</span></li>
-            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">CNN trained on pain expressions</span></li>
-            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">LSTM pain score</span></li>
-            <li><span class="status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> DONE</span><span class="status-list__item">Working prototype with a live carer dashboard</span></li>
-            <li><span class="status-list__state"><span aria-hidden="true">&#9680;</span> IN PROGRESS</span><span class="status-list__item">The 8cm cube, hardware arrived for assembly</span></li>
+            <li><span class="is-plain status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> Done</span><span class="status-list__item">Face and pose detection</span></li>
+            <li><span class="is-plain status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> Done</span><span class="status-list__item">CNN trained on pain expressions</span></li>
+            <li><span class="is-plain status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> Done</span><span class="status-list__item">LSTM pain score</span></li>
+            <li><span class="is-plain status-list__state status-list__state--done"><span aria-hidden="true">&#10003;</span> Done</span><span class="status-list__item">Working prototype with a live carer dashboard</span></li>
+            <li><span class="is-plain status-list__state"><span aria-hidden="true">&#9680;</span> In progress</span><span class="status-list__item">The 8cm cube, hardware arrived for assembly</span></li>
           </ul>
         </div>
         <div class="stat-block">
-          <span class="metadata">04 · WHAT'S NEXT</span>
+          <span class="is-plain metadata">04 What's next</span>
           <h3 style="margin:0;font:500 22px/1.25 var(--font-sans);letter-spacing:-0.015em">After the showcase.</h3>
           <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">We showcased Pulse on 7 October 2026. Next: calibrating with more people, testing how a clinic dataset holds up in a dark bedroom, room sensors, and a browser-only demo of the dashboard.</p>
         </div>
@@ -86,25 +90,24 @@ extraScripts:
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
         <div>
           <span class="eyebrow" style="margin-bottom:16px">
-            <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-            <span class="eyebrow__label">THE RECORD</span>
+            <span class="pixel-mark" aria-hidden="true"></span>
+            <span class="is-plain eyebrow__label">The record</span>
           </span>
           <h2 id="journal-title" style="margin:0;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We're building Pulse in public.</h2>
         </div>
       </div>
       <ul style="list-style:none;margin:0;padding:0">
+        {% from "journal-thumb.njk" import journalThumb %}
         {% for post in collections.posts | limit(3) %}
         <li class="rule-top--list">
-          <a href="{{ post.url }}" class="hover-shift" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:28px;align-items:center;padding:26px 0;text-decoration:none;color:var(--ink-primary);transition:transform var(--dur-hover) var(--ease)">
-            <span class="pixel-grid" data-pixel-grid data-pattern="{{ post.data.listMotif }}" data-n="7" style="padding:8px">
-              <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,5px);grid-auto-rows:5px;gap:2px"></span>
-            </span>
+          <a href="{{ post.url }}" class="journal-entry__link hover-shift">
+            {{ journalThumb(post, 7, 6, 2) }}
             <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-              <span class="metadata">{{ post.data.category }} · {{ post.data.date | dateDisplay }}</span>
+              <span class="metadata"><span class="is-plain">{{ post.data.category | sentence }}</span>&nbsp;&nbsp;{{ post.data.date | dateDisplay }}</span>
               <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
               <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">{{ post.data.excerpt }}</span>
             </span>
-            <span class="metadata" style="text-align:right">{{ post.data.author | upper }} · {{ post.data.readTime }} MIN</span>
+            <span class="metadata is-plain" style="text-align:right">{{ post.data.author }}, {{ post.data.readTime }} min read</span>
           </a>
         </li>
         {% endfor %}
@@ -117,6 +120,25 @@ extraScripts:
         </a>
         <a href="/media.html" class="link-action">
           <span>Photos and video</span>
+          <span aria-hidden="true" class="link-action__arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section aria-labelledby="showcase-title" class="photo-banner" style="--banner-pos:50% 45%;--banner-pos-sm:40% 40%">
+    <picture>
+      <source srcset="/media/showcase-banner-home.webp" type="image/webp" />
+      <img class="photo-banner__img" src="/media/showcase-banner-home.jpg" width="1798" height="900" alt="The Pulse team talking with a visitor at the showcase booth, the live Pulse carer dashboard on a large monitor beside them." loading="lazy" decoding="async" />
+    </picture>
+    <div class="wrap photo-banner__content">
+      <h2 id="showcase-title" style="margin:0 0 32px;max-width:24ch;font:500 clamp(30px,4vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We showed Pulse live at the Monash DeepNeuron showcase.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:20px 56px">
+        <a href="/journal/posts/week-eight-showcase.html" class="link-action link-action--on-dark">
+          <span>Read about the night</span>
+          <span aria-hidden="true" class="link-action__arrow">→</span>
+        </a>
+        <a href="/team.html" class="link-action link-action--on-dark">
+          <span>Meet the team</span>
           <span aria-hidden="true" class="link-action__arrow">→</span>
         </a>
       </div>

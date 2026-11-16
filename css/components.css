@@ -11,7 +11,7 @@
   letter-spacing: 0.2em;
   color: var(--ink-eyebrow);
 }
-.eyebrow__label--on-charcoal { color: var(--purple-300); }
+.eyebrow__label--on-charcoal { color: var(--amber); }
 
 /* Metadata label: mono, uppercase, 0.14em, 10px. Separator " · ". */
 .metadata {
@@ -51,9 +51,9 @@ blockquote.pull-quote {
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  font: 400 13px/1 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font: 500 15px/1 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   color: var(--charcoal);
   background: var(--amber);
@@ -67,9 +67,9 @@ blockquote.pull-quote {
 .btn-secondary {
   display: inline-flex;
   align-items: center;
-  font: 400 13px/1 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font: 500 15px/1 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
   text-decoration: none;
   color: var(--ink-on-charcoal);
   background: transparent;
@@ -82,9 +82,9 @@ blockquote.pull-quote {
 
 .btn-form-submit {
   align-self: flex-start;
-  font: 400 12px/1 var(--font-mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font: 500 15px/1 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
   background: transparent;
   color: var(--ink-primary);
   border: 1px solid var(--rule-bone-30);
@@ -92,7 +92,7 @@ blockquote.pull-quote {
   cursor: pointer;
   transition: color var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
 }
-.btn-form-submit:hover { color: var(--purple-500); border-color: var(--purple-500); }
+.btn-form-submit:hover { color: var(--ink-eyebrow); border-color: var(--ink-eyebrow); }
 
 .link-action {
   display: inline-flex;
@@ -106,7 +106,7 @@ blockquote.pull-quote {
   padding-bottom: 5px;
   transition: color var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
 }
-.link-action:hover { color: var(--purple-500); border-bottom-color: var(--purple-500); }
+.link-action:hover { color: var(--ink-eyebrow); border-bottom-color: var(--ink-eyebrow); }
 .link-action__arrow {
   display: inline-block;
   transition: transform var(--dur-hover) var(--ease);
@@ -119,7 +119,7 @@ blockquote.pull-quote {
   border-bottom: 1px solid var(--rule-bone-30);
   transition: color var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
 }
-.link-standalone:hover { color: var(--purple-500); border-bottom-color: var(--purple-500); }
+.link-standalone:hover { color: var(--ink-eyebrow); border-bottom-color: var(--ink-eyebrow); }
 
 .link-on-dark {
   color: var(--ink-on-charcoal);
@@ -149,9 +149,8 @@ blockquote.pull-quote {
 
 /* Nav item */
 .nav-link {
-  font: 400 13px/1 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font: 400 15px/1 var(--font-sans);
+  letter-spacing: 0;
   text-decoration: none;
   padding: 9px 12px;
   border-bottom: 2px solid transparent;
@@ -209,24 +208,7 @@ blockquote.pull-quote {
 .contact-success[hidden] { display: none; }
 .contact-form { display: flex; flex-direction: column; gap: 18px; }
 .contact-form[hidden] { display: none; }
-.media-group { display: flex; }
-.media-group[hidden] { display: none; }
 
-/* Media grid: every tile the same size regardless of source aspect ratio,
-   so captions across a row start at the same y-position. */
-.media-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: var(--card-grid-gap);
-}
-/* Caps a tile's width so a sparse row (one or two items) can't stretch a
-   thumbnail past the size it would be in a full row. */
-.media-item {
-  max-width: 360px;
-}
 .media-thumb {
   display: flex;
   width: 100%;
@@ -514,7 +496,7 @@ main section[id] { scroll-margin-top: 74px; }
 }
 .roadmap-timeline__path--done {
   fill: none;
-  stroke: var(--purple-400);
+  stroke: var(--amber-dim);
   stroke-width: 2;
   stroke-linecap: round;
 }
@@ -568,14 +550,14 @@ main section[id] { scroll-margin-top: 74px; }
 .roadmap-timeline__row[data-side="left"] .roadmap-timeline__node { justify-self: start; }
 .roadmap-timeline__row[data-side="right"] .roadmap-timeline__node { justify-self: end; }
 .roadmap-timeline__row[data-status="done"] .roadmap-timeline__node {
-  background: var(--purple-400);
+  background: var(--amber-dim);
   opacity: 1;
 }
 .roadmap-timeline__row[data-status="current"] .roadmap-timeline__node {
   width: 18px;
   height: 18px;
   background: var(--bone);
-  border: 2px solid var(--purple-400);
+  border: 2px solid var(--amber-dim);
   opacity: 1;
 }
 .roadmap-timeline__row[data-status="current"] .roadmap-timeline__node::after {
@@ -583,7 +565,7 @@ main section[id] { scroll-margin-top: 74px; }
   position: absolute;
   inset: -9px;
   border-radius: 999px;
-  border: 1px solid var(--purple-400);
+  border: 1px solid var(--amber-dim);
   animation: roadmap-breathe var(--dur-breath) var(--ease) infinite;
 }
 @keyframes roadmap-breathe {
@@ -628,7 +610,7 @@ main section[id] { scroll-margin-top: 74px; }
   color: var(--ink-muted);
   transition: color var(--dur-hover) var(--ease);
 }
-.social-link:hover { color: var(--purple-500); }
+.social-link:hover { color: var(--ink-eyebrow); }
 
 /* Touch targets. The type stays at its Brand Kit size (§2: metadata 10px,
    filter 14px); only the hit area grows, and only on touch-width screens.
@@ -737,8 +719,8 @@ main section[id] { scroll-margin-top: 74px; }
   .header-status-wrap { display: none !important; }
 }
 .lockup__title {
-  font: 500 19px/1 var(--font-sans);
-  letter-spacing: -0.02em;
+  font: 600 19px/1 var(--font-wordmark);
+  letter-spacing: normal;
 }
 .lockup__sub {
   font: 400 10px/1 var(--font-mono);
@@ -766,7 +748,7 @@ main section[id] { scroll-margin-top: 74px; }
 .article-body pre { margin: 0; padding: 22px; background: var(--charcoal); color: var(--ink-on-charcoal); overflow-x: auto; font: 400 13px/1.75 var(--font-mono); }
 .article-body pre code { background: none; padding: 0; font: inherit; }
 .article-body figure { margin: 0 0 28px; padding: 0; }
-.article-body figcaption { margin-top: 12px; font: 400 10px/1.6 var(--font-mono); letter-spacing: 0.14em; color: var(--ink-muted); }
+.article-body figcaption { margin-top: 12px; font: 400 14px/1.5 var(--font-sans); letter-spacing: 0; color: var(--ink-body); }
 /* See eleventy.config.js: every markdown table is wrapped in this so the
    min-width below scrolls within the block rather than widening the page.
    The two background pairs are the standard local/scroll shadow trick: the
@@ -791,25 +773,486 @@ main section[id] { scroll-margin-top: 74px; }
 .article-body td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--rule-bone-14); font: 400 15px/1.6 var(--font-sans); color: var(--ink-primary); }
 .article-body td:not(:first-child) { font: 400 13px/1.6 var(--font-mono); color: var(--ink-muted); }
 
-/* Footer attribution card */
-.attribution-card {
+/* Footer MDN credit: the white lockup on its own, linked to deepneuron.org. */
+.footer-credit {
+  justify-self: start;
+  display: inline-block;
+  color: var(--ink-on-charcoal); /* overrides the base link colour, which focus rings inherit */
+  opacity: 0.86;
+  transition: opacity var(--dur-hover) var(--ease);
+}
+.footer-credit:hover { opacity: 1; color: var(--ink-on-charcoal); }
+
+/* Arrow link on charcoal or photo backgrounds: same shape as .link-action,
+   colours from .link-on-dark. */
+.link-action--on-dark { color: var(--ink-on-charcoal); border-bottom-color: rgba(var(--bone-rgb), 0.3); }
+.link-action--on-dark:hover { color: var(--amber); border-bottom-color: var(--amber); }
+
+/* Home closing banner (index.html only). Full-bleed photo banner. The charcoal background is the fallback while the
+   photo loads; the image is absolutely positioned inside a box whose height
+   comes from min-height, so loading it never shifts the layout. The gradient
+   keeps text over the photo at WCAG AA. Set --banner-pos / --banner-pos-sm
+   inline to frame the subject on desktop and phones. */
+.photo-banner {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(420px, 60vh, 720px);
+  padding: 96px 0 52px;
+  background: var(--charcoal);
+  color: var(--ink-on-charcoal);
+}
+.photo-banner__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--banner-pos, center);
+  display: block;
+}
+.photo-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top,
+    rgba(var(--charcoal-rgb), 1) 0%,
+    rgba(var(--charcoal-rgb), 0.88) 40%,
+    rgba(var(--charcoal-rgb), 0.5) 70%,
+    rgba(var(--charcoal-rgb), 0.2) 100%);
+}
+.photo-banner__content { position: relative; z-index: 1; width: 100%; padding: 0 24px; }
+@media (max-width: 640px) {
+  .photo-banner { min-height: max(400px, 54vh); padding: 72px 0 40px; }
+  .photo-banner__img { object-position: var(--banner-pos-sm, var(--banner-pos, center)); }
+}
+
+/* Team page grid: five members plus the Pulse project card in the sixth spot.
+   The member <ul> uses display: contents so its <li>s and the project card
+   share one grid; role="list" keeps list semantics in Safari.
+   One column on phones, 2 + 2 + 2 from 648px, 3 + 3 from 968px (the same
+   breakpoints the old auto-fill(280px) grid had). */
+.team-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--grid-col-gap);
+  row-gap: 44px;
+}
+
+.team-grid__members { display: contents; list-style: none; margin: 0; padding: 0; }
+@media (min-width: 648px) { .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 968px) { .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Home "Where things stand": heading and intro on the left, the shared
+   device cube on the right, sized to the heading block. Under 768px the cube
+   sits above the heading at a smaller size. */
+.where-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-bottom: 56px;
+}
+/* The rotated cube draws wider than its layout box, hence the side margins. */
+.where-intro__cube { --cube-zoom: 0.55; order: -1; justify-self: start; margin: 0 0 20px 28px; }
+@media (min-width: 768px) {
+  /* Text column takes its natural width; the cube follows it after a fixed
+     gap instead of being pushed to the far edge. */
+  .where-intro { grid-template-columns: minmax(0, max-content) auto; justify-content: start; column-gap: var(--where-cube-gap, 86px); align-items: start; }
+  /* Top offset lines the cube's top edge up with the heading (not the eyebrow);
+     the right margin keeps the rotated cube inside the viewport at 768px.
+     The rotated cube draws past its layout box, so the CSS gaps differ from
+     the visible 64-96px gap they produce. */
+  .where-intro__cube { --cube-zoom: 0.62; order: 0; justify-self: start; margin: 23px 24px 0 0; }
+}
+@media (min-width: 1100px) {
+  .where-intro { --where-cube-gap: 104px; }
+  .where-intro__cube { --cube-zoom: 0.9; margin: 20px 0 0 0; }
+}
+
+/* Without 3D transforms the cube collapses to its flat front face. */
+@supports not (transform-style: preserve-3d) {
+  .device-cube__cube { transform: none !important; }
+  .device-cube__cube > div:not(:first-child) { display: none; }
+  .device-cube__cube > div:first-child { transform: none !important; }
+}
+
+/* Page top banner: Team, Project, Journal, Media. One height rule for every
+   page: clamp(440px, 68vh, 660px) from 768px up, a fixed 360px on phones.
+   Row 1 is the photo (or solid charcoal); text sits bottom-left on it,
+   aligned to the content column, with 64px of room below and at least 64px
+   above. On phones the text wrapper becomes display: contents, so the eyebrow
+   and heading stay on the photo and the intro drops into row 2 as normal page
+   text. Nothing is duplicated. (The tallest intro block, Team at about 300px,
+   always fits the 440px minimum, so short screens keep the overlay.) */
+.page-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  --hero-h: clamp(440px, 68vh, 660px);
+  grid-template-rows: var(--hero-h) auto;
+}
+.page-hero__bg {
+  grid-area: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--charcoal);            /* fallback while the photo loads */
+}
+.page-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--hero-pos, center);
+  display: block;
+}
+.page-hero__bg--soft .page-hero__img { filter: blur(2.5px); transform: scale(1.04); }
+/* Same on every banner: a large ellipse anchored bottom-left, darkest under
+   the text block and fading out towards the top-right corner. */
+.page-hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse var(--hero-shade-w, 100%) var(--hero-shade-h, 175%) at 0% 100%,
+    rgba(var(--charcoal-rgb), 0.95) 0%,
+    rgba(var(--charcoal-rgb), 0.92) 58%,
+    rgba(var(--charcoal-rgb), 0.72) 76%,
+    rgba(var(--charcoal-rgb), 0.25) 91%,
+    rgba(var(--charcoal-rgb), 0) 100%);
+}
+.page-hero__text {
+  grid-area: 1 / 1;
+  align-self: end;
+  z-index: 1;
+  width: 100%;
+  padding: 64px 24px 64px;
+  color: var(--ink-on-charcoal);
+}
+.page-hero__intro { margin-top: 22px; }
+.page-hero__lede { margin: 0; max-width: 52ch; font: 400 19px/1.65 var(--font-sans); color: var(--ink-on-charcoal-86); }
+.page-hero__accent { color: var(--purple-300); }
+/* Mono subline that sits with the intro, so on phones it moves below the banner with it.
+   On the photo it sits 14px under the heading, matching Team's caption. */
+.page-hero__subline { display: block; margin: -8px 0 22px; color: var(--ink-on-charcoal-86); }
+.page-hero__on-page { display: none; }
+
+/* Phones: eyebrow and heading on the photo, intro below as page text. The
+   heading spans the full width here, so the same ellipse is stretched wider. */
+@media (max-width: 767px) {
+  .page-hero { --hero-h: 360px; }
+  .page-hero__img { object-position: var(--hero-pos-sm, var(--hero-pos, center)); }
+  .page-hero__bg { --hero-shade-w: 170%; --hero-shade-h: 115%; }
+  .page-hero__text { display: contents; }
+  .page-hero__head {
+    grid-area: 1 / 1;
+    align-self: end;
+    z-index: 1;
+    width: 100%;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0 24px 32px;
+    color: var(--ink-on-charcoal);
+  }
+  .page-hero__intro {
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 36px 24px 0;
+  }
+  .page-hero__lede { color: var(--ink-body); font-size: 18px; }
+  .page-hero__accent { color: var(--purple-700); }
+  .page-hero__subline { margin: 0 0 14px; color: var(--ink-muted); }
+  .page-hero__on-photo { display: none; }
+  .page-hero__on-page { display: block; }
+}
+
+/* Filter chips on the light page background (Journal, Media). */
+.filter-bar { display: flex; gap: 28px; flex-wrap: wrap; padding-bottom: 22px; border-bottom: 1px solid var(--rule-bone-18); }
+.filter-bar .filter-chip { color: var(--ink-muted); }
+.filter-bar .filter-chip:hover,
+.filter-bar .filter-chip[aria-pressed="true"] { color: var(--ink-primary); }
+.filter-bar .filter-chip__dot { background: rgba(var(--amber-dim-rgb), 0.45); }
+.filter-bar .filter-chip[aria-pressed="true"] .filter-chip__dot { background: var(--amber-deep); box-shadow: none; }
+
+/* ---------------------------------------------------------------- Media page */
+/* Mosaic banner: tall slices, 2px gaps; 5 / 4 / 3 slices by width. */
+.page-hero__mosaic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--charcoal);
+}
+.page-hero__mosaic picture, .page-hero__mosaic img { display: block; width: 100%; height: 100%; min-width: 0; }
+.page-hero__mosaic img { object-fit: cover; }
+@media (max-width: 1099px) {
+  .page-hero__mosaic { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .page-hero__mosaic picture:nth-child(n+5) { display: none; }
+}
+@media (max-width: 767px) {
+  .page-hero__mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .page-hero__mosaic picture:nth-child(n+4) { display: none; }
+}
+
+.media-page { padding: 40px 24px 96px; display: flex; flex-direction: column; gap: 48px; }
+
+/* Featured: photo at 60%, text beside it, thin rules above and below. */
+.media-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 48px;
+  align-items: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--rule-bone-18);
+  border-bottom: 1px solid var(--rule-bone-18);
+}
+.media-featured__img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.media-featured__text { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.media-featured__line { margin: 0; font: 500 clamp(22px, 2.4vw, 28px)/1.25 var(--font-sans); letter-spacing: -0.015em; }
+@media (max-width: 767px) {
+  .media-featured { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 28px 0; }
+}
+
+.filter-chip__count { font: 400 10px/1 var(--font-mono); letter-spacing: 0.1em; color: var(--ink-muted); margin-left: 4px; }
+
+/* Group heading: plain title, count in mono, thin line, then the grid. */
+.media-section { display: flex; flex-direction: column; }
+.media-section[hidden] { display: none; }
+.media-section__head {
+  display: flex;
+  align-items: baseline;
   gap: 14px;
-  align-items: flex-start;
-  text-decoration: none;
-  padding: 22px;
-  border: 1px solid var(--purple-400);
-  border-radius: 3px;
-  background: transparent;
-  box-shadow: 0 0 28px rgba(var(--purple-400-rgb), 0.28), inset 0 0 22px rgba(var(--purple-400-rgb), 0.16);
-  transition: box-shadow var(--dur-hover) var(--ease);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--rule-bone-18);
 }
-.attribution-card:hover {
-  box-shadow: 0 0 40px rgba(var(--purple-400-rgb), 0.42), inset 0 0 30px rgba(var(--purple-400-rgb), 0.24);
+.media-section__title { margin: 0; font: 500 clamp(24px, 3vw, 30px)/1.2 var(--font-sans); letter-spacing: -0.02em; }
+
+/* Gallery: 3 / 2 / 1 columns, 8px gaps, 4:3 tiles; portrait items span 2 rows. */
+.media-gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  grid-auto-flow: row dense;
 }
-.attribution-card__copy {
-  font: 400 12px/1.7 var(--font-mono);
-  letter-spacing: 0.08em;
-  color: var(--purple-300);
+@media (min-width: 600px) { .media-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .media-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.media-tile { display: flex; flex-direction: column; min-width: 0; }
+.media-tile__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
 }
+.media-tile__open:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.media-tile__media {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bone-2);
+}
+/* Pictures fill the frame absolutely, so the frame's size (4:3, or the
+   portrait span) never depends on the image having loaded. */
+.media-tile__media picture,
+.media-tile__media > .media-tile__img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.media-tile__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter var(--dur-hover) var(--ease);
+}
+.media-tile__img--contain { object-fit: contain; }
+.media-tile__open:hover .media-tile__img,
+.media-tile__open:focus-visible .media-tile__img { filter: brightness(1.08); }
+/* Portrait items (the poster): span two rows. The image area keeps a portrait
+   minimum so a group holding only the poster still has height, and grows to
+   fill both rows when it sits next to 4:3 tiles. */
+.media-tile--tall .media-tile__open { display: flex; flex-direction: column; flex: 1 1 auto; }
+.media-tile--tall .media-tile__media { flex: 1 1 auto; aspect-ratio: 991 / 1400; }
+@media (min-width: 600px) {
+  .media-tile--tall { grid-row: span 2; }
+  .media-tile--tall .media-tile__media { aspect-ratio: 3 / 4.2; }
+}
+.media-tile__play {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: rgba(var(--charcoal-rgb), 0.82);
+  color: var(--ink-on-charcoal);
+}
+.media-tile__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0 14px;
+  min-width: 0;
+}
+.media-tile__caption {
+  font: 400 14px/1.45 var(--font-sans);
+  color: var(--ink-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.media-tile__label { font: 400 10px/1.6 var(--font-mono); letter-spacing: 0.14em; color: var(--ink-muted); white-space: nowrap; flex: 0 0 auto; }
+
+/* Posts and coverage rows. */
+.media-posts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-bone-18); }
+.media-posts li {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) auto auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule-bone-18);
+}
+.media-posts__title { font: 400 16px/1.5 var(--font-sans); }
+.media-posts__link { text-decoration: none; color: var(--ink-primary); }
+@media (max-width: 599px) { .media-posts li { grid-template-columns: minmax(0, 1fr) auto; } }
+
+/* Viewer footer: caption, week, and the poster's PDF link. */
+.media-viewer__footer { flex-direction: column; align-items: center; gap: 8px; }
+.media-viewer__pdf { font: 400 13px/1.4 var(--font-sans); }
+.media-viewer__pdf[hidden] { display: none; }
+.lightbox-stage picture { display: contents; }
+.lightbox-stage img, .lightbox-stage video { width: auto; height: auto; object-fit: contain; }
+.lightbox-nav[hidden] { visibility: hidden; display: block; }
+
+/* ------------------------------------------------ Project Figure 1 (pipeline)
+   The original dot-matrix layout: row 1 (01 -> 02) is a flex row; the two
+   branch rows share one grid with content-sized columns, which looks the same
+   as the old flex rows but lines a column up under stage 05 so the 06 -> 05
+   connector can land there. When the figure is too narrow for that, a
+   container query stacks everything into one column (no sideways scroll). */
+.pipe-figure { margin: 24px 0 0; padding: 30px 26px; background: var(--bone-2); container-type: inline-size; }
+.pipe { display: flex; flex-direction: column; --pipe-up: 24px; }   /* measured: lands 3px under stage 05's icon */
+.pipe__row { display: flex; align-items: center; gap: 18px; padding: 22px 0; }
+.pipe__grid {
+  display: grid;
+  /* Column 1 is the original 132px branch-label width; the longer
+     "NO FACE · BODY VIEW" wraps there instead of squeezing the stages. */
+  grid-template-columns: 132px auto auto auto auto auto;
+  justify-content: start;
+  column-gap: 16px;   /* 2px under the old 18px: the shared columns need 810px, the figure has 804 */
+  align-items: center;
+  padding: 22px 0 4px;
+  border-top: 1px solid var(--rule-bone-16);
+}
+/* Labels stay on one line, as they did in the original flex rows. */
+.pipe__grid .pipeline-stage__name, .pipe__grid .pipeline-stage__state { white-space: nowrap; }
+.pipe__divider { height: 1px; background: var(--rule-bone-16); margin: 22px 0; }
+/* 06 -> 05: a line at stage-icon height from just past 06, along to the 05
+   column, then up into stage 05 (its icon is 47px wide; the line meets its centre). */
+.pipe__link, .pipe__link-end { position: relative; align-self: stretch; min-height: 47px; }
+.pipe__link::before {
+  content: ""; position: absolute; left: 0; right: -18px; top: 50%;
+  border-top: 1px solid var(--ink-eyebrow);
+}
+.pipe__link-label {
+  position: absolute; left: 4px; right: 4px; bottom: calc(50% + 6px);
+  font: 400 10px/1.4 var(--font-mono); letter-spacing: 0.1em; color: var(--ink-eyebrow);
+}
+.pipe__link-end::before {
+  content: ""; position: absolute; left: 0; width: 24px; top: 50%;
+  border-top: 1px solid var(--ink-eyebrow);
+}
+.pipe__link-end::after {      /* up through the divider into stage 05, from the row's middle */
+  content: ""; position: absolute; left: 23px; bottom: 50%;
+  height: calc(50% + 45px + var(--pipe-up, 0px));
+  border-left: 1px solid var(--ink-eyebrow);
+}
+.pipe__head {
+  position: absolute; left: 19px;
+  bottom: calc(50% + 45px + var(--pipe-up, 0px) - 1px);
+  width: 0; height: 0;
+  border-left: 4.5px solid transparent; border-right: 4.5px solid transparent;
+  border-bottom: 7px solid var(--ink-eyebrow);
+}
+.pipe__note { display: none; margin: 0; font: 400 13px/1.45 var(--font-sans); color: var(--ink-eyebrow); }
+
+@container (max-width: 799px) {
+  .pipe__grid .pipeline-stage__name, .pipe__grid .pipeline-stage__state { white-space: normal; }
+  .pipe__row, .pipe__grid { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 0; }
+  .pipe__grid > * { grid-column: auto !important; grid-row: auto !important; }
+  .pipe .pipeline-arrow { transform: rotate(90deg); margin-left: 16px; }
+  .pipe .pipeline-branch { min-width: 0; }
+  .pipe__divider { align-self: stretch; margin: 8px 0; }
+  .pipe__link, .pipe__link-end { display: none; }
+  .pipe__note { display: block; padding-left: 59px; }
+}
+@media (max-width: 639px) { .pipe-figure { padding: 24px 18px; } }
+
+/* Media gallery cap: 6 items per group (3 on phones) until "Show all".
+   A group is uncapped while its filter chip is on. */
+.media-section:not(.is-expanded):not(.is-uncapped) .media-tile--extra { display: none; }
+@media (max-width: 599px) {
+  .media-section:not(.is-expanded):not(.is-uncapped) .media-tile--extra-sm { display: none; }
+}
+.media-section__more {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 6px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rule-bone-30);
+  cursor: pointer;
+  font: 500 14px/1.4 var(--font-sans);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-primary);
+  transition: color var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
+}
+.media-section__more:hover { color: var(--ink-eyebrow); border-bottom-color: var(--ink-eyebrow); }
+.media-section__more:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.is-uncapped .media-section__more { display: none; }
+@media (min-width: 600px) { .media-section__more--sm-only { display: none; } }
+
+/* Pulse marker: one square pixel, in the dot-matrix face's style (1px radius),
+   replacing the old sparkle glyph in eyebrows. Bright Pulse amber on dark
+   backgrounds; on cream the dim amber, since bright amber is only 1.4:1
+   against cream and would barely show. */
+.pixel-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin: 1px;                 /* sits in the same 11px slot the sparkle used */
+  border-radius: 1px;
+  background: var(--amber-dim);
+}
+.pixel-mark--on-dark { background: var(--amber); }
+
+/* De-template pass: labels that aren't data read as ordinary sentence-case
+   text in the body font. Mono stays for real data (figure numbers, week
+   labels, dates, stage numbers, live values). !important because several of
+   these labels carry inline mono styles. */
+.is-plain {
+  font-family: var(--font-sans) !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+.eyebrow .is-plain { font-size: 14px !important; font-weight: 500; }
+.fig-cap { font: 400 14px/1.5 var(--font-sans); letter-spacing: 0; color: var(--ink-body); }
+.fig-num { font: 400 11px/1 var(--font-mono); letter-spacing: 0.14em; color: var(--ink-muted); margin-right: 6px; }

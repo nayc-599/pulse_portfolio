@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/week-six.html"
 title: "Week six: both models trained, and one result I can't explain yet"
 description: "I trained the CNN for the first time and the LSTM on top of it. The LSTM, which should have beaten the CNN, trails it on the test set, and figuring out why is the next thing I'm digging into."
-ogDescription: "Pulse journal · Build log · 27 September 2026 · Nay Chi"
+ogDescription: "Pulse journal, Build log, 27 September 2026, Nay Chi"
 category: "BUILD LOG"
 date: 2026-09-27
 author: "Nay Chi"
@@ -23,7 +23,7 @@ This week I trained both models myself, end to end. One of them came out worse t
 
 <figure>
 <img src="/media/pipeline_diagram.svg" alt="Pipeline diagram, five stages top to bottom: camera; face and pose detection with MediaPipe producing an aligned face crop; CNN producing per-frame features; LSTM reading a trailing window to predict current pain; dashboard alert via a frontend and backend API." style="width:100%;max-width:520px;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption>FIGURE 1 · THE PIPELINE AS IT STANDS IN WEEK 6. THIS POST IS ABOUT STAGES 03, 04 AND 05.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> The pipeline as it stands in week 6. This post is about stages 03, 04 and 05.</figcaption>
 </figure>
 
 ## The CNN had never been trained
@@ -48,7 +48,7 @@ Right now it doesn't. On the test set, the LSTM trails the CNN's frame-level num
 
 <figure>
 <img src="/media/training_curves.png" alt="TODO: describe the chart once the final image is in place. Per-epoch train and validation MSE for the CNN (10 epochs) and the LSTM (15 epochs)." style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption>FIGURE 2 · CNN AND LSTM TRAIN AND VALIDATION MSE PER EPOCH. CNN BEST VAL MSE 0.519 (EPOCH 7); LSTM BEST VAL MSE 0.502 (EPOCH 15). THE LSTM'S TEST PERFORMANCE CURRENTLY TRAILS THE CNN'S, AND WE ARE STILL INVESTIGATING WHY.</figcaption>
+<figcaption><span class="fig-num">FIGURE 2</span> CNN and LSTM train and validation MSE per epoch. CNN best val MSE 0.519 (epoch 7); LSTM best val MSE 0.502 (epoch 15). The LSTM's test performance currently trails the CNN's, and we are still investigating why.</figcaption>
 </figure>
 
 On validation the two are close, and the LSTM is slightly ahead: 0.502 against the CNN's 0.519. On test the order flips. A chart with only train and validation curves would hide the most important thing about this model right now, so I'm saying it here.

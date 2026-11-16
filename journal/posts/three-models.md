@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/three-models.html"
 title: "Three models, not one: our plan for splitting the pipeline"
 description: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
-ogDescription: "Pulse journal · Engineering · 19 August 2026 · Aaron"
+ogDescription: "Pulse journal, Engineering, 19 August 2026, Aaron"
 category: "ENGINEERING"
 date: 2026-08-19
 author: "Aaron"
@@ -22,7 +22,7 @@ The plan is three models instead: a face detector, a CNN feature extractor, and 
 
 <figure>
 <img src="/media/workflow.png" alt="Flowchart on a dark background: Live Video Feed branches to Patient Detection and to CNN facial feature extraction, which feeds CNN plus RNN/LSTM pain detection; both branches flow into Alert System, then Dashboard / Frontend." />
-<figcaption>FIGURE 1 · THE PLANNED FLOW. PAIN DETECTION IS TWO MODELS IN SERIES, NOT ONE, AND IT MEETS PATIENT DETECTION AT THE ALERT SYSTEM.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> The planned flow. Pain detection is two models in series, not one, and it meets patient detection at the alert system.</figcaption>
 </figure>
 
 ## Why split
@@ -46,9 +46,9 @@ detector.eval();  <span style="color:var(--amber-dim)"># no gradients, no update
 cnn.eval();
 lstm.eval();
 
-<span style="color:var(--purple-300)">with</span> torch.no_grad():          <span style="color:var(--amber-dim)"># the device should not learn the patient</span>
+<span style="color:var(--amber)">with</span> torch.no_grad():          <span style="color:var(--amber-dim)"># the device should not learn the patient</span>
     conf = lstm(window)</code></pre>
-<figcaption>FIGURE 2 · THE INTENDED PATTERN, AT DESIGN STAGE.</figcaption>
+<figcaption><span class="fig-num">FIGURE 2</span> The intended pattern, at design stage.</figcaption>
 </figure>
 
 <blockquote class="pull-quote"><p>People will probably assume the device learns the patient over time. It won't. The plan is for the weights to be fixed before the device is ever switched on.</p></blockquote>

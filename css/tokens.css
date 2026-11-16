@@ -64,6 +64,8 @@
   /* Typography (Brand Kit §2) */
   --font-sans: 'General Sans', system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
+  /* Pixelify Sans 600, only for the "Pulse" wordmark. */
+  --font-wordmark: 'Pixelify Sans', system-ui, sans-serif;
 
   /* Spacing and layout (Brand Kit §3) */
   --content-max: 1160px;

@@ -1,0 +1,52 @@
+{#- Page top banner (Team, Project, Journal, Media). One height rule for all of
+    them lives in css/components.css (.page-hero). The photo comes from the
+    page's `banner` front matter, so it can be swapped without touching any
+    template; a page with no `banner` keeps the solid charcoal banner.
+
+      banner:
+        jpg: /media/example.jpg      # JPEG fallback (required)
+        webp: /media/example.webp    # optional WebP source
+        width: 1620                  # intrinsic size of the JPEG
+        height: 945
+        alt: "What the photo shows"
+        pos: "50% 40%"               # object-position from 768px up
+        posSm: "50% 40%"             # object-position under 768px (optional)
+        soft: true                   # low-res source: light blur, same gradient
+
+    Page markup:
+      <section class="page-hero" aria-labelledby="...">
+        {{ pageHeroBg(banner) }}
+        <div class="wrap page-hero__text">
+          <div class="page-hero__head"> eyebrow + h1 </div>
+          <div class="page-hero__intro"> intro paragraph </div>
+        </div>
+      </section> -#}
+{% macro pageHeroBg(b) %}
+<div class="page-hero__bg{% if b and b.soft %} page-hero__bg--soft{% endif %}"{% if b %} style="--hero-pos:{{ b.pos or 'center' }};--hero-pos-sm:{{ b.posSm or b.pos or 'center' }}"{% endif %}>
+  {% if b %}
+  <picture>
+    {% if b.webp %}<source srcset="{{ b.webp }}" type="image/webp" />{% endif %}
+    <img class="page-hero__img" src="{{ b.jpg }}" width="{{ b.width }}" height="{{ b.height }}" alt="{{ b.alt }}" fetchpriority="high" decoding="async" />
+  </picture>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{#- Mosaic variant (Media page): tall slices side by side instead of one photo,
+    from items with a numeric `mosaic` order in _data/media.json. Decorative:
+    the same photos appear in the gallery with real alt text. Five slices on
+    desktop, four at tablet width, three on phones (CSS hides the extras). -#}
+{% macro pageHeroMosaic(items) %}
+<div class="page-hero__bg page-hero__bg--mosaic">
+  <div class="page-hero__mosaic" aria-hidden="true">
+    {% for it in items %}
+    {% set slug = it.poster if it.type == "video" else it.src %}
+    {% set base = "/media/gallery/mosaic-" + (slug | replace("/media/gallery/", "")) %}
+    <picture>
+      <source srcset="{{ base }}.webp" type="image/webp" />
+      <img src="{{ base }}.jpg" alt="" decoding="async" fetchpriority="{{ 'high' if loop.index <= 3 else 'auto' }}" />
+    </picture>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}

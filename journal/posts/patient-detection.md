@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/patient-detection.html"
 title: "The other branch: what patient detection does when the face isn't enough"
 description: "Pulse has a second branch for when the patient is out of bed. It reads the body, not the face. Here is what the demo shows today, and what it doesn't."
-ogDescription: "Pulse journal · Engineering · 17 September 2026 · Aaron"
+ogDescription: "Pulse journal, Engineering, 17 September 2026, Aaron"
 category: "ENGINEERING"
 date: 2026-09-17
 author: "Aaron"
@@ -16,7 +16,7 @@ chainOrder: 1
 # Draft pending Aaron's sign-off. Everything below is limited to what the 17 Sep
 # recording visibly shows and what the project page already states. Confirm with
 # Aaron: the pose model and keypoint count, and the current debugging status.
-thumb: /media/Person_Detection_Demo-poster.jpg
+thumb: /media/gallery/pose-demo-poster-800.jpg
 thumbAlt: "Webcam frame of a person standing in a hallway with green tracking dots on the face and body, and an overlay reading Patient detected, Posture standing, Movement low."
 ---
 Most of what we write about on this site is the face. That makes sense, because in bed the face is all there is: a blanket hides the body, so the pain branch has to work from expression alone. But a patient is not always in bed, and the moment they are up, the face stops being the most useful thing in the frame.
@@ -34,10 +34,11 @@ So rather than stretch one model across both situations, the pose branch maps th
 There is finally a recording worth putting up, so here it is.
 
 <figure>
-<video controls preload="none" playsinline poster="/media/Person_Detection_Demo-poster.jpg" style="width:100%;display:block;border:1px solid var(--rule-bone-16);background:var(--charcoal)" aria-label="Screen recording of pose tracking on a live webcam feed, with keypoints drawn on a person as they stand, move around and sit down, and readouts for posture and movement level.">
-<source src="/media/Person_Detection_Demo.mp4" type="video/mp4" />
+<video controls preload="none" playsinline poster="/media/gallery/pose-demo-poster-full.jpg" width="1152" height="720" muted style="width:100%;display:block;border:1px solid var(--rule-bone-16);background:var(--charcoal)" aria-label="Screen recording of pose tracking on a live webcam feed, with keypoints drawn on a person as they stand, move around and sit down, and readouts for posture and movement level.">
+<source src="/media/video/pose-demo.webm" type="video/webm" />
+<source src="/media/video/pose-demo.mp4" type="video/mp4" />
 </video>
-<figcaption>FIGURE 1 · ONE MINUTE OF LIVE WEBCAM INPUT. ONE PERSON, ONE ROOM, STANDING AND SITTING ONLY.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> One minute of live webcam input. One person, one room, standing and sitting only.</figcaption>
 </figure>
 
 Three things are happening on screen:

@@ -34,6 +34,21 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("findIndexByUrl", (arr, url) => arr.findIndex((p) => p.url === url));
   eleventyConfig.addFilter("limit", (arr, n) => arr.slice(0, n));
+  // "BUILD LOG" -> "Build log": sentence case for labels stored in capitals.
+  eleventyConfig.addFilter("dateText", (value) => {
+    const d = value instanceof Date ? value : new Date(value + "T00:00:00Z");
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  });
+  eleventyConfig.addFilter("sentence", (s) => {
+    const t = String(s ?? "").toLowerCase();
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  });
+  // Nunjucks' built-in selectattr ignores its "equalto" test, so filtering a
+  // list by a field value needs its own filter: items | where("group", "dashboard").
+  eleventyConfig.addFilter("where", (arr, key, value) => (arr || []).filter((item) => item && item[key] === value));
+  // Media page: hand-set "order" first, then week (both ascending).
+  eleventyConfig.addFilter("byOrder", (arr) =>
+    [...(arr || [])].sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || (a.week ?? 0) - (b.week ?? 0)));
 
   return {
     dir: {

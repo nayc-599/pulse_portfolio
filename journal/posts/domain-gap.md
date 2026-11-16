@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/domain-gap.html"
 title: "Our dataset is a physio clinic. Our room is a bedroom at 3am."
 description: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
-ogDescription: "Pulse journal · Research · 27 August 2026 · Amelie"
+ogDescription: "Pulse journal, Research, 27 August 2026, Amelie"
 category: "RESEARCH"
 date: 2026-08-27
 author: "Amelie"
@@ -54,7 +54,7 @@ aug = Compose([
     RandomBrightnessContrast(<span style="color:var(--amber)">0.3</span>, <span style="color:var(--amber)">0.3</span>),
     RandomOcclusion(max_frac=<span style="color:var(--amber)">0.25</span>),   <span style="color:var(--amber-dim)"># pillow, arm, blanket</span>
 ])</code></pre>
-<figcaption>FIGURE 1 · SYNTHESISING A BEDROOM OUT OF A CLINIC. IT IS A GUESS, NOT A GROUND TRUTH.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> Synthesising a bedroom out of a clinic. It is a guess, not a ground truth.</figcaption>
 </figure>
 
 Perspective jitter is not the same as a camera actually being below someone. It moves pixels; it does not add the parts of a face you can only see from underneath. We are honest about that in the write-up and we will be honest about it on stage.

@@ -4,21 +4,41 @@ title: "Journal: Pulse"
 description: "We're building Pulse in public: the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited."
 ogTitle: "Journal: Pulse"
 ogDescription: "Build log from a student team at Monash DeepNeuron: engineering, research, design and the things we got wrong the first time."
+# Top banner: the redacted makerspace photo (postage label and poster QR code
+# blurred in the file; the original is in uploads/originals/). Swap by
+# changing only these values.
+banner:
+  jpg: /media/journal-banner-box.jpg
+  webp: /media/journal-banner-box.webp
+  width: 1453
+  height: 1090
+  alt: "Our sealed parts box on a black Makerspace shelf: a white Core Electronics shipping box wrapped in blue-printed electronics-brand tape, with a Monash DeepNeuron sticker and a yellow Express Post label. The postage label and a poster's QR code beside it are blurred."
+  pos: "100% 8%"
+  posSm: "80% 40%"
 extraScripts:
   - /js/journal.js
 ---
-<div style="background:var(--charcoal);color:var(--ink-on-charcoal);position:relative;overflow:hidden">
-  <img src="/assets/wireframes/wf-melt-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-80px;top:-70px;width:440px;opacity:0.09;pointer-events:none" />
-  <section aria-labelledby="j-title" class="wrap" style="padding:80px 24px 40px;position:relative">
-    <span class="eyebrow" style="margin-bottom:20px">
-      <img src="/assets/brand/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-      <span class="eyebrow__label eyebrow__label--on-charcoal">BUILD LOG · MONASH DEEPNEURON</span>
-    </span>
-    <h1 id="j-title" style="margin:0 0 22px;font:500 clamp(40px,6vw,60px)/1.06 var(--font-sans);letter-spacing:-0.03em">Journal</h1>
-    <p style="margin:0;max-width:52ch;font:400 19px/1.65 var(--font-sans);color:var(--ink-on-charcoal-86)">We're building Pulse in public: the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited.</p>
-  </section>
-  <div class="wrap" style="padding:0 24px 34px;position:relative">
-    <div role="group" aria-label="Filter by category" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:26px">
+{% from "page-hero.njk" import pageHeroBg %}
+<section aria-labelledby="j-title" class="page-hero">
+  {{ pageHeroBg(banner) }}
+  <div class="wrap page-hero__text">
+    <div class="page-hero__head">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <span class="pixel-mark pixel-mark--on-dark" aria-hidden="true"></span>
+        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Build log, Monash DeepNeuron</span>
+      </span>
+      <h1 id="j-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">What we tried, what broke, what stayed.</h1>
+    </div>
+    <div class="page-hero__intro">
+      <span class="metadata page-hero__subline is-plain">One post a week, since week one</span>
+      <p class="page-hero__lede">We're building Pulse in public: the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap" style="padding:32px 24px 0">
+    <div role="group" aria-label="Filter by category" class="filter-bar">
       <button type="button" class="filter-chip" data-filter="ALL" aria-pressed="true"><span class="filter-chip__dot"></span><span>All entries</span></button>
       <button type="button" class="filter-chip" data-filter="ENGINEERING" aria-pressed="false"><span class="filter-chip__dot"></span><span>Engineering</span></button>
       <button type="button" class="filter-chip" data-filter="RESEARCH" aria-pressed="false"><span class="filter-chip__dot"></span><span>Research</span></button>
@@ -26,9 +46,6 @@ extraScripts:
       <button type="button" class="filter-chip" data-filter="BUILD LOG" aria-pressed="false"><span class="filter-chip__dot"></span><span>Build log</span></button>
     </div>
   </div>
-</div>
-
-<main>
   {% from "journal-thumb.njk" import journalThumb %}
   {% set featured = collections.posts | selectattr("fileSlug", "equalto", "shape-of-pain") | first %}
   <section class="journal-featured" data-category="{{ featured.data.category }}" aria-label="Featured entry" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
@@ -36,10 +53,10 @@ extraScripts:
       <a href="{{ featured.url }}" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:var(--ink-primary)">
         {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
         <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
-          <span class="metadata" style="color:var(--ink-eyebrow)">FEATURED · {{ featured.data.category }} · {{ featured.data.date | dateDisplay }}</span>
+          <span class="metadata" style="color:var(--ink-eyebrow)"><span class="is-plain">Featured, {{ featured.data.category | lower }}</span>&nbsp;&nbsp;{{ featured.data.date | dateDisplay }}</span>
           <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
           <span style="font:400 17px/1.7 var(--font-sans);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
-          <span class="metadata">{{ featured.data.author | upper }} · {{ featured.data.readTime }} MIN READ</span>
+          <span class="metadata is-plain">{{ featured.data.author }}, {{ featured.data.readTime }} min read</span>
           <span class="link-action" style="margin-top:6px">
             <span>Read the entry</span>
             <span aria-hidden="true" class="link-action__arrow">→</span>
@@ -50,18 +67,18 @@ extraScripts:
   </section>
 
   <section aria-label="All entries" class="wrap" style="padding:56px 24px 24px">
-    <span data-entry-count class="metadata" style="display:block;margin-bottom:26px"></span>
+    <span data-entry-count class="metadata is-plain" style="display:block;margin-bottom:26px"></span>
     <ul style="list-style:none;margin:0;padding:0">
       {% for post in collections.posts %}
       <li class="journal-entry rule-top--list" data-category="{{ post.data.category }}">
         <a href="{{ post.url }}" class="journal-entry__link hover-shift">
           {{ journalThumb(post, 7, 6, 2) }}
           <span style="display:flex;flex-direction:column;gap:9px;min-width:0">
-            <span class="metadata">{{ post.data.category }} · {{ post.data.date | dateDisplay }}</span>
+            <span class="metadata"><span class="is-plain">{{ post.data.category | sentence }}</span>&nbsp;&nbsp;{{ post.data.date | dateDisplay }}</span>
             <span style="font:500 23px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
             <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body);max-width:70ch">{{ post.data.excerpt }}</span>
           </span>
-          <span class="metadata" style="text-align:right">{{ post.data.author | upper }} · {{ post.data.readTime }} MIN</span>
+          <span class="metadata is-plain" style="text-align:right">{{ post.data.author }}, {{ post.data.readTime }} min</span>
         </a>
       </li>
       {% endfor %}
@@ -78,6 +95,6 @@ extraScripts:
       <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:rgba(var(--amber-dim-rgb),0.55)"></span>
       <span>2</span>
     </span>
-    <span class="metadata" style="margin-left:24px">EIGHT ENTRIES SO FAR · WE POST MOST WEDNESDAYS</span>
+    <span class="metadata is-plain" style="margin-left:24px">{{ collections.posts | length }} entries so far. We post most Wednesdays.</span>
   </nav>
 </main>

@@ -241,10 +241,7 @@ Colour: `#5C574D` on bone, `#6B5528` when it carries the eyebrow role, `rgba(244
 
 ### Footer attribution block
 
-Linked card, last cell of the footer grid: `padding:22px`, `1px solid #7854FC`, `border-radius:3px`, transparent fill,
-`box-shadow: 0 0 28px rgba(120,84,252,0.28), inset 0 0 22px rgba(120,84,252,0.16)`
-→ hover `0 0 40px rgba(120,84,252,0.42), inset 0 0 30px rgba(120,84,252,0.24)` over `900ms`.
-Contains `assets/mdn-lockup-purple.png` (`max-width:190px`) above one Mono 12px/1.7 `0.08em` `#A996FE` line.
+Last cell of the footer grid: `assets/mdn-lockup-white.png` alone, `height:36px`, linked to deepneuron.org, alt "Monash Deep Neuron". No caption, border, glow or purple; `opacity:0.86` → `1` on hover. The footer is always charcoal, so no dark variant is needed.
 
 Footer shell: `#1C1A17`, `padding:72px 24px 40px`, grid `repeat(auto-fit,minmax(220px,1fr))`, `gap:48px`; legal strip `margin-top:56px`, `border-top:1px solid rgba(244,241,234,0.14)`.
 
@@ -278,7 +275,8 @@ Device cube: `rotateX(-14deg) rotateY(-60deg → +50deg)` linked to viewport pro
 |---|---|
 | `assets/mdn-mark-white.png` | MDN mark on charcoal, when purple is too low-contrast |
 | `assets/mdn-mark-purple.png` | MDN mark on bone — header, team intro |
-| `assets/mdn-lockup-purple.png` | Full MDN + AI lockup, footer attribution card only |
+| `assets/mdn-lockup-white.png` | Full MDN + AI lockup in white, footer credit only |
+| `assets/mdn-lockup-purple.png` | Full MDN + AI lockup in purple (currently unused) |
 | `assets/sparkle-purple.png` | Eyebrow glyph on bone / bone-2 |
 | `assets/sparkle-p300.png` | Eyebrow glyph on charcoal |
 

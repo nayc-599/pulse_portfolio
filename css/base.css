@@ -10,8 +10,15 @@ body {
 
 p { text-wrap: pretty; }
 
-a { color: var(--purple-500); }
-a:hover { color: var(--purple-700); }
+/* Links are Pulse amber (the dark text tone, 6.3:1 on cream). Purple is
+   Monash DeepNeuron's colour, so only links to MDN keep it. */
+a { color: var(--ink-eyebrow); }
+a:hover { color: var(--ink-primary); }
+a[href*="deepneuron.org"], a[href*="MonashDeepNeuron"] { color: var(--purple-500); }      /* 5.0:1 on cream */
+a[href*="deepneuron.org"]:hover, a[href*="MonashDeepNeuron"]:hover { color: var(--purple-700); }
+/* On charcoal the light purple (7.0:1); purple-500 there is only 3.1:1. */
+.link-on-dark[href*="deepneuron.org"], .link-on-dark[href*="MonashDeepNeuron"] { color: var(--purple-300); }
+.link-on-dark[href*="deepneuron.org"]:hover, .link-on-dark[href*="MonashDeepNeuron"]:hover { color: var(--amber); }
 
 :focus-visible {
   outline: 2px solid var(--amber);

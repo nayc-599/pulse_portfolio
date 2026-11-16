@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/skeletons.html"
 title: "Skeletons before data: writing the loop ahead of the models"
 description: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
-ogDescription: "Pulse journal · Build log · 27 August 2026 · Christopher"
+ogDescription: "Pulse journal, Build log, 27 August 2026, Christopher"
 category: "BUILD LOG"
 date: 2026-08-27
 author: "Christopher"
@@ -25,24 +25,24 @@ It felt like procrastination. It was the most useful ten days of the project so 
 
 <figure>
 <pre><code><span style="color:var(--amber-dim)"># pulse/stubs.py: stand-ins with the right shapes and nothing else</span>
-<span style="color:var(--purple-300)">def</span> detect_face(frame):
+<span style="color:var(--amber)">def</span> detect_face(frame):
     <span style="color:var(--amber-dim)"># 1 in 8 frames has no face, like a real room</span>
-    <span style="color:var(--purple-300)">if</span> random.random() &lt; <span style="color:var(--amber)">0.125</span>: <span style="color:var(--purple-300)">return</span> <span style="color:var(--amber)">None</span>
-    <span style="color:var(--purple-300)">return</span> np.zeros((<span style="color:var(--amber)">224</span>, <span style="color:var(--amber)">224</span>, <span style="color:var(--amber)">3</span>), np.uint8)
+    <span style="color:var(--amber)">if</span> random.random() &lt; <span style="color:var(--amber)">0.125</span>: <span style="color:var(--amber)">return</span> <span style="color:var(--amber)">None</span>
+    <span style="color:var(--amber)">return</span> np.zeros((<span style="color:var(--amber)">224</span>, <span style="color:var(--amber)">224</span>, <span style="color:var(--amber)">3</span>), np.uint8)
 
-<span style="color:var(--purple-300)">def</span> features(crop):
-    <span style="color:var(--purple-300)">return</span> np.random.randn(<span style="color:var(--amber)">256</span>).astype(np.float32)
+<span style="color:var(--amber)">def</span> features(crop):
+    <span style="color:var(--amber)">return</span> np.random.randn(<span style="color:var(--amber)">256</span>).astype(np.float32)
 
-<span style="color:var(--purple-300)">def</span> confidence(window):
-    <span style="color:var(--purple-300)">return</span> float(np.clip(np.random.normal(<span style="color:var(--amber)">0.4</span>, <span style="color:var(--amber)">0.2</span>), <span style="color:var(--amber)">0</span>, <span style="color:var(--amber)">1</span>))</code></pre>
-<figcaption>FIGURE 1 · THREE FUNCTIONS THAT KNOW NOTHING AND STILL FOUND FOUR BUGS.</figcaption>
+<span style="color:var(--amber)">def</span> confidence(window):
+    <span style="color:var(--amber)">return</span> float(np.clip(np.random.normal(<span style="color:var(--amber)">0.4</span>, <span style="color:var(--amber)">0.2</span>), <span style="color:var(--amber)">0</span>, <span style="color:var(--amber)">1</span>))</code></pre>
+<figcaption><span class="fig-num">FIGURE 1</span> Three functions that know nothing and still found four bugs.</figcaption>
 </figure>
 
 The one decision worth copying is the **1 in 8 frames has no face** line. A stub that always succeeds tests nothing. A stub that fails at a realistic rate turns the missing-face path from a hypothetical into something you trip over on the first run.
 
 <figure>
 <img src="/media/skeletal_code.png" alt="Screenshot of a Colab notebook cell titled Transforms, defining train_transform with RandomHorizontalFlip, RandomRotation of 10 degrees, ColorJitter and Normalize, and a val_transform that only normalises." />
-<figcaption>FIGURE 2 · THE PREPROCESSING THE REAL MODELS WILL SLOT INTO: AUGMENTATION ON TRAIN, NORMALISATION ONLY ON VALIDATION.</figcaption>
+<figcaption><span class="fig-num">FIGURE 2</span> The preprocessing the real models will slot into: augmentation on train, normalisation only on validation.</figcaption>
 </figure>
 
 ## What it caught

@@ -2,252 +2,147 @@
 layout: layout.njk
 permalink: "media.html"
 title: "Media: Pulse"
-description: "Photos, video, renders and diagrams from the build of Pulse, grouped by milestone."
+description: "Photos and demo videos from the build of Pulse, grouped by what they show: hardware, models and training, the dashboard, and the showcase."
 ogTitle: "Media: Pulse"
-ogDescription: "The library of what we have built so far, in chronological order."
+ogDescription: "The visual record of the build: parts at the Makerspace, demos of each model, the dashboard as it changed, and showcase night."
 extraScripts:
   - /js/media.js
 ---
-<section aria-labelledby="m-title" style="background:var(--charcoal);color:var(--ink-on-charcoal);padding:76px 0 40px;position:relative;overflow:hidden">
-  <img src="/assets/wireframes/wf-orb-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-100px;top:-80px;width:480px;opacity:0.1;pointer-events:none" />
-  <div class="wrap" style="position:relative;padding:0 24px">
-    <span class="eyebrow" style="margin-bottom:20px">
-      <img src="/assets/brand/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-      <span class="eyebrow__label eyebrow__label--on-charcoal">MEDIA</span>
-    </span>
-    <h1 id="m-title" style="margin:0 0 20px;font:500 clamp(38px,5.4vw,56px)/1.07 var(--font-sans);letter-spacing:-0.03em">What we have built, in order.</h1>
-    <p style="margin:0 0 30px;max-width:52ch;font:400 19px/1.65 var(--font-sans);color:var(--ink-on-charcoal-86)">Bench photos, screen recordings of the model running, CAD renders of a cube that is designed but not yet fabricated, and the diagrams we drew to argue with each other.</p>
-    <div role="group" aria-label="Filter by type" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:24px">
-      <button type="button" class="filter-chip" data-filter="ALL" aria-pressed="true"><span class="filter-chip__dot"></span><span>Everything</span></button>
-      <button type="button" class="filter-chip" data-filter="PHOTOS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Photos</span></button>
-      <button type="button" class="filter-chip" data-filter="VIDEO" aria-pressed="false"><span class="filter-chip__dot"></span><span>Video</span></button>
-      <button type="button" class="filter-chip" data-filter="RENDERS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Renders</span></button>
-      <button type="button" class="filter-chip" data-filter="DIAGRAMS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Diagrams</span></button>
-      <button type="button" class="filter-chip" data-filter="SCREENSHOTS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Screenshots</span></button>
-      <button type="button" class="filter-chip" data-filter="CHARTS" aria-pressed="false"><span class="filter-chip__dot"></span><span>Charts</span></button>
+{#- Everything below is driven by _data/media.json. -#}
+{% from "page-hero.njk" import pageHeroMosaic %}
+{% set mosaicItems = media.items | selectattr("mosaic") | sort(false, false, "mosaic") %}
+{% set featured = media.items | selectattr("featured") | first %}
+{% set galleryItems = media.items | rejectattr("featured") %}
+
+{%- macro picture(base, w, h, alt, cls, sizes, eager) -%}
+<picture>
+  <source type="image/webp" srcset="{{ base }}-800.webp 800w, {{ base }}-full.webp {{ w }}w" sizes="{{ sizes }}" />
+  <img class="{{ cls }}" src="{{ base }}-800.jpg" srcset="{{ base }}-800.jpg 800w, {{ base }}-full.jpg {{ w }}w" sizes="{{ sizes }}" width="{{ w }}" height="{{ h }}" alt="{{ alt }}" decoding="async"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %} />
+</picture>
+{%- endmacro -%}
+
+<section aria-labelledby="m-title" class="page-hero">
+  {{ pageHeroMosaic(mosaicItems) }}
+  <div class="wrap page-hero__text">
+    <div class="page-hero__head">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <span class="pixel-mark pixel-mark--on-dark" aria-hidden="true"></span>
+        <span class="eyebrow__label eyebrow__label--on-charcoal is-plain">Media, Monash DeepNeuron</span>
+      </span>
+      <h1 id="m-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">Proof it's not just slides.</h1>
+    </div>
+    <div class="page-hero__intro">
+      <span class="metadata page-hero__subline is-plain">Photos, demos and the poster, week 1 to now</span>
+      <p class="page-hero__lede">Everything here was taken while we built Pulse: parts boxes at the Makerspace, demos of each model working on us, the dashboard as it changed, and the night we showed it live. Click anything to see it full size.</p>
     </div>
   </div>
 </section>
 
-<main class="wrap" style="padding:56px 24px 96px;display:flex;flex-direction:column;gap:64px">
-  <section class="media-group" aria-label="Device concept" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">REFERENCE</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Device concept</h2>
+<main class="wrap media-page">
+  {% if featured %}
+  <section class="media-featured" aria-labelledby="featured-title">
+    <div class="media-featured__photo">
+      <button type="button" class="media-tile__open" data-viewer-item="{{ featured.id }}" aria-label="Open full size: {{ featured.caption }}">
+        {{ picture(featured.src, featured.width, featured.height, featured.alt, "media-featured__img", "(min-width: 768px) 60vw, 100vw", true) }}
+      </button>
     </div>
-    <ul class="media-grid">
-      <li class="media-item" data-type="PHOTOS" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="PHOTO" data-date="10 AUG 2026" data-ratio="824 / 812" data-slot="PHOTO · REFERENCE IMAGE" data-caption="The reference image the cube is aimed at. Approachable, compact, and clearly not medical equipment." data-src="/media/inspo_pic.png" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift">
-            <img src="/media/inspo_pic.png" alt="" />
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The reference image the cube is aimed at. Approachable, compact, and clearly not medical equipment.</span>
-            <span class="metadata">10 AUG 2026</span>
+    <div class="media-featured__text">
+      <span class="metadata is-plain" style="color:var(--ink-eyebrow)">Week {{ featured.week }}, 7 October 2026</span>
+      <h2 id="featured-title" class="media-featured__line">We demoed Pulse live at the Monash DeepNeuron showcase.</h2>
+      <a href="/journal/posts/week-eight-showcase.html" class="link-action">
+        <span>Read about the night</span>
+        <span aria-hidden="true" class="link-action__arrow">→</span>
+      </a>
+    </div>
+  </section>
+  {% endif %}
+
+  {#- Chips: one per group that is shown, each with its count. -#}
+  <div role="group" aria-label="Filter by group" class="filter-bar media-filters">
+    <button type="button" class="filter-chip" data-filter="all" aria-pressed="true"><span class="filter-chip__dot"></span><span>All <span class="filter-chip__count">{{ galleryItems | length }}</span></span></button>
+    {% for g in media.groups %}
+    {% set n = galleryItems | where("group", g.id) | length %}
+    {% if n >= 2 or (n >= 1 and g.keepWhenSmall) %}
+    <button type="button" class="filter-chip" data-filter="{{ g.id }}" aria-pressed="false"><span class="filter-chip__dot"></span><span>{{ g.label }} <span class="filter-chip__count">{{ n }}</span></span></button>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  {% for g in media.groups %}
+  {% set items = galleryItems | where("group", g.id) | byOrder %}
+  {% if items | length >= 2 or (items | length >= 1 and g.keepWhenSmall) %}
+  <section class="media-section" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-title">
+    <div class="media-section__head">
+      <h2 id="{{ g.id }}-title" class="media-section__title">{{ g.label }}</h2>
+      <span class="metadata is-plain">{{ items | length }} {{ "item" if items | length == 1 else "items" }}</span>
+    </div>
+    <ul class="media-gallery" id="{{ g.id }}-items">
+      {% for it in items %}
+      {% set thumb = it.poster if it.type == "video" else it.src %}
+      {% set label = "Play video: " if it.type == "video" else "Open full size: " %}
+      {% set who = (" Shows " + (it.people | join(" and ")) + ".") if (it.type == "video" and it.people | length) else "" %}
+      <li class="media-tile{% if it.height > it.width * 1.2 %} media-tile--tall{% endif %}{% if loop.index > 6 %} media-tile--extra{% elif loop.index > 3 %} media-tile--extra-sm{% endif %}" data-group="{{ g.id }}">
+        <button type="button" class="media-tile__open" data-viewer-item="{{ it.id }}" aria-label="{{ label }}{{ it.caption }}{{ who }}">
+          <span class="media-tile__media">
+            {% if it.svg %}
+            <img class="media-tile__img media-tile__img--contain" src="{{ it.src }}" width="{{ it.width }}" height="{{ it.height }}" alt="{{ it.alt }}" loading="lazy" decoding="async" />
+            {% else %}
+            {{ picture(thumb, it.width, it.height, it.alt, "media-tile__img media-tile__img--contain" if it.fit == "contain" else "media-tile__img", "(min-width: 1024px) 380px, (min-width: 600px) 50vw, 100vw", false) }}
+            {% endif %}
+            {% if it.type == "video" %}<span class="media-tile__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>{% endif %}
           </span>
         </button>
+        <span class="media-tile__meta">
+          <span class="media-tile__caption" title="{{ it.caption }}">{{ it.caption }}</span>
+          <span class="media-tile__label">{% if it.type == "video" %}VIDEO {{ it.duration }}, {% endif %}WK {{ it.week }}</span>
+        </span>
       </li>
+      {% endfor %}
+    </ul>
+    {#- Cap: 6 visible (3 on phones); the rest behind this button. Hidden when a filter chip is on. -#}
+    {% if items | length > 3 %}
+    <button type="button" class="media-section__more{% if items | length <= 6 %} media-section__more--sm-only{% endif %}" aria-expanded="false" aria-controls="{{ g.id }}-items" data-count="{{ items | length }}">Show all ({{ items | length }})</button>
+    {% endif %}
+  </section>
+  {% endif %}
+  {% endfor %}
+
+  {% if media.posts | length %}
+  <section class="media-section" aria-labelledby="posts-title">
+    <div class="media-section__head">
+      <h2 id="posts-title" class="media-section__title">Posts and coverage</h2>
+      <span class="metadata">{{ media.posts | length }}</span>
+    </div>
+    <ul class="media-posts">
+      {% for p in media.posts %}
+      <li>
+        <span class="metadata">{{ p.date | dateDisplay }}</span>
+        <span class="media-posts__title">{{ p.title }}</span>
+        <span class="metadata is-plain">{{ p.source }}</span>
+        <a href="{{ p.url }}" target="_blank" rel="noopener" class="media-posts__link" aria-label="{{ p.title }} on {{ p.source }} (opens in a new tab)">→</a>
+      </li>
+      {% endfor %}
     </ul>
   </section>
-
-  <section class="media-group" aria-label="Week 2: first detections" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">MILESTONE · WEEK 2</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 2: first detections</h2>
-    </div>
-    <ul class="media-grid">
-      <li class="media-item" data-type="VIDEO" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="18 SEP 2026" data-ratio="16 / 9" data-slot="SCREEN RECORDING · FRAME EXTRACTION" data-caption="The per-frame extraction step running live: a face found and boxed in each webcam frame, landmarks placed on it, and the crop pushed through the CNN, which prints a feature vector for that frame, one terminal line per frame. No pain score is produced here; this is the stage that produces the vectors the pain model will read." data-src="/media/frame_extract_demo.mp4" data-media-type="video" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift">
-            <img src="/media/frame_extract_demo-poster.jpg" alt="A monitor filmed off-screen running the pulse-ai project: a live webcam window with a green box locked onto a face and a mesh of cyan landmark dots across it, an overlay reading faces: 1, and a terminal column beside it streaming one line per frame, each logging the frame number and the feature vector taken from it." />
-            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">&#9654;</span>
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The per-frame extraction step running live: a face found and boxed in each webcam frame, landmarks placed on it, and the crop pushed through the CNN, which prints a feature vector for that frame, one terminal line per frame. No pain score is produced here; this is the stage that produces the vectors the pain model will read.</span>
-            <span class="metadata">18 SEP 2026</span>
-          </span>
-        </button>
-      </li>
-      <li class="media-item" data-type="VIDEO" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="17 SEP 2026" data-ratio="2880 / 1800" data-slot="SCREEN RECORDING · PATIENT DETECTION" data-caption="Pose tracking on live webcam input: the body mapped to keypoints in real time, with on-screen readouts for posture (standing or sitting, next to a knee angle) and a low, medium or high movement level. There is no fall classification in this demo." data-src="/media/Person_Detection_Demo.mp4" data-media-type="video" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift">
-            <img src="/media/Person_Detection_Demo-poster.jpg" alt="Webcam frame of a person standing in a hallway with green tracking dots on the face, shoulders, elbows, wrists, hips and knees, and an overlay reading Patient detected, Posture standing, Movement low." />
-            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">&#9654;</span>
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Pose tracking on live webcam input: the body mapped to keypoints in real time, with on-screen readouts for posture (standing or sitting, next to a knee angle) and a low, medium or high movement level. There is no fall classification in this demo.</span>
-            <span class="metadata">17 SEP 2026</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-
-  <section class="media-group" aria-label="Week 3: the dashboard comes online" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">MILESTONE · WEEK 3</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 3: the dashboard comes online</h2>
-    </div>
-    <ul class="media-grid">
-      <li class="media-item" data-type="VIDEO" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="SCREEN RECORDING" data-date="21 AUG 2026" data-ratio="3024 / 1964" data-slot="SCREEN RECORDING · CARER DASHBOARD" data-caption="A mockup of the carer dashboard's alert view, with scripted data standing in for the models, showing what it will display once they are connected to it." data-src="/media/dashboard-demo.mp4" data-media-type="video" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift">
-            <img src="/media/dashboard-demo-poster.jpg" alt="" />
-            <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:46px;height:46px;border:1px solid var(--ink-primary);border-radius:999px;background:rgba(var(--bone-rgb),0.9);display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-mono);color:var(--ink-primary)">&#9654;</span>
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">VIDEO</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">A mockup of the carer dashboard's alert view, with scripted data standing in for the models, showing what it will display once they are connected to it.</span>
-            <span class="metadata">21 AUG 2026</span>
-          </span>
-        </button>
-      </li>
-    </ul>
-  </section>
-
-  <section class="media-group" aria-label="Week 4: reading the data" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">MILESTONE · WEEK 4</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 4: reading the data</h2>
-    </div>
-    <p style="margin:0 0 24px;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Week 4 was mostly reading the dataset before anything was trained: indexing every frame, and plotting how pain intensity rises and falls across a sequence. Pain turned out to build and hold rather than spike, which told us the sequence model was the right shape. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></p>
-    <ul class="media-grid">
-      <li class="media-item" data-type="CHARTS" style="min-width:0">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <button type="button" class="media-item__open" data-type="CHART" data-date="13 SEP 2026" data-ratio="1289 / 390" data-slot="CHART · PSPI DISTRIBUTION" data-caption="How pain intensity is distributed across all 48,398 frames: almost all of them score zero, on both a linear and a log scale." data-src="/media/pspi_info.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-            <span class="media-thumb hover-lift">
-              <img src="/media/pspi_info.png" alt="Two histograms of pain intensity across all frames, linear and log scale, both dominated by a large bar at zero." />
-            </span>
-          </button>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">How pain intensity is distributed across all frames: almost all of them score zero. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></span>
-            <span class="metadata">13 SEP 2026</span>
-          </span>
-        </div>
-      </li>
-      <li class="media-item" data-type="CHARTS" style="min-width:0">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <button type="button" class="media-item__open" data-type="CHART" data-date="13 SEP 2026" data-ratio="1189 / 440" data-slot="CHART · SELF-REPORT VS FACIAL SIGNAL" data-caption="How closely a patient's own pain report, and a trained observer's rating, agree with what the facial signal shows." data-src="/media/VAS_OPR_vs_facial_signal.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-            <span class="media-thumb hover-lift">
-              <img src="/media/VAS_OPR_vs_facial_signal.png" alt="Two scatter plots comparing peak facial pain signal against patient self-report and against a trained observer's rating." />
-            </span>
-          </button>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">What a patient reports against what their face shows: the two only agree moderately, even by a trained observer's reading. <a href="/journal/posts/shape-of-pain.html">Written up in the journal.</a></span>
-            <span class="metadata">13 SEP 2026</span>
-          </span>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <section class="media-group" aria-label="Week 6: models trained, hardware arrives" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">MILESTONE · WEEK 6</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 6: models trained, hardware arrives</h2>
-    </div>
-    <ul class="media-grid">
-      <!-- TODO: set the real date in data-date and the date line. -->
-      <li class="media-item" data-type="RENDERS" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="RENDER" data-date="DATE TBC" data-ratio="839 / 491" data-slot="RENDER · CAD CUBE MONITOR" data-caption="Kate's CAD model of the Pulse cube: the front shell, with a large circular opening and a smaller round hole, beside the back plate that screws on at its four corners." data-src="/media/week6-cad-cube-render.png" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift">
-            <img src="/media/week6-cad-cube-render.png" alt="CAD model of the Pulse cube in dark grey on a pale background: a square shell whose front face has a large circular opening and a small round hole in the top corner, next to a flat back plate with a screw hole in each corner and one round hole near the bottom." />
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">RENDERS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Kate's CAD model of the Pulse cube: the front shell, with a large circular opening and a smaller round hole, beside the back plate that screws on at its four corners.</span>
-            <span class="metadata">DATE TBC</span>
-          </span>
-        </button>
-      </li>
-      <!-- EMPTY SLOT: drop the Makerspace photo at /media/week6-makerspace-hardware.jpg (same swap steps as above). -->
-      <li class="media-item" data-type="PHOTOS" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="PHOTO" data-date="DATE TBC" data-ratio="16 / 10" data-slot="PHOTO PENDING · HARDWARE AT MAKERSPACE" data-caption="Hardware components at Makerspace, ready for assembly" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb placeholder-tile hover-lift">
-            <span class="metadata" style="text-align:center;padding:0 16px">PHOTO PENDING · HARDWARE AT MAKERSPACE</span>
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">PHOTOS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Hardware components at Makerspace, ready for assembly</span>
-            <span class="metadata">DATE TBC</span>
-          </span>
-        </button>
-      </li>
-      <li class="media-item" data-type="DIAGRAMS" style="min-width:0">
-        <button type="button" class="media-item__open" data-type="DIAGRAM" data-date="27 SEP 2026" data-ratio="560 / 580" data-slot="DIAGRAM · INFERENCE PIPELINE" data-caption="The pipeline as it stands in week six: camera, MediaPipe face and pose detection, the CNN's per-frame features, the LSTM's windowed prediction, and the dashboard alert." data-src="/media/pipeline_diagram.svg" style="width:100%;display:flex;flex-direction:column;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-          <span class="media-thumb hover-lift" style="--thumb-pos:center top">
-            <img src="/media/pipeline_diagram.svg" alt="" />
-          </span>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">DIAGRAMS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The pipeline as it stands in week six: camera, MediaPipe face and pose detection, the CNN's per-frame features, the LSTM's windowed prediction, and the dashboard alert.</span>
-            <span class="metadata">27 SEP 2026</span>
-          </span>
-        </button>
-      </li>
-      <li class="media-item" data-type="CHARTS" style="min-width:0">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <button type="button" class="media-item__open" data-type="CHART" data-date="27 SEP 2026" data-ratio="2160 / 870" data-slot="CHART · CNN AND LSTM TRAINING CURVES" data-caption="Model training progress, Week 6" data-src="/media/training_curves.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-            <span class="media-thumb hover-lift">
-              <img src="/media/training_curves.png" alt="Line charts of CNN and LSTM train and validation MSE per epoch, week 6." />
-            </span>
-          </button>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">CHARTS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">Model training progress, Week 6. <a href="/journal/posts/week-six-training.html">Written up in the journal.</a></span>
-            <span class="metadata">27 SEP 2026</span>
-          </span>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <section class="media-group" aria-label="Week 8: showcase day" style="flex-direction:column;gap:24px">
-    <div style="display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule-bone-18);padding-bottom:14px">
-      <span class="metadata">MILESTONE · WEEK 8</span>
-      <h2 style="margin:0;font:500 clamp(24px,3vw,30px)/1.2 var(--font-sans);letter-spacing:-0.02em">Week 8: showcase day</h2>
-    </div>
-    <ul class="media-grid">
-      <li class="media-item" data-type="SCREENSHOTS" style="min-width:0">
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <button type="button" class="media-item__open" data-type="SCREENSHOT" data-date="7 OCT 2026" data-ratio="1388 / 1332" data-slot="SCREENSHOT · DASHBOARD REDESIGN" data-caption="The redesigned carer dashboard, versions A to F: four beds on the ward view, live alerts and the night's history at a glance. The bottom row is the version we built." data-src="/media/week8-dashboard-redesign.png" style="display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-            <span class="media-thumb hover-lift" style="--thumb-pos:center bottom">
-              <img src="/media/week8-dashboard-redesign.png" alt="A design board of dark dashboard mockups in six rows, labelled Version A to Version F: ward overviews with four bed cards, camera views with stick-figure skeletons over a bed, a live view with a red high pain detected banner, a night's history chart, and a settings page. The bottom row, Version F, is labelled Final." loading="lazy" />
-            </span>
-          </button>
-          <span style="display:flex;flex-direction:column;gap:6px">
-            <span class="metadata" style="color:var(--ink-eyebrow)">SCREENSHOTS</span>
-            <span style="font:400 14px/1.6 var(--font-mono);color:var(--ink-primary)">The redesigned carer dashboard, versions A to F: four beds on the ward view, live alerts and the night's history at a glance. The bottom row is the version we built. <a href="/journal/posts/week-eight-showcase.html">Written up in the journal.</a></span>
-            <span class="metadata">7 OCT 2026</span>
-          </span>
-        </div>
-      </li>
-    </ul>
-  </section>
-
-  <p style="margin:0;max-width:60ch;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">The charts from each week live in the journal too, where they have context. New weeks get added here as each one runs.</p>
+  {% endif %}
 </main>
 
-<div class="lightbox" role="dialog" aria-modal="true" aria-label="" hidden>
+{#- Viewer data: what the full-size view needs per item, read by js/media.js. -#}
+<script type="application/json" id="media-data">{{ media.items | dump | safe }}</script>
+
+<div class="lightbox media-viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-caption" hidden>
   <div class="lightbox__bar">
-    <span data-lightbox-type class="metadata metadata--on-charcoal"></span>
-    <button type="button" data-lightbox-close aria-label="Close" class="link-on-dark link-on-dark--underline lightbox__close">CLOSE<span class="lightbox__close-key"> ESC</span></button>
+    <span data-viewer-count class="metadata metadata--on-charcoal" aria-live="polite"></span>
+    <button type="button" data-viewer-close class="link-on-dark link-on-dark--underline lightbox__close is-plain">Close<span class="lightbox__close-key"> (Esc)</span></button>
   </div>
-  <div data-lightbox-backdrop class="lightbox__backdrop">
-    <button type="button" data-lightbox-prev aria-label="Previous" class="lightbox-nav">←</button>
-    <span data-lightbox-stage class="lightbox-stage">
-      <img data-lightbox-image alt="" hidden />
-      <video data-lightbox-video hidden controls playsinline disablepictureinpicture controlslist="nodownload noremoteplayback"></video>
-      <span data-lightbox-slot class="lightbox__slot"></span>
-    </span>
-    <button type="button" data-lightbox-next aria-label="Next" class="lightbox-nav">→</button>
+  <div class="lightbox__backdrop" data-viewer-backdrop>
+    <button type="button" data-viewer-prev aria-label="Previous" class="lightbox-nav">←</button>
+    <div class="lightbox-stage" data-viewer-stage></div>
+    <button type="button" data-viewer-next aria-label="Next" class="lightbox-nav">→</button>
   </div>
-  <div class="lightbox__footer">
-    <span data-lightbox-caption class="lightbox__caption"></span>
+  <div class="lightbox__footer media-viewer__footer">
+    <span id="viewer-caption" data-viewer-caption class="lightbox__caption"></span>
+    <span data-viewer-week class="metadata metadata--on-charcoal"></span>
+    <a data-viewer-pdf class="link-on-dark link-on-dark--underline media-viewer__pdf" hidden download>Download the poster (PDF)</a>
   </div>
 </div>

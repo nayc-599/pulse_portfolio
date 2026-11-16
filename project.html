@@ -5,65 +5,81 @@ title: "The Project: Pulse"
 description: "How Pulse works: two branches for in bed and out of bed. As of the 7 October 2026 showcase, Pulse is a working prototype with a live carer dashboard, and the camera cube is in progress. The device, the dataset, its limits, and the roadmap."
 ogTitle: "The Project: Pulse"
 ogDescription: "Two branches, one threshold, and an honest account of what a five-person student project can and cannot do."
+# Top banner: crop of uploads/originals/dashboard_1.png (Bed 02 and Bed 01
+# tiles below the nav bar; the bystander behind the glass is blurred in the
+# file). Swap by changing only these values.
+banner:
+  jpg: /media/project-banner-ward.jpg
+  webp: /media/project-banner-ward.webp
+  width: 2010
+  height: 879
+  alt: "The Pulse carer dashboard's ward view: the Bed 01 live camera tile shows a person standing with arms out, amber face-tracking marks on the face and a skeleton across the shoulders, status Settled, pain 1.2, movement low. Beside it, the Bed 02 demo tile reads Pain rising."
+  pos: "100% 0%"
+  posSm: "86% 0%"
 extraScripts:
   - /js/device-cube.js
   - /js/project.js
   - /js/roadmap-timeline.js
 ---
-<section style="background:var(--charcoal);color:var(--ink-on-charcoal);padding:80px 0 72px;position:relative;overflow:hidden">
-  <img src="/assets/wireframes/wf-net1-purple.png" alt="" aria-hidden="true" style="position:absolute;right:-80px;top:-60px;width:520px;opacity:0.1;pointer-events:none" />
-  <div class="wrap" style="position:relative;padding:0 24px">
-    <span class="eyebrow" style="margin-bottom:20px">
-      <img src="/assets/brand/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-      <span class="eyebrow__label eyebrow__label--on-charcoal">THE PROJECT</span>
-    </span>
-    <h1 style="margin:0 0 24px;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">One camera, three frozen models, and a number.</h1>
-    <p style="margin:0;max-width:52ch;font:400 19px/1.65 var(--font-sans);color:var(--ink-on-charcoal-86)">This page explains everything: what Pulse watches for, how the pipeline works, how we decide when to wake someone up, and where the whole thing currently stops being true.</p>
+{% from "page-hero.njk" import pageHeroBg %}
+<section aria-labelledby="p-title" class="page-hero">
+  {{ pageHeroBg(banner) }}
+  <div class="wrap page-hero__text">
+    <div class="page-hero__head">
+      <span class="eyebrow" style="margin-bottom:18px">
+        <span class="pixel-mark pixel-mark--on-dark" aria-hidden="true"></span>
+        <span class="is-plain eyebrow__label eyebrow__label--on-charcoal">The project</span>
+      </span>
+      <h1 id="p-title" style="margin:0;max-width:22ch;font:500 clamp(38px,5.4vw,58px)/1.07 var(--font-sans);letter-spacing:-0.03em">One camera, three frozen models, and a number.</h1>
+    </div>
+    <div class="page-hero__intro">
+      <p class="page-hero__lede">This page explains everything: what Pulse watches for, how the pipeline works, how we decide when to wake someone up, and where the whole thing currently stops being true.</p>
+    </div>
   </div>
 </section>
 
 <main class="wrap" style="padding:0 24px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0">
   <div style="display:flex;flex-wrap:wrap;gap:56px;padding-top:56px;align-items:flex-start">
     <nav aria-label="On this page" class="page-index">
-      <span class="metadata page-index__label">ON THIS PAGE</span>
-      <a href="#problem" class="link-ghost page-index__link">01 THE PROBLEM</a>
-      <a href="#building" class="link-ghost page-index__link">02 WHAT WE'RE BUILDING</a>
-      <a href="#how" class="link-ghost page-index__link">03 HOW IT WORKS</a>
-      <a href="#threshold" class="link-ghost page-index__link">04 DECIDING WHEN TO ALERT</a>
-      <a href="#device" class="link-ghost page-index__link">05 THE DEVICE</a>
-      <a href="#data" class="link-ghost page-index__link">06 THE DATA</a>
-      <a href="#limits" class="link-ghost page-index__link">07 WHAT IT ISN'T</a>
-      <a href="#roadmap" class="link-ghost page-index__link">08 ROADMAP</a>
+      <span class="is-plain metadata page-index__label">On this page</span>
+      <a href="#problem" class="is-plain link-ghost page-index__link">01 The problem</a>
+      <a href="#building" class="is-plain link-ghost page-index__link">02 What we're building</a>
+      <a href="#how" class="is-plain link-ghost page-index__link">03 How it works</a>
+      <a href="#threshold" class="is-plain link-ghost page-index__link">04 Deciding when to alert</a>
+      <a href="#device" class="is-plain link-ghost page-index__link">05 The device</a>
+      <a href="#data" class="is-plain link-ghost page-index__link">06 The data</a>
+      <a href="#limits" class="is-plain link-ghost page-index__link">07 What it isn't</a>
+      <a href="#roadmap" class="is-plain link-ghost page-index__link">08 Roadmap</a>
     </nav>
 
     <div style="display:flex;flex-direction:column;gap:80px;flex:1 1 560px;min-width:0">
       <section id="problem" aria-labelledby="problem-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">01 · THE PROBLEM</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">01 The problem</span>
         </span>
         <h2 id="problem-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A carer cannot be in the room twenty-four hours a day.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Bedridden patients in home and residential care are checked on a schedule. Between those checks, a patient who cannot reach a call button, whether from paralysis, sedation, dementia, or simple exhaustion, has no way to report pain. A patient in pain at 2am may wait until the morning round.</p>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse does not replace a carer. It tells a carer when to come. That is the whole ambition, and it is deliberately small: the gap we are trying to close is measured in minutes, not in staffing budgets. Forty-one seconds, not four hours.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Pulse does not replace a carer. It tells a carer when to come. That is the whole ambition, and it is deliberately small: the gap we are trying to close is measured in minutes, not in staffing budgets. Under a minute, not four hours.</p>
       </section>
 
       <section id="building" aria-labelledby="building-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">02 · WHAT WE'RE BUILDING</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">02 What we're building</span>
         </span>
         <h2 id="building-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Video in, a phone notification out.</h2>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px;max-width:900px;margin-top:8px">
           <div class="stat-block">
-            <span class="metadata">INPUT</span>
+            <span class="is-plain metadata">Input</span>
             <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">One wide-angle camera, pointed at a bed from a bedside table. No wearables, no contact sensors, no microphone in the demo.</p>
           </div>
           <div class="stat-block">
-            <span class="metadata">OUTPUT</span>
+            <span class="is-plain metadata">Output</span>
             <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A push notification to one carer's phone: what was detected, how confident, and a still frame from the moment it fired.</p>
           </div>
           <div class="stat-block">
-            <span class="metadata">WHO USES IT</span>
+            <span class="is-plain metadata">Who uses it</span>
             <p style="margin:0;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A family carer or a night nurse covering several rooms. They set it down, point it at the bed, and otherwise ignore it.</p>
           </div>
         </div>
@@ -71,16 +87,16 @@ extraScripts:
 
       <section id="how" aria-labelledby="how-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">03 · HOW IT WORKS</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">03 How it works</span>
         </span>
         <h2 id="how-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Two branches, because in bed and out of bed aren't the same problem.</h2>
-        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch reads facial expression: a CNN with a ResNet18 backbone extracts features from each aligned face crop, and an LSTM reads 30-frame windows of those features to predict a PSPI pain score from 0 to 16. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 17 COCO keypoints and tracks them frame to frame. The pipeline runs live, end to end: camera, face detection and alignment, the CNN and LSTM pain score, pose, posture and movement, the alert engine, and the carer dashboard. Fall detection is the one part that is still experimental: a prototype behind a Settings toggle that is off by default.</p>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">If the patient is in bed, the body is under a blanket. The face is the only signal there is, so that branch reads facial expression: a CNN with a ResNet18 backbone extracts features from each aligned face crop, and an LSTM reads 30-frame windows of those features to predict a PSPI pain score from 0 to 16. If the patient is out of bed, the body is visible instead, so that branch reads posture: a pose model that maps the body to 33 keypoints and tracks them frame to frame. The pipeline runs live, end to end: camera, face detection and alignment, the CNN and LSTM pain score, pose, posture and movement, the alert engine, and the carer dashboard. Fall detection is the one part that is still experimental: a prototype behind a Settings toggle that is off by default.</p>
 
-        <figure style="margin:24px 0 0;padding:30px 26px;background:var(--bone-2);overflow-x:auto">
-          <figcaption class="metadata" style="margin-bottom:6px">FIGURE 1 · TWO BRANCHES · BOTH RUN LIVE, END TO END</figcaption>
-          <div style="display:flex;flex-direction:column;min-width:max-content">
-            <div style="display:flex;align-items:center;gap:18px;padding:22px 0">
+        <figure class="pipe-figure">
+          <figcaption class="fig-cap metadata" style="margin-bottom:6px"><span class="fig-num">FIGURE 1</span> Two branches, both run live, end to end.</figcaption>
+          <div class="pipe">
+            <div class="pipe__row">
               <span class="pipeline-stage">
                 <span class="pixel-grid" data-pixel-grid data-pattern="scatter" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
@@ -88,7 +104,7 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">01</span>
                   <span class="pipeline-stage__name">Camera frame</span>
-                  <span class="pipeline-stage__state">RGB FRAME · 30 FPS</span>
+                  <span class="is-plain pipeline-stage__state">RGB frame, 30 fps</span>
                 </span>
               </span>
               <span class="pipeline-arrow">&#8594;</span>
@@ -99,57 +115,59 @@ extraScripts:
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">02</span>
                   <span class="pipeline-stage__name">Face found?</span>
-                  <span class="pipeline-stage__state">SPLITS THE TWO BRANCHES</span>
+                  <span class="is-plain pipeline-stage__state">Splits the two branches</span>
                 </span>
               </span>
             </div>
-            <div style="display:flex;align-items:center;gap:18px;padding:22px 0;border-top:1px solid var(--rule-bone-16)">
-              <span class="pipeline-branch">YES · IN BED</span>
-              <span class="pipeline-stage">
+            <div class="pipe__grid">
+              <span class="is-plain pipeline-branch" style="grid-column:1;grid-row:1">Yes, in bed</span>
+              <span class="pipeline-stage" style="grid-column:2;grid-row:1">
                 <span class="pixel-grid" data-pixel-grid data-pattern="lattice" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">03</span>
                   <span class="pipeline-stage__name">CNN</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">TRAINED · RUNS LIVE</span>
+                  <span class="is-plain pipeline-stage__state pipeline-stage__state--live">Trained, runs live</span>
                 </span>
               </span>
-              <span class="pipeline-arrow">&#8594;</span>
-              <span class="pipeline-stage">
+              <span class="pipeline-arrow" style="grid-column:3;grid-row:1">&#8594;</span>
+              <span class="pipeline-stage" style="grid-column:4;grid-row:1">
                 <span class="pixel-grid" data-pixel-grid data-pattern="staircase" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">04</span>
                   <span class="pipeline-stage__name">LSTM</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">TRAINED · RUNS LIVE</span>
+                  <span class="is-plain pipeline-stage__state pipeline-stage__state--live">Trained, runs live</span>
                 </span>
               </span>
-              <span class="pipeline-arrow">&#8594;</span>
-              <span class="pipeline-stage">
+              <span class="pipeline-arrow" style="grid-column:5;grid-row:1">&#8594;</span>
+              <span class="pipeline-stage" style="grid-column:6;grid-row:1">
                 <span class="pixel-grid" data-pixel-grid data-pattern="ring" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">05</span>
                   <span class="pipeline-stage__name">Alert decision</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">DONE · RUNS LIVE</span>
+                  <span class="is-plain pipeline-stage__state pipeline-stage__state--live">Done, runs live</span>
                 </span>
               </span>
-            </div>
-            <div style="display:flex;align-items:center;gap:18px;padding:22px 0 4px;border-top:1px solid var(--rule-bone-16)">
-              <span class="pipeline-branch">NO · OUT OF BED</span>
-              <span class="pipeline-stage">
+              <span class="pipe__divider" style="grid-column:1 / -1;grid-row:2" aria-hidden="true"></span>
+              <span class="is-plain pipeline-branch" style="grid-column:1;grid-row:3">No face, body view</span>
+              <span class="pipeline-stage" style="grid-column:2 / 4;grid-row:3">
                 <span class="pixel-grid" data-pixel-grid data-pattern="iris" data-n="7" style="padding:7px">
                   <span class="pixel-grid__cells" style="display:grid;grid-template-columns:repeat(7,3px);grid-auto-rows:3px;gap:2px"></span>
                 </span>
                 <span class="pipeline-stage__text">
                   <span class="pipeline-stage__num">06</span>
                   <span class="pipeline-stage__name">Patient detection (pose)</span>
-                  <span class="pipeline-stage__state pipeline-stage__state--live">17 KEYPOINTS · RUNS LIVE</span>
+                  <span class="is-plain pipeline-stage__state pipeline-stage__state--live">33 keypoints, runs live</span>
                 </span>
               </span>
+              <span class="pipe__link" style="grid-column:4 / 6;grid-row:3" aria-hidden="true"><span class="is-plain pipe__link-label">Movement, posture, fall (experimental)</span></span>
+              <span class="pipe__link-end" style="grid-column:6;grid-row:3" aria-hidden="true"><span class="pipe__head"></span></span>
+              <p class="pipe__note"><span aria-hidden="true">&#8593;</span> Into 05, Alert decision: movement, posture, fall (experimental).</p>
             </div>
           </div>
         </figure>
@@ -163,7 +181,7 @@ extraScripts:
             </button>
             <div id="stage-1" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A wide-angle frame every 33 milliseconds. Nothing leaves the device: frames are processed and discarded, and no video is stored or streamed.</p>
-              <span class="metadata">RGB FRAME · 30 FPS</span>
+              <span class="is-plain metadata">RGB frame, 30 fps</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -174,7 +192,7 @@ extraScripts:
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face, aligns it and crops it out. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are built for. If there is no face, that usually means the patient is out of bed, which is the pose model's case. We connected both detectors into one live pipeline that feeds the carer dashboard, including the handoff between them, and the alert engine downstream acts on what each one finds.</p>
-              <span class="metadata">FRAME → FACE CROP</span>
+              <span class="is-plain metadata">Frame → face crop</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -185,7 +203,7 @@ extraScripts:
             </button>
             <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A convolutional network with a ResNet18 backbone turns each aligned face crop into 512 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector. Training surfaced a class imbalance issue, which is resolved.</p>
-              <span class="metadata">TRAINED · RUNS LIVE</span>
+              <span class="is-plain metadata">Trained, runs live</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -196,7 +214,7 @@ extraScripts:
             </button>
             <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The CNN generates these vectors, one per frame. We built the step that stores them frame by frame for the live pipeline, and each one goes into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
-              <span class="metadata">DONE · RUNS LIVE</span>
+              <span class="is-plain metadata">Done, runs live</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -207,7 +225,7 @@ extraScripts:
             </button>
             <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A recurrent model reads 30-frame windows of feature vectors, about one second of video, and predicts a PSPI pain score from 0 to 16: change over time, not a snapshot. While the window is still filling, the CNN's score is used on its own as a fallback.</p>
-              <span class="metadata">TRAINED · RUNS LIVE</span>
+              <span class="is-plain metadata">Trained, runs live</span>
             </div>
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
@@ -217,8 +235,8 @@ extraScripts:
               <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
-              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs live in the dashboard, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 17 COCO keypoints, tracked frame to frame, and the dashboard shows posture and movement from them. The pose team has also built a prototype fall detector. It scores evidence such as downward motion, a change in orientation and a transition into lying. It is integrated behind a Settings toggle that is off by default, and it is not clinically validated.</p>
-              <span class="metadata">17 KEYPOINTS · RUNS LIVE</span>
+              <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs live in the dashboard, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 33 keypoints, tracked frame to frame, and the dashboard shows posture and movement from them. The pose team has also built a prototype fall detector. It scores evidence such as downward motion, a change in orientation and a transition into lying. It is integrated behind a Settings toggle that is off by default, and it is not clinically validated.</p>
+              <span class="is-plain metadata">33 keypoints, runs live</span>
             </div>
           </li>
           <li>
@@ -229,7 +247,7 @@ extraScripts:
             </button>
             <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Done, and running live. The alert engine turns pain, movement, posture and camera status into OK, CHECK and URGENT patient alarms, plus technical alarms for when the camera is lost or the light is too low. An alert stays on screen until a carer acknowledges it, the audio pauses once they do, and the alert clears once readings stay back in range. The thresholds are demo defaults set through a calibration step, not clinical thresholds.</p>
-              <span class="metadata">DONE · RUNS LIVE</span>
+              <span class="is-plain metadata">Done, runs live</span>
             </div>
           </li>
         </ul>
@@ -237,15 +255,15 @@ extraScripts:
 
       <section id="threshold" aria-labelledby="thr-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">04 · DECIDING WHEN TO ALERT</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">04 Deciding when to alert</span>
         </span>
         <h2 id="thr-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Above threshold, and only above threshold, an alert goes out.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below it, the room stays quiet. False alarms cost trust. A carer who is woken three times a night by a sneeze stops trusting the fourth alert, and the fourth alert is the one that matters. Everything about this decision is a trade.</p>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Below are twenty illustrative confidence values, not measured ones. Seven are placed where a genuine-pain moment would sit. Move the threshold and watch what you gain and what you give up. In the working dashboard, the LSTM predicts a PSPI pain score from 0 to 16, and the thresholds are demo defaults set through a calibration step, not clinical thresholds.</p>
 
         <figure style="margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:24px">
-          <figcaption class="metadata">FIGURE 2 · THRESHOLD DEMO · 20 ILLUSTRATIVE CONFIDENCE VALUES</figcaption>
+          <figcaption class="fig-cap metadata"><span class="fig-num">FIGURE 2</span> Threshold demo, 20 illustrative confidence values.</figcaption>
           <div style="background:var(--charcoal);padding:26px 24px 20px;display:flex;flex-direction:column;gap:18px">
             <div class="threshold-bars" style="display:flex;align-items:flex-end;gap:6px;height:150px">
               <span class="threshold-bar" data-v="0.12" data-pain="0" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><span class="threshold-bar__fill" style="display:block;width:100%"></span></span>
@@ -270,25 +288,25 @@ extraScripts:
               <span class="threshold-bar" data-v="0.52" data-pain="0" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><span class="threshold-bar__fill" style="display:block;width:100%"></span></span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:14px">
-              <span class="metadata metadata--on-charcoal">LIT BARS FIRE AN ALERT · OUTLINED BARS ARE LABELLED PAIN EVENTS</span>
+              <span class="is-plain metadata metadata--on-charcoal">Lit bars fire an alert. Outlined bars are labelled pain events.</span>
               <span data-threshold-label style="font:400 10px/1.6 var(--font-mono);letter-spacing:0.14em;color:var(--amber)">THRESHOLD 0.65</span>
             </div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:12px">
-            <label for="thr" class="metadata">ALERT THRESHOLD</label>
+            <label for="thr" class="is-plain metadata">Alert threshold</label>
             <input id="thr" type="range" min="0" max="1" step="0.01" value="0.65" style="width:100%;max-width:520px;height:28px" />
             <div style="display:flex;gap:36px;flex-wrap:wrap;margin-top:6px">
               <span style="display:flex;flex-direction:column;gap:6px">
-                <span class="metadata">ALERTS FIRED</span>
+                <span class="is-plain metadata">Alerts fired</span>
                 <span style="font:500 30px/1 var(--font-sans)" data-fired>0</span>
               </span>
               <span style="display:flex;flex-direction:column;gap:6px">
-                <span class="metadata">PAIN EVENTS MISSED</span>
+                <span class="is-plain metadata">Pain events missed</span>
                 <span style="font:500 30px/1 var(--font-sans)"><span data-missed>0</span> <span style="font:400 13px/1 var(--font-mono);color:var(--ink-muted)">/ 7</span></span>
               </span>
               <span style="display:flex;flex-direction:column;gap:6px">
-                <span class="metadata" style="color:var(--ink-signal)">FALSE ALARMS</span>
+                <span class="is-plain metadata" style="color:var(--ink-signal)">False alarms</span>
                 <span style="font:500 30px/1 var(--font-sans)" data-falses>0</span>
               </span>
             </div>
@@ -300,97 +318,83 @@ extraScripts:
       <section id="device" aria-labelledby="dev-h" style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
         <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
           <span class="eyebrow">
-            <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-            <span class="eyebrow__label">05 · THE DEVICE</span>
+            <span class="pixel-mark" aria-hidden="true"></span>
+            <span class="is-plain eyebrow__label">05 The device</span>
           </span>
           <h2 id="dev-h" style="margin:0;max-width:24ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A concept, not a product. We should say that plainly.</h2>
           <p style="margin:0;max-width:60ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Right now Pulse is software running on a laptop with a webcam. The camera cube is in progress, and it is where we're heading: a Raspberry Pi 5, a wide camera, and a round display, in about 8cm of warm plastic on a bedside table. Nothing clipped to the patient, no wires across the bed.</p>
-          <span class="not-built-pill">CAD STAGE · NOT YET BUILT</span>
+          <span class="is-plain not-built-pill">CAD stage, not yet built</span>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));column-gap:32px;row-gap:26px;margin-top:12px">
             <div class="stat-block" style="padding-top:18px">
-              <span class="metadata">CAMERA</span>
+              <span class="is-plain metadata">Camera</span>
               <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Camera Module 3 Wide, the only sensor the demo needs.</p>
             </div>
             <div class="stat-block" style="padding-top:18px">
-              <span class="metadata">DISPLAY</span>
+              <span class="is-plain metadata">Display</span>
               <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">240 × 240 round LCD. It exists to hold the face.</p>
             </div>
             <div class="stat-block" style="padding-top:18px">
-              <span class="metadata">MICROPHONE</span>
+              <span class="is-plain metadata">Microphone</span>
               <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">I2S mic for audible distress, as a second opinion.</p>
             </div>
             <div class="stat-block" style="padding-top:18px">
-              <span class="metadata">SENSOR ARRAY</span>
+              <span class="is-plain metadata">Sensor array</span>
               <p style="margin:0;font:400 15px/1.7 var(--font-sans);color:var(--ink-body)">Room sensors for thermal, motion, distance and air quality. Planned, not built yet.</p>
             </div>
           </div>
         </div>
 
         <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:28px">
-          <div class="device-cube" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;padding:28px 0;perspective:900px;perspective-origin:50% 45%">
-            <div class="device-cube__cube" style="position:relative;width:200px;height:200px;transform-style:preserve-3d;transform:rotateX(-14deg) rotateY(-60deg)">
-              <div style="position:absolute;inset:0;background:var(--cube-front);border:1px solid var(--rule-bone-16);transform:translateZ(100px);display:flex;align-items:center;justify-content:center">
-                <div style="width:132px;height:132px;border-radius:50%;overflow:hidden;background:var(--charcoal);border:6px solid var(--cube-lens-bezel);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 22px rgba(var(--black-rgb),0.6)">
-                  <div class="device-cube__face" style="display:grid;grid-template-columns:repeat(18,6px);grid-auto-rows:6px;gap:1px"></div>
-                </div>
-                <span style="position:absolute;top:16px;right:18px;width:16px;height:16px;border-radius:999px;background:var(--cube-button);border:3px solid var(--cube-button-ring)"></span>
-              </div>
-              <div style="position:absolute;inset:0;background:var(--cube-side);border:1px solid var(--rule-bone-16);transform:rotateY(90deg) translateZ(100px)"></div>
-              <div style="position:absolute;inset:0;background:var(--cube-side);border:1px solid var(--rule-bone-16);transform:rotateY(-90deg) translateZ(100px)"></div>
-              <div style="position:absolute;inset:0;background:var(--cube-top);border:1px solid var(--rule-bone-12);transform:rotateX(90deg) translateZ(100px)"></div>
-              <div style="position:absolute;inset:0;background:var(--cube-bottom);border:1px solid var(--rule-bone-16);transform:rotateX(-90deg) translateZ(100px)"></div>
-              <div style="position:absolute;inset:0;background:var(--cube-back);border:1px solid var(--rule-bone-16);transform:rotateY(180deg) translateZ(100px)"></div>
-            </div>
-          </div>
+          {% include "device-cube.njk" %}
           <figure style="margin:0;padding:26px 22px 20px;background:var(--bone-2);display:flex;flex-direction:column;gap:20px">
-            <figcaption class="metadata">FIGURE 3 · DRAWN TO SCALE · 8.3 PX/CM</figcaption>
+            <figcaption class="fig-cap metadata"><span class="fig-num">FIGURE 3</span> Drawn to scale, 8.3 px/cm.</figcaption>
             <div style="display:flex;align-items:flex-end;gap:0;flex-wrap:wrap">
               <span style="display:flex;flex-direction:column;align-items:center;gap:0;width:118px">
                 <span style="display:flex;align-items:flex-end;height:122px">
                   <span style="display:block;width:66px;height:66px;border:1px solid var(--ink-primary);border-radius:6px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-primary);text-align:center;margin-top:10px">PULSE · 8 CM</span>
+                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-primary);text-align:center;margin-top:10px">PULSE, 8 CM</span>
               </span>
               <span style="display:flex;flex-direction:column;align-items:center;gap:0;width:118px">
                 <span style="display:flex;align-items:flex-end;height:122px">
                   <span style="display:block;width:62px;height:79px;border:1px solid var(--ink-muted);border-radius:3px 3px 8px 8px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">MUG · 9.5 CM</span>
+                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">MUG, 9.5 CM</span>
               </span>
               <span style="display:flex;flex-direction:column;align-items:center;gap:0;width:118px">
                 <span style="display:flex;align-items:flex-end;height:122px">
                   <span style="display:block;width:58px;height:122px;border:1px solid var(--ink-muted);border-radius:8px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">PHONE · 14.7 CM</span>
+                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">PHONE, 14.7 CM</span>
               </span>
             </div>
-            <span style="font:400 11px/1.6 var(--font-mono);letter-spacing:0.1em;color:var(--ink-muted)">SHARED BASELINE: THE CUBE IS SHORTER THAN A COFFEE MUG</span>
+            <span style="font:400 13px/1.5 var(--font-sans);color:var(--ink-muted)">Shared baseline: the cube is shorter than a coffee mug.</span>
           </figure>
         </div>
       </section>
 
       <section id="data" aria-labelledby="data-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">06 · THE DATA</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">06 The data</span>
         </span>
         <h2 id="data-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We train on a physiotherapy clinic and aim at a bedroom.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Our models are trained on a published clinical pain-expression dataset: video of adult patients in a clinical setting, with pain intensity coded frame by frame. It is licensed for non-commercial research and teaching only, and we use it under those terms.</p>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">The domain gap is real and we are not going to talk around it. That footage is seated adults, lit clinically, facing the camera, in acute pain provoked on purpose. Our target is a person lying down, in a dark room, at an oblique angle, possibly in chronic pain. We align faces before the CNN and augment with rotation and angle jitter. That narrows the gap. It does not close it, and no result from our demo should be read as if it did.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px;margin-top:8px;max-width:820px">
           <div class="stat-block" style="padding-top:16px">
-            <span class="metadata">SOURCE</span>
+            <span class="is-plain metadata">Source</span>
             <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">A published clinical pain-expression dataset</span>
           </div>
           <div class="stat-block" style="padding-top:16px">
-            <span class="metadata">LICENCE</span>
-            <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Non-commercial · research and teaching</span>
+            <span class="is-plain metadata">Licence</span>
+            <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Non-commercial, research and teaching</span>
           </div>
           <div class="stat-block" style="padding-top:16px">
-            <span class="metadata">MITIGATIONS</span>
+            <span class="is-plain metadata">Mitigations</span>
             <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">Face alignment, angle augmentation: partial, not sufficient</span>
           </div>
         </div>
@@ -398,8 +402,8 @@ extraScripts:
 
       <section id="limits" aria-labelledby="lim-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">07 · WHAT IT ISN'T</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">07 What it isn't</span>
         </span>
         <h2 id="lim-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A concept, not a product. We should say that plainly.</h2>
         <ul style="list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:0;max-width:68ch">
@@ -414,8 +418,8 @@ extraScripts:
 
       <section id="roadmap" aria-labelledby="road-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
-          <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
-          <span class="eyebrow__label">08 · ROADMAP</span>
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">08 Roadmap</span>
         </span>
         <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started. We're eight of them in.</h2>
         <div class="roadmap-timeline" data-roadmap-timeline aria-label="Ten-week roadmap, currently in week eight" style="margin-top:8px">
@@ -429,15 +433,15 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 1</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Scope: falls, breathing, or pain</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="right">
               <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 2</span>
-                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection and patient detection (17 keypoints) both working</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Face detection and patient detection (33 keypoints) both working</p>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="left">
@@ -445,7 +449,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 3</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Dashboard prototype</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="right">
@@ -453,7 +457,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 4</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Dataset access came through; indexed 48,398 frames and checked labels against the paper</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="left">
@@ -461,7 +465,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 5</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">CNN complete: 512-dimension feature vectors generated, class imbalance issue resolved</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="right">
@@ -469,7 +473,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 6</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Wiring the pieces together: frame storage for the CNN pipeline, webcam integration, LSTM development, patient detection refinement</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="done" data-side="left">
@@ -477,19 +481,19 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 7</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Integration: one live inference loop</p>
-                <span class="metadata" style="color:var(--ink-muted)">DONE</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Done</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="current" data-side="right">
               <span class="roadmap-timeline__node" data-node aria-hidden="true"></span>
               <div class="roadmap-timeline__content">
                 <span style="display:inline-flex;align-items:center;gap:6px">
-                  <img src="/assets/brand/sparkle-purple.png" alt="" aria-hidden="true" style="width:10px;height:10px;display:block" />
-                  <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--purple-500)">WE ARE HERE</span>
+                  <span class="pixel-mark" aria-hidden="true"></span>
+                  <span style="font:500 13px/1 var(--font-sans);color:var(--ink-eyebrow)">We are here</span>
                 </span>
                 <span class="metadata">WEEK 8</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-primary)">Showcase: live video in, alerts out</p>
-                <span class="metadata" style="color:var(--purple-500)">REACHED · SHOWCASED 7 OCT 2026</span>
+                <span class="is-plain metadata" style="color:var(--ink-eyebrow)">Reached, showcased 7 Oct 2026</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="planned" data-side="left">
@@ -497,7 +501,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 9</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Threshold tuning, latency, failure cases</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Planned</span>
               </div>
             </li>
             <li class="roadmap-timeline__row" data-status="planned" data-side="right">
@@ -505,7 +509,7 @@ extraScripts:
               <div class="roadmap-timeline__content">
                 <span class="metadata">WEEK 10</span>
                 <p style="margin:0;font:400 16px/1.5 var(--font-sans);color:var(--ink-body)">Write-up, handover, CAD refinement</p>
-                <span class="metadata" style="color:var(--ink-muted)">PLANNED</span>
+                <span class="is-plain metadata" style="color:var(--ink-muted)">Planned</span>
               </div>
             </li>
           </ol>

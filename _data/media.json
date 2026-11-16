@@ -1,0 +1,301 @@
+{
+  "_readme": [
+    "Everything on the Media page comes from this file; the template never needs editing to add an item.",
+    "Image files: run tools/make_media_assets.py, which writes <src>-800 and <src>-full as .webp and .jpg (no metadata).",
+    "Videos: <src>.mp4 (H.264) and <src>.webm (VP9), muted, metadata stripped, under about 5 MB each; 'poster' is an image base path like 'src'.",
+    "SVG images set \"svg\": true and give the file itself as src.",
+    "type: image | video | pdf. week: the week whose journal post the item belongs to (not strict calendar date).",
+    "featured: shown in the Showcase night block instead of the gallery. mosaic: a number gives its slice order in the banner (one per group where possible).",
+    "people: team members shown, used in captions and labels. Nobody outside the team, no UNBC-McMaster content, no QR codes except our own poster's.",
+    "fit: \"contain\" shows the whole image inside the 4:3 tile (charts, documents, diagrams) instead of cropping it.",
+    "order: lower comes first within a group (ties fall back to week). Current scheme: videos and photos of people or hardware (10s-20s), then screenshots, then charts and diagrams. The first 6 in a group show by default (3 on phones); the rest sit behind Show all."
+  ],
+  "groups": [
+    {
+      "id": "hardware",
+      "label": "Hardware",
+      "keepWhenSmall": true
+    },
+    {
+      "id": "models-and-training",
+      "label": "Models and training"
+    },
+    {
+      "id": "dashboard",
+      "label": "Dashboard"
+    },
+    {
+      "id": "showcase-and-team",
+      "label": "Showcase and team",
+      "keepWhenSmall": true
+    }
+  ],
+  "items": [
+    {
+      "id": "showcase-night",
+      "group": "showcase-and-team",
+      "type": "image",
+      "src": "/media/gallery/showcase-night",
+      "width": 1560,
+      "height": 1040,
+      "caption": "Explaining Pulse to visitors at the Monash DeepNeuron showcase, with the live dashboard running behind us.",
+      "week": 8,
+      "alt": "Pulse team members in conversation with a visitor at the showcase booth, one wearing a purple lanyard, beside a large monitor showing the Pulse carer dashboard's four bed tiles.",
+      "people": [
+        "The Pulse team"
+      ],
+      "featured": true,
+      "mosaic": 4,
+      "order": 10
+    },
+    {
+      "id": "makerspace-box",
+      "group": "hardware",
+      "type": "image",
+      "src": "/media/gallery/makerspace-box",
+      "width": 1453,
+      "height": 1090,
+      "caption": "Our parts box at the Makerspace.",
+      "week": 6,
+      "alt": "A sealed white Core Electronics shipping box on a black Makerspace shelf, wrapped in blue-printed electronics-brand tape, with a Monash DeepNeuron sticker and a yellow Express Post label on the lid. The postage label and a poster's QR code beside it are blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": 1,
+      "order": 20
+    },
+    {
+      "id": "cad-render",
+      "group": "hardware",
+      "type": "image",
+      "src": "/media/gallery/cad-render",
+      "width": 839,
+      "height": 491,
+      "caption": "Kate's CAD model of the cube: the front shell and the back plate.",
+      "week": 6,
+      "alt": "CAD render of the Pulse cube in dark grey on a pale background: a square shell with a large circular opening and a small round hole in one corner, next to a flat back plate with a screw hole in each corner.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 30
+    },
+    {
+      "id": "pose-demo",
+      "group": "models-and-training",
+      "type": "video",
+      "src": "/media/video/pose-demo",
+      "poster": "/media/gallery/pose-demo-poster",
+      "width": 1152,
+      "height": 720,
+      "duration": "1:03",
+      "caption": "Aaron testing the pose model live: standing, sitting, lying down and leaving the frame, with the posture and movement readout updating as he moves.",
+      "week": 5,
+      "alt": "Aaron standing in a hallway with green tracking dots on his face, shoulders, elbows, wrists, hips and knees, and an overlay reading Patient detected, Posture standing, Movement medium.",
+      "people": [
+        "Aaron"
+      ],
+      "featured": false,
+      "mosaic": 2,
+      "order": 10
+    },
+    {
+      "id": "frame-extract-demo",
+      "group": "models-and-training",
+      "type": "video",
+      "src": "/media/video/frame-extract-demo",
+      "poster": "/media/gallery/frame-extract-demo-poster",
+      "width": 1024,
+      "height": 576,
+      "duration": "0:13",
+      "caption": "Christopher running face detection and the CNN live: his face boxed in the webcam window while the terminal logs one feature vector per frame.",
+      "week": 5,
+      "alt": "A monitor filmed off-screen: a webcam window with a green box and landmark dots on Christopher's face, beside a terminal printing one line per frame with faces=1 and a 512-number CNN output. The editor status bar along the bottom is blurred.",
+      "people": [
+        "Christopher"
+      ],
+      "featured": false,
+      "mosaic": 5,
+      "order": 20
+    },
+    {
+      "id": "dashboard-demo",
+      "group": "dashboard",
+      "type": "video",
+      "src": "/media/video/dashboard-demo",
+      "poster": "/media/gallery/dashboard-demo-poster",
+      "width": 1600,
+      "height": 1040,
+      "duration": "0:19",
+      "caption": "Our first alert-view mockup, with scripted patients: a bed-exit alert raised, acknowledged and resolved.",
+      "week": 1,
+      "alt": "An early dark dashboard mockup titled Pulse Ward Dashboard: a patient detail panel for a scripted patient called Charlie with heart rate 85 bpm, breathing elevated and pain medium, and a red Bed exit detected alert with an Acknowledge alert button.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 10
+    },
+    {
+      "id": "dashboard-redesign",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/dashboard-redesign",
+      "width": 1388,
+      "height": 1332,
+      "caption": "The dashboard redesign board, versions A to F. The bottom row is the one we built.",
+      "week": 8,
+      "alt": "A design board of dark dashboard mockups in six rows, labelled Version A to Version F: ward overviews with four bed cards, camera views with stick-figure skeletons over a bed, a live view with a red high pain detected banner, a night's history chart, and a settings page. The bottom row, Version F, is labelled Final.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 30
+    },
+    {
+      "id": "ward-view",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/ward-view",
+      "width": 2000,
+      "height": 1151,
+      "caption": "The ward view with Bed 01 live: face tracking and the pose skeleton on camera, a Bed 02 alert waiting on the right.",
+      "week": 8,
+      "alt": "The Pulse carer dashboard's ward view: four bed tiles, with Bed 01 showing a live camera feed of Nay Chi standing with arms out, amber face-tracking marks and a skeleton across her shoulders, status Settled. On the right, a Check alert for Bed 02, pain elevated, with View bed and Acknowledge buttons, a chart of the night and a list of recent alerts.",
+      "people": [
+        "Nay Chi"
+      ],
+      "featured": false,
+      "mosaic": 3,
+      "order": 20
+    },
+    {
+      "id": "poster",
+      "group": "showcase-and-team",
+      "type": "pdf",
+      "src": "/media/gallery/poster",
+      "pdf": "/media/pulse.pdf",
+      "pdfSize": "1.6 MB",
+      "width": 991,
+      "height": 1400,
+      "caption": "Our poster for the MDN showcase",
+      "week": 8,
+      "alt": "The Pulse showcase poster, A3 portrait, on a purple Monash DeepNeuron background. Left column: an Aim section, a Progress report on the facial and pose models, the camera-module prototype and the dashboard demo, and Future goals on room sensors and the domain gap. A Results section shows a dashboard screenshot and two renders of the camera module. Right column: round photos of the team at the time, with names and roles, and a QR code linking to this website.",
+      "people": [
+        "The team as it was in week 8"
+      ],
+      "featured": false,
+      "mosaic": false,
+      "order": 10
+    },
+    {
+      "id": "makerspace-open",
+      "group": "hardware",
+      "type": "image",
+      "src": "/media/gallery/makerspace-open",
+      "width": 2000,
+      "height": 2295,
+      "caption": "The parts box opened: the printed cube shell and the Raspberry Pi kit.",
+      "week": 6,
+      "alt": "An opened shipping box on a black Makerspace shelf, held open by a teammate's hand: inside, a white printed cube shell with a round lens opening and a small hole, a Raspberry Pi starter booklet and bubble wrap. A barcode on a box at the left edge is blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 10
+    },
+    {
+      "id": "workflow",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/workflow",
+      "width": 1870,
+      "height": 1780,
+      "caption": "The plan in week one: patient detection and pain detection meeting at the alert system.",
+      "week": 1,
+      "alt": "Flow diagram on a dark background: Live video feed splits into Patient detection and CNN facial feature extraction; the CNN feeds a CNN plus RNN/LSTM pain detection stage; both branches meet at the Alert system, which feeds the Dashboard and frontend.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 60
+    },
+    {
+      "id": "contract",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/contract",
+      "width": 1316,
+      "height": 920,
+      "caption": "The contract between the CNN and the LSTM, written before either existed.",
+      "week": 2,
+      "alt": "A page from our design document: a pipeline overview from raw frame to dashboard, and a table comparing the CNN, which sees raw pixels and is trained on single frames, with the LSTM, which never sees pixels and is trained on sequences of CNN feature vectors.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 40
+    },
+    {
+      "id": "skeletal-code",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/skeletal-code",
+      "width": 1162,
+      "height": 892,
+      "caption": "Training and validation transforms for the CNN, written ahead of the models.",
+      "week": 2,
+      "alt": "A notebook cell titled Transforms: the training transform flips, rotates by up to 10 degrees, adjusts brightness and contrast and normalises; the validation transform only normalises.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 50
+    },
+    {
+      "id": "pspi-info",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/pspi-info",
+      "width": 1289,
+      "height": 390,
+      "caption": "Pain intensity across all frames, aggregate: most frames score zero.",
+      "week": 4,
+      "alt": "Two aggregate histograms of pain intensity (PSPI 0 to 15) across all dataset frames, on linear and log scales; about 40,000 frames score zero and counts fall away sharply above that.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 70
+    },
+    {
+      "id": "class-balance",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/class-balance",
+      "width": 790,
+      "height": 390,
+      "caption": "Class balance by pain threshold and labelling rule, aggregate.",
+      "week": 4,
+      "alt": "Aggregate line chart of the percentage of positive examples at PSPI thresholds 1 to 5, for frame-level labels and for windows under a max rule and a sustained rule; all three fall from between 17 and 25 percent at threshold 1 to under 5 percent at threshold 5.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 80
+    },
+    {
+      "id": "training-curves",
+      "group": "models-and-training",
+      "type": "image",
+      "fit": "contain",
+      "src": "/media/gallery/training-curves",
+      "width": 2000,
+      "height": 806,
+      "caption": "Training and validation loss for the CNN and LSTM, Week 6.",
+      "week": 6,
+      "alt": "Two aggregate line charts of mean squared error per epoch: CNN training over 10 epochs and LSTM training over 15 epochs, each with a training and a validation line; the LSTM's training loss spikes once near epoch 9.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 30
+    }
+  ],
+  "postsTodo": "TODO: add our LinkedIn showcase post here, e.g. { \"date\": \"2026-10-08\", \"title\": \"...\", \"source\": \"LinkedIn\", \"url\": \"https://www.linkedin.com/...\" }. The section stays hidden while this list is empty.",
+  "posts": []
+}

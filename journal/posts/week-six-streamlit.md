@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/week-six-streamlit.html"
 title: "Week six: moving the dashboard off Streamlit"
 description: "Streamlit can't handle the latency and alert timing a hospital needs, so the carer dashboard is moving to a proper frontend and a backend API."
-ogDescription: "Pulse journal · Engineering · 26 September 2026 · Nay Chi"
+ogDescription: "Pulse journal, Engineering, 26 September 2026, Nay Chi"
 category: "ENGINEERING"
 date: 2026-09-26
 author: "Nay Chi"

@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/week-six-training.html"
 title: "Week six: training the CNN for the first time, and the LSTM that should have beaten it"
 description: "The CNN had never been trained: its backbone was fully frozen. I trained it, then the LSTM on top of it. The LSTM trails the CNN on the test set, and figuring out why is the next thing I'm digging into."
-ogDescription: "Pulse journal · Engineering · 27 September 2026 · Nay Chi"
+ogDescription: "Pulse journal, Engineering, 27 September 2026, Nay Chi"
 category: "ENGINEERING"
 date: 2026-09-27T18:00:00Z
 author: "Nay Chi"
@@ -23,7 +23,7 @@ This week I trained both models myself, end to end. One of them came out worse t
 
 <figure>
 <img src="/media/pipeline_diagram.svg" alt="Pipeline diagram, five stages top to bottom: camera; face and pose detection with MediaPipe producing an aligned face crop; CNN producing per-frame features; LSTM reading a trailing window to predict current pain; dashboard alert via a frontend and backend API." style="width:100%;max-width:520px;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption>FIGURE 1 · THE PIPELINE AS IT STANDS IN WEEK 6. THIS POST IS ABOUT STAGES 03 AND 04.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> The pipeline as it stands in week 6. This post is about stages 03 and 04.</figcaption>
 </figure>
 
 ## The CNN had never been trained
@@ -48,7 +48,7 @@ Right now it doesn't. On the test set, the LSTM trails the CNN's frame-level num
 
 <figure>
 <img src="/media/training_curves.png" alt="Two line charts of MSE per epoch, train and validation. CNN, 10 epochs: training MSE swings between about 0.48 and 1.09; validation starts near 0.7, peaks near 0.94 at epoch 2, reaches its lowest, 0.519, at epoch 7, and rises to about 0.73 by epoch 10. LSTM, 15 epochs: training MSE mostly between 0.5 and 2, with a spike to about 6.9 at epoch 9; validation stays flat between about 0.5 and 0.95 and ends at its lowest, 0.502, at epoch 15." style="width:100%;display:block;border:1px solid var(--rule-bone-16)" />
-<figcaption>FIGURE 2 · CNN BEST VAL MSE 0.519 (EPOCH 7), LSTM BEST VAL MSE 0.502 (EPOCH 15). THE LSTM'S TEST PERFORMANCE CURRENTLY TRAILS THE CNN'S AND IS STILL BEING INVESTIGATED.</figcaption>
+<figcaption><span class="fig-num">FIGURE 2</span> CNN best val MSE 0.519 (epoch 7), LSTM best val MSE 0.502 (epoch 15). The LSTM's test performance currently trails the CNN's and is still being investigated.</figcaption>
 </figure>
 
 On validation the two are close, and the LSTM is slightly ahead: 0.502 against the CNN's 0.519. On test the order flips. A chart with only train and validation curves would hide the most important thing about this model right now, so I'm saying it here.

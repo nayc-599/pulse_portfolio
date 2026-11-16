@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/contract.html"
 title: "Writing the contract between our CNN and our LSTM, before either exists"
 description: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the one-page contract we wrote to catch that before it costs us a debugging afternoon."
-ogDescription: "Pulse journal · Engineering · 28 August 2026 · Nay Chi"
+ogDescription: "Pulse journal, Engineering, 28 August 2026, Nay Chi"
 category: "ENGINEERING"
 date: 2026-08-28
 author: "Nay Chi"
@@ -38,24 +38,24 @@ So we wrote one page now, ahead of training either model. Not a design document:
 
 <figure>
 <pre><code><span style="color:var(--amber-dim)"># pulse/contract.py: the interface between stage 3 and stage 5</span>
-<span style="color:var(--purple-300)">FEATURE_DIM</span>   = 256          <span style="color:var(--amber-dim)"># fixed. never inferred at runtime</span>
-<span style="color:var(--purple-300)">WINDOW</span>        = 32           <span style="color:var(--amber-dim)"># frames &#8776; 1.1s at 30fps</span>
-<span style="color:var(--purple-300)">DTYPE</span>         = np.float32
-<span style="color:var(--purple-300)">ORDER</span>         = <span style="color:var(--amber)">"oldest_first"</span>
-<span style="color:var(--purple-300)">NORMALISED</span>    = <span style="color:var(--amber)">True</span>         <span style="color:var(--amber-dim)"># zero mean, unit variance, per-dim</span>
-<span style="color:var(--purple-300)">ON_NO_FACE</span>    = <span style="color:var(--amber)">"skip"</span>        <span style="color:var(--amber-dim)"># never a zero vector. skip the frame.</span>
+<span style="color:var(--amber)">FEATURE_DIM</span>   = 256          <span style="color:var(--amber-dim)"># fixed. never inferred at runtime</span>
+<span style="color:var(--amber)">WINDOW</span>        = 32           <span style="color:var(--amber-dim)"># frames &#8776; 1.1s at 30fps</span>
+<span style="color:var(--amber)">DTYPE</span>         = np.float32
+<span style="color:var(--amber)">ORDER</span>         = <span style="color:var(--amber)">"oldest_first"</span>
+<span style="color:var(--amber)">NORMALISED</span>    = <span style="color:var(--amber)">True</span>         <span style="color:var(--amber-dim)"># zero mean, unit variance, per-dim</span>
+<span style="color:var(--amber)">ON_NO_FACE</span>    = <span style="color:var(--amber)">"skip"</span>        <span style="color:var(--amber-dim)"># never a zero vector. skip the frame.</span>
 
-<span style="color:var(--purple-300)">def</span> validate(window):
+<span style="color:var(--amber)">def</span> validate(window):
     assert window.dtype == DTYPE
     assert window.shape == (WINDOW, FEATURE_DIM)
     assert abs(window.mean()) &lt; 0.5      <span style="color:var(--amber-dim)"># catches un-normalised input</span>
     return window</code></pre>
-<figcaption>FIGURE 1 · THE WHOLE CONTRACT. TESTING AGAINST IT STARTS WHEN THE MODELS ARE TRAINED IN WEEKS FIVE AND SIX.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> The whole contract. Testing against it starts when the models are trained in weeks five and six.</figcaption>
 </figure>
 
 <figure>
 <img src="/media/contract.png" alt="Excerpt from our planning document: a pipeline overview running raw frame to face detection, CNN, feature vector, LSTM, alert system and dashboard, above a table showing the CNN sees raw pixels and trains per frame while the LSTM never sees pixels and trains on windows of feature vectors." />
-<figcaption>FIGURE 2 · THE PIPELINE OVERVIEW THE CONTRACT SITS INSIDE: WHICH STAGE SEES PIXELS, AND WHAT EACH ONE IS TRAINED ON.</figcaption>
+<figcaption><span class="fig-num">FIGURE 2</span> The pipeline overview the contract sits inside: which stage sees pixels, and what each one is trained on.</figcaption>
 </figure>
 
 The assertion on the mean is the one I expect to matter most. It is crude, since a normalised window can legitimately drift, but the idea is that it should catch the un-normalised case within seconds instead of after an afternoon of staring at a flat line, assuming we actually remember to call it once there is code to call it on.

@@ -16,10 +16,11 @@ function applyFilter(type) {
   }
   if (countEl) {
     if (type === 'ALL') {
-      countEl.textContent = 'ALL ENTRIES · ' + total;
+      countEl.textContent = 'All entries, ' + total;
     } else {
       const visible = Array.from(entries).filter((li) => !li.hidden).length;
-      countEl.textContent = type + ' · ' + visible + (visible === 1 ? ' ENTRY' : ' ENTRIES');
+      const name = type.charAt(0) + type.slice(1).toLowerCase();
+      countEl.textContent = name + ', ' + visible + (visible === 1 ? ' entry' : ' entries');
     }
   }
 }

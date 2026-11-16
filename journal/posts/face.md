@@ -3,7 +3,7 @@ layout: post.njk
 permalink: "journal/posts/face.html"
 title: "Why the device has a face"
 description: "A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason."
-ogDescription: "Pulse journal · Design · 22 August 2026 · Ai Lin"
+ogDescription: "Pulse journal, Design, 22 August 2026, Ai Lin"
 category: "DESIGN"
 date: 2026-08-22
 author: "Ai Lin"
@@ -31,7 +31,7 @@ The 240 × 240 round display exists to hold a low-resolution smile, and it does 
 
 <figure>
 <img src="/media/inspo_pic.png" alt="Concept render of a soft-cornered white cube on a wooden bedside table in a hospital room, with a lit pixel-art smiling face on its front, a round camera lens in the top corner and a speaker grille on the side." />
-<figcaption>FIGURE 1 · THE REFERENCE IMAGE WE DESIGNED TOWARD. SAME LENS, BUT THE SMILE IS WHAT YOU SEE FIRST.</figcaption>
+<figcaption><span class="fig-num">FIGURE 1</span> The reference image we designed toward. Same lens, but the smile is what you see first.</figcaption>
 </figure>
 
 ## Two expressions, and a hard prohibition
