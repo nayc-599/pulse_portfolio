@@ -14,8 +14,8 @@ extraScripts:
       <img src="/assets/brand/sparkle-p300.png" alt="" aria-hidden="true" style="width:11px;height:11px;display:block" />
       <span class="eyebrow__label eyebrow__label--on-charcoal">BUILD LOG · MONASH DEEPNEURON</span>
     </span>
-    <h1 id="j-title" style="margin:0 0 22px;font:500 clamp(40px,6vw,60px)/1.06 var(--font-sans);letter-spacing:-0.03em">Journal</h1>
-    <p style="margin:0;max-width:52ch;font:400 19px/1.65 var(--font-sans);color:var(--ink-on-charcoal-86)">We're building Pulse in public: the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited.</p>
+    <h1 id="j-title" style="margin:0 0 22px;font:var(--heading-weight) clamp(32px,6vw,60px)/1.06 var(--font-sans);font-stretch:var(--heading-stretch);letter-spacing:var(--heading-track)">Journal</h1>
+    <p style="margin:0;max-width:52ch;font:400 19px/1.65 var(--font-sans);font-stretch:var(--body-stretch);color:var(--ink-on-charcoal-86)">We're building Pulse in public: the decisions, the arguments in Wednesday meetings, and the things we got wrong the first time. Written by the five of us, unedited.</p>
   </section>
   <div class="wrap" style="padding:0 24px 34px;position:relative">
     <div role="group" aria-label="Filter by category" style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:26px">
@@ -37,8 +37,8 @@ extraScripts:
         {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
         <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
           <span class="metadata" style="color:var(--ink-eyebrow)">FEATURED · {{ featured.data.category }} · {{ featured.data.date | dateDisplay }}</span>
-          <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
-          <span style="font:400 17px/1.7 var(--font-sans);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
+          <span style="font:var(--heading-weight) clamp(22px,3.6vw,38px)/1.15 var(--font-sans);font-stretch:var(--heading-stretch);letter-spacing:var(--heading-track)">{{ featured.data.title }}</span>
+          <span style="font:400 17px/1.7 var(--font-sans);font-stretch:var(--body-stretch);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
           <span class="metadata">{{ featured.data.author | upper }} · {{ featured.data.readTime }} MIN READ</span>
           <span class="link-action" style="margin-top:6px">
             <span>Read the entry</span>
@@ -58,8 +58,8 @@ extraScripts:
           {{ journalThumb(post, 7, 6, 2) }}
           <span style="display:flex;flex-direction:column;gap:9px;min-width:0">
             <span class="metadata">{{ post.data.category }} · {{ post.data.date | dateDisplay }}</span>
-            <span style="font:500 23px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
-            <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body);max-width:70ch">{{ post.data.excerpt }}</span>
+            <span style="font:var(--heading-weight) clamp(18px,3.83vw,23px)/1.28 var(--font-sans);font-stretch:var(--heading-stretch);letter-spacing:var(--heading-track)">{{ post.data.title }}</span>
+            <span style="font:400 15px/1.6 var(--font-sans);font-stretch:var(--body-stretch);color:var(--ink-body);max-width:70ch">{{ post.data.excerpt }}</span>
           </span>
           <span class="metadata" style="text-align:right">{{ post.data.author | upper }} · {{ post.data.readTime }} MIN</span>
         </a>
@@ -70,11 +70,11 @@ extraScripts:
   </section>
 
   <nav aria-label="Pagination" class="wrap" style="padding:12px 24px 88px;display:flex;gap:10px;align-items:center">
-    <span aria-current="page" style="display:inline-flex;align-items:center;gap:9px;font:400 14px/1.2 var(--font-sans);color:var(--ink-primary)">
+    <span aria-current="page" style="display:inline-flex;align-items:center;gap:9px;font:400 14px/1.2 var(--font-sans);font-stretch:var(--body-stretch);color:var(--ink-primary)">
       <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:var(--amber);box-shadow:0 0 7px rgba(var(--amber-rgb),0.5)"></span>
       <span>1</span>
     </span>
-    <span style="display:inline-flex;align-items:center;gap:9px;margin-left:20px;font:400 14px/1.2 var(--font-sans);color:var(--ink-muted)">
+    <span style="display:inline-flex;align-items:center;gap:9px;margin-left:20px;font:400 14px/1.2 var(--font-sans);font-stretch:var(--body-stretch);color:var(--ink-muted)">
       <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:rgba(var(--amber-dim-rgb),0.55)"></span>
       <span>2</span>
     </span>
