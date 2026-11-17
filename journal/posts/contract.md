@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/contract.html"
 title: "Writing the contract between our CNN and our LSTM, before either exists"
 description: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the one-page contract we wrote to catch that before it costs us a debugging afternoon."
-ogDescription: "Pulse journal · Engineering · 28 August 2026 · Nay Chi"
-category: "ENGINEERING"
+ogDescription: "Pulse journal · Build log · 28 August 2026 · Nay Chi"
+category: "build-log"
 date: 2026-08-28
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 10
 excerpt: "Two people are about to train two models against two different ideas of what a feature vector is. Here is the contract we wrote to catch that in advance."
 motif: scatter

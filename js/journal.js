@@ -9,17 +9,17 @@ const total = entries.length;
 
 function applyFilter(type) {
   entries.forEach((li) => {
-    li.hidden = type !== 'ALL' && li.dataset.category !== type;
+    li.hidden = type !== 'all' && li.dataset.category !== type;
   });
   if (featured) {
-    featured.hidden = type !== 'ALL' && featured.dataset.category !== type;
+    featured.hidden = type !== 'all' && featured.dataset.category !== type;
   }
   if (countEl) {
-    if (type === 'ALL') {
+    if (type === 'all') {
       countEl.textContent = 'All entries · ' + total;
     } else {
       const visible = Array.from(entries).filter((li) => !li.hidden).length;
-      const name = type.charAt(0) + type.slice(1).toLowerCase();
+      const name = type === 'update' ? 'Updates' : 'Build log';
       countEl.textContent = name + ' · ' + visible + (visible === 1 ? ' entry' : ' entries');
     }
   }
@@ -32,4 +32,4 @@ chips.forEach((chip) => {
   });
 });
 
-applyFilter('ALL');
+applyFilter('all');

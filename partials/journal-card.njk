@@ -1,0 +1,20 @@
+{#- One journal card, shared by the Journal page and the home page.
+    Build log posts: thumbnail, "Build log · 27 Sep 2026", title, excerpt.
+    Updates: a shorter card with no thumbnail, "Update · Week 6 · 27 Sep 2026",
+    title and a one-line summary. -#}
+{% from "journal-thumb.njk" import journalThumb %}
+{% macro journalCard(post, titleSize) %}
+{%- set isUpdate = post.data.category == "update" -%}
+{%- set ppl = post.data | postPeople -%}
+<li class="journal-entry rule-top--list{% if isUpdate %} journal-entry--update{% endif %}" data-category="{{ post.data.category }}">
+  <a href="{{ post.url }}" class="journal-entry__link hover-shift">
+    {% if not isUpdate %}{{ journalThumb(post, 7, 6, 2) }}{% endif %}
+    <span style="display:flex;flex-direction:column;gap:{{ 6 if isUpdate else 9 }}px;min-width:0">
+      <span class="metadata is-plain">{{ post.data | postMeta }}</span>
+      <span class="journal-entry__title" style="font:500 {{ 19 if isUpdate else titleSize }}px/1.3 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
+      <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body);max-width:70ch">{{ post.data.summary or post.data.excerpt }}</span>
+    </span>
+    <span class="metadata is-plain" style="text-align:right">{{ ppl | names }}{% if not isUpdate %} · {{ post.data.readTime }} min{% endif %}</span>
+  </a>
+</li>
+{% endmacro %}

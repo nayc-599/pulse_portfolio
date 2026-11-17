@@ -4,10 +4,9 @@ permalink: "journal/posts/week-six.html"
 title: "Week 6: both models trained, and one result I can't explain yet"
 description: "I trained the CNN for the first time and the LSTM on top of it. The LSTM, which should have beaten the CNN, trails it on the test set, and figuring out why is the next thing I'm digging into."
 ogDescription: "Pulse journal · Build log · 27 September 2026 · Nay Chi"
-category: "BUILD LOG"
+category: "build-log"
 date: 2026-09-27
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 6
 excerpt: "I trained the CNN for the first time and the LSTM on top of it. The model that should have won didn't, and I'd rather show that than the flattering curve."
 motif: scatter

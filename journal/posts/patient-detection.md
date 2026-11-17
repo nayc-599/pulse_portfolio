@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/patient-detection.html"
 title: "The other branch: what patient detection does when the face isn't enough"
 description: "Pulse has a second branch for when the patient is out of bed. It reads the body, not the face. Here is what the demo shows today, and what it doesn't."
-ogDescription: "Pulse journal · Engineering · 17 September 2026 · Aaron"
-category: "ENGINEERING"
+ogDescription: "Pulse journal · Build log · 17 September 2026 · Aaron"
+category: "build-log"
 date: 2026-09-17
-author: "Aaron"
-authorRole: "COMPUTER VISION · POSE & ALERTS"
+author: "aaron"
 readTime: 5
 excerpt: "Pulse has a second branch for when the patient is out of bed. It reads the body instead of the face. Here is what the demo shows today, and what it doesn't yet."
 motif: lattice

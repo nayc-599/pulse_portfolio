@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/face.html"
 title: "Why the device has a face"
 description: "A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason."
-ogDescription: "Pulse journal · Design · 22 August 2026 · Ai Lin"
-category: "DESIGN"
+ogDescription: "Pulse journal · Build log · 22 August 2026 · Ai Lin"
+category: "build-log"
 date: 2026-08-22
-author: "Ai Lin"
-authorRole: "PRODUCT DESIGN"
+author: "ailin"
 readTime: 6
 excerpt: "A camera pointed at a bed is a surveillance object until you give it a reason not to be. The face is that reason."
 motif: ring

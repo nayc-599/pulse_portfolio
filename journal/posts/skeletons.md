@@ -4,10 +4,9 @@ permalink: "journal/posts/skeletons.html"
 title: "Skeletons before data: writing the loop ahead of the models"
 description: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 ogDescription: "Pulse journal · Build log · 27 August 2026 · Christopher"
-category: "BUILD LOG"
+category: "build-log"
 date: 2026-08-27
-author: "Christopher"
-authorRole: "COMPUTER VISION · FACE & DATA"
+author: "christopher"
 readTime: 5
 excerpt: "We wrote the whole inference loop with stub models returning random numbers. It caught four interface bugs before the weights existed."
 motif: staircase

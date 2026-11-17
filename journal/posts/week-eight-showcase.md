@@ -4,10 +4,9 @@ permalink: "journal/posts/week-eight-showcase.html"
 title: "Week 8: Showcase day"
 description: "This week we presented Pulse at the Monash DeepNeuron showcase. Where the project stands: a React and FastAPI carer dashboard, a real alert engine, a look borrowed from bedside monitors, and the pose team's work wired in."
 ogDescription: "Pulse journal · Build log · 7 October 2026 · Nay Chi"
-category: "BUILD LOG"
+category: "build-log"
 date: 2026-10-07
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 5
 excerpt: "This week we presented Pulse at the Monash DeepNeuron showcase. Here is where it stands: a carer dashboard with an alert engine, redesigned to look less like a website and more like a bedside monitor."
 motif: lattice

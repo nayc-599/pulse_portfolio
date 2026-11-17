@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/shape-of-pain.html"
 title: "We checked whether pain has a shape before we built a model that assumes it does"
 description: "Before training anything, I plotted 48,398 frames of the UNBC-McMaster dataset. What the filenames were hiding, what the shape of pain looks like, and the ceiling we cannot engineer past."
-ogDescription: "Pulse journal · Research · 13 September 2026 · Nay Chi"
-category: "RESEARCH"
+ogDescription: "Pulse journal · Build log · 13 September 2026 · Nay Chi"
+category: "build-log"
 date: 2026-09-13
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 9
 excerpt: "Before training anything, I plotted 48,398 frames of the dataset. One finding validated our architecture. One we cannot engineer our way past."
 motif: scatter

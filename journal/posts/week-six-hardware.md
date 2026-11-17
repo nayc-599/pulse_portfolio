@@ -4,10 +4,9 @@ permalink: "journal/posts/week-six-hardware.html"
 title: "Week 6: hardware at Makerspace, and a new teammate"
 description: "Kate's CAD design for the cube is nearly done, the hardware has arrived at Makerspace, and Nageeb has joined to lead hardware integration, ten days before the showcase."
 ogDescription: "Pulse journal · Build log · 27 September 2026 · Nay Chi"
-category: "BUILD LOG"
+category: "build-log"
 date: 2026-09-27
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 2
 excerpt: "The cube is nearly designed, its parts are on a bench at Makerspace, and there is one more of us."
 motif: ring

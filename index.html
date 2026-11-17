@@ -108,18 +108,9 @@ extraScripts:
       </div>
       <ul style="list-style:none;margin:0;padding:0">
         {% from "journal-thumb.njk" import journalThumb %}
+        {% from "journal-card.njk" import journalCard %}
         {% for post in collections.posts | limit(3) %}
-        <li class="rule-top--list">
-          <a href="{{ post.url }}" class="journal-entry__link hover-shift">
-            {{ journalThumb(post, 7, 6, 2) }}
-            <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-              <span class="metadata"><span class="is-plain">{{ post.data.category | sentence }}</span> · {{ post.data.date | dateDisplay }}</span>
-              <span style="font:500 22px/1.28 var(--font-sans);letter-spacing:-0.015em">{{ post.data.title }}</span>
-              <span style="font:400 15px/1.6 var(--font-sans);color:var(--ink-body)">{{ post.data.excerpt }}</span>
-            </span>
-            <span class="metadata is-plain" style="text-align:right">{{ post.data.author }} · {{ post.data.readTime }} min read</span>
-          </a>
-        </li>
+        {{ journalCard(post, 22) }}
         {% endfor %}
       </ul>
       <div class="rule-top--list"></div>

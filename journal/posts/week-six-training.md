@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/week-six-training.html"
 title: "Week 6: training the CNN for the first time, and the LSTM that should have beaten it"
 description: "The CNN had never been trained: its backbone was fully frozen. I trained it, then the LSTM on top of it. The LSTM trails the CNN on the test set, and figuring out why is the next thing I'm digging into."
-ogDescription: "Pulse journal · Engineering · 27 September 2026 · Nay Chi"
-category: "ENGINEERING"
+ogDescription: "Pulse journal · Build log · 27 September 2026 · Nay Chi"
+category: "build-log"
 date: 2026-09-27T18:00:00Z
-author: "Nay Chi"
-authorRole: "PROJECT LEAD · SEQUENCE MODELLING · WEB"
+author: "naychi"
 readTime: 4
 excerpt: "I trained both models myself this week. The one that was supposed to be better came out worse, and I'd rather show that than the flattering curve."
 motif: scatter

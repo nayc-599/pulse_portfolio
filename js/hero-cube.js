@@ -23,7 +23,7 @@ import { clamp, lerp, AMBER, AMBER_DIM, AMBER_RGB } from './pixel-grid.js';
 // shutter, the glide, the Turn, the glow) is unchanged. true: the full
 // rocking-and-heartbeat hold before the glide.
 const ENABLE_HEARTBEAT = true;
-const BPM = 96;                          // heartbeat: one lub-dub every 60/96 = 0.625s
+const BPM = 120;                         // heartbeat: one lub-dub every 60/120 = 0.5s, so 3 beats take 1.5s
 const HOLD_BEATS = 3;                    // the cube thinks at screen centre for exactly this many
                                           // complete lub-dub cycles, back to back, then moves on
 const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
@@ -65,27 +65,23 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
 /* ---------------------------------------------------------------------
    Timeline, in seconds from the first frame (defaults in brackets):
      0 .. AP             the shutter opens at screen centre [0 - 0.9]
-     AP .. H             the cube thinks at screen centre: HOLD_BEATS complete
-                         lub-dub cycles, back to back, at a constant pace [0.9 - 2.775]
-     H                   the HOLD_BEATS-th lub lands exactly here: the glide starts on it
-     H .. TURN           the glide up into the face's place [2.775 - 3.475]
-     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.475 - 5.675]
-     TURN + D/2 .. END   the beat decays over about one beat as the face
-                         lands, leaving the breathing underneath [4.575 - 6.3]
+     AP .. H             the cube thinks at screen centre: exactly HOLD_BEATS
+                         lub-dubs, one every BEAT seconds [0.9 - 2.4: 3 beats in 1.5s]
+     H                   the heart stops; the glide starts [2.4]
+     H .. TURN           the glide into the face's place [2.4 - 3.1]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.1 - 5.3]
+                         No heartbeat after H.
 
-   The heart's phase is linear in t and anchored at AP, so the hold's first
-   lub lands the moment the cube appears (t = AP) and every later one lands
-   exactly BEAT seconds after the last, with no acceleration: the HOLD_BEATS-
-   th lub falls precisely on H = AP + HOLD_BEATS * BEAT by construction, and
-   the transition happens the instant it does, whatever BPM or HOLD_BEATS
-   are. The same constant-rate phase carries on past H, so the beat already
-   visible at the Turn continues at that pace while beatAmp() fades it out.
+   The heart's phase is linear in t and anchored at AP, so the first lub
+   lands the moment the cube appears (t = AP) and each later one exactly
+   BEAT seconds after the last. beatAmp() is 1 up to H and 0 from H on, so
+   the lub that would land on H never fires: exactly HOLD_BEATS beats.
    --------------------------------------------------------------------- */
 const H = AP + (ENABLE_HEARTBEAT ? HOLD_BEATS * BEAT : 0);
 const TURN = H + MOVE_SECONDS;
 const SETTLE = TURN + D;
-const END = ENABLE_HEARTBEAT ? SETTLE + BEAT : SETTLE;   // with no beat there is nothing left to decay
-export const INTRO_SECONDS = END;        // from the first frame until the beat has fully decayed
+const END = SETTLE;                      // the beat stops at H, so nothing is left to decay after the Turn
+export const INTRO_SECONDS = END;        // from the first frame until the face has settled
 
 const smoothstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
@@ -107,12 +103,12 @@ function sinceLub(t) {
   const ph = heartPhase(t);
   return (ph - Math.floor(ph)) * BEAT;
 }
+// Exactly HOLD_BEATS beats, at AP, AP + BEAT, ... and none before or after: the
+// heart stops at H, the moment the glide starts (the next lub would land
+// exactly there), so nothing beats during the glide, the Turn or after.
 function beatAmp(t) {
   if (!ENABLE_HEARTBEAT) return 0;
-  const a = TURN + 0.5 * D;
-  if (t <= a) return 1;
-  if (t >= END) return 0;
-  return 0.5 + 0.5 * Math.cos(Math.PI * (t - a) / (END - a));
+  return t >= AP && t < H ? 1 : 0;   // none while the shutter opens, none from H on
 }
 
 /* Heartbeat envelopes, both zero before their onset (times at 40bpm,

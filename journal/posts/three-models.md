@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/three-models.html"
 title: "Three models, not one: our plan for splitting the pipeline"
 description: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
-ogDescription: "Pulse journal · Engineering · 19 August 2026 · Aaron"
-category: "ENGINEERING"
+ogDescription: "Pulse journal · Build log · 19 August 2026 · Aaron"
+category: "build-log"
 date: 2026-08-19
-author: "Aaron"
-authorRole: "COMPUTER VISION · POSE & ALERTS"
+author: "aaron"
 readTime: 6
 excerpt: "One end-to-end network would be simpler to draw and much harder to debug. We are choosing debuggable, before we've trained anything."
 motif: lattice

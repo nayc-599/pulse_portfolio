@@ -3,11 +3,10 @@ layout: post.njk
 permalink: "journal/posts/domain-gap.html"
 title: "Our dataset is a physio clinic. Our room is a bedroom at 3am."
 description: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
-ogDescription: "Pulse journal · Research · 27 August 2026 · Amelie"
-category: "RESEARCH"
+ogDescription: "Pulse journal · Build log · 27 August 2026 · Amelie"
+category: "build-log"
 date: 2026-08-27
-author: "Amelie"
-authorRole: "DEEP LEARNING · FEATURE EXTRACTION"
+author: "amelie"
 readTime: 7
 excerpt: "What UNBC-McMaster actually contains, and the honest distance between that footage and the room we are aiming at."
 motif: ring

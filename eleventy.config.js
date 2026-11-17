@@ -1,4 +1,8 @@
+import fs from "node:fs";
 export default function (eleventyConfig) {
+  // Draft posts waiting for the teammate they feature to read them.
+  eleventyConfig.ignores.add("journal/drafts/**");
+
   // Curly quotes in visible text, at build time: ' -> ’ (or ‘ at the start
   // of a quote), " -> “ ”. Only text between tags is touched; tag
   // attributes (alt, aria-label, href...), and the contents of <script>,
@@ -58,11 +62,44 @@ export default function (eleventyConfig) {
     collectionApi.getFilteredByGlob("journal/posts/*.md").sort((a, b) => b.date - a.date)
   );
 
+  // Journal categories: only "build-log" and "update".
+  const CATEGORY_LABELS = { "build-log": "Build log", "update": "Update" };
+  eleventyConfig.addFilter("categoryLabel", (c) => CATEGORY_LABELS[c] || "Build log");
+  eleventyConfig.addFilter("byCategory", (arr, c) => (arr || []).filter((p) => p.data.category === c));
+  // The meta line on cards: "Build log · 27 Sep 2026", or for an Update
+  // "Update · Week 6 · 27 Sep 2026". Build log posts carry no week.
+  eleventyConfig.addFilter("postMeta", (d) =>
+    d.category === "update"
+      ? ["Update", d.week ? "Week " + d.week : null, compactDate(d.date)].filter(Boolean).join(" · ")
+      : "Build log · " + compactDate(d.date));
+
+  // People: posts name an author (and optional `featuring`) by id from
+  // _data/people.json. Returns the people objects, author first.
+  const PEOPLE = JSON.parse(fs.readFileSync("_data/people.json", "utf8")).people;
+  eleventyConfig.addWatchTarget("_data/people.json");
+  eleventyConfig.addFilter("postPeople", function (d) {
+    const people = PEOPLE;
+    const ids = [d.author].concat(d.featuring ? [].concat(d.featuring) : []);
+    return ids.map((id) => people.find((p) => p.id === id) || { id, name: id, role: "" });
+  });
+  eleventyConfig.addFilter("names", (list) => {
+    const n = (list || []).map((p) => p.name);
+    return n.length <= 1 ? n.join("") : n.slice(0, -1).join(", ") + " and " + n[n.length - 1];
+  });
+
   // Prev/next reading order: the team publishes out of strict date order
   // (see the Week One entry), so the "newer/older" chain is a separate,
   // hand-authored sequence from the date-sorted display order above.
   eleventyConfig.addCollection("postsChain", (collectionApi) =>
-    collectionApi.getFilteredByGlob("journal/posts/*.md").sort((a, b) => a.data.chainOrder - b.data.chainOrder)
+    collectionApi.getFilteredByGlob("journal/posts/*.md")
+      .filter((p) => p.data.category !== "update")
+      .sort((a, b) => a.data.chainOrder - b.data.chainOrder)
+  );
+  // Updates read newest to oldest among themselves.
+  eleventyConfig.addCollection("updatesChain", (collectionApi) =>
+    collectionApi.getFilteredByGlob("journal/posts/*.md")
+      .filter((p) => p.data.category === "update")
+      .sort((a, b) => b.date - a.date)
   );
 
   eleventyConfig.addFilter("findIndexByUrl", (arr, url) => arr.findIndex((p) => p.url === url));
