@@ -69,7 +69,7 @@ extraScripts:
   </div>
 
   {% for g in media.groups %}
-  {% set items = galleryItems | where("group", g.id) | byOrder %}
+  {% set items = galleryItems | where("group", g.id) | byWeek %}
   {% if items | length >= 2 or (items | length >= 1 and g.keepWhenSmall) %}
   <section class="media-section" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-title">
     <div class="media-section__head">

@@ -76,9 +76,13 @@ export default function (eleventyConfig) {
   // Nunjucks' built-in selectattr ignores its "equalto" test, so filtering a
   // list by a field value needs its own filter: items | where("group", "dashboard").
   eleventyConfig.addFilter("where", (arr, key, value) => (arr || []).filter((item) => item && item[key] === value));
-  // Media page: hand-set "order" first, then week (both ascending).
-  eleventyConfig.addFilter("byOrder", (arr) =>
-    [...(arr || [])].sort((a, b) => (a.order ?? 999) - (b.order ?? 999) || (a.week ?? 0) - (b.week ?? 0)));
+  // Media page: by week, oldest first. Ties go by "date" (YYYY-MM-DD) when
+  // both items have one, otherwise they keep their order in media.json
+  // (Array.prototype.sort is stable).
+  eleventyConfig.addFilter("byWeek", (arr) =>
+    [...(arr || [])].sort((a, b) =>
+      (a.week ?? 0) - (b.week ?? 0) ||
+      (a.date && b.date ? a.date.localeCompare(b.date) : 0)));
 
   return {
     dir: {
