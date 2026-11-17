@@ -1,7 +1,7 @@
 ---
 layout: post.njk
-permalink: "journal/posts/week-eight-showcase.html"
-title: "Week 8: Showcase day"
+permalink: "journal/posts/showcase-day.html"
+title: "Showcase day"
 description: "This week we presented Pulse at the Monash DeepNeuron showcase. Where the project stands: a React and FastAPI carer dashboard, a real alert engine, a look borrowed from bedside monitors, and the pose team's work wired in."
 ogDescription: "Pulse journal · Build log · 7 October 2026 · Nay Chi"
 category: "build-log"

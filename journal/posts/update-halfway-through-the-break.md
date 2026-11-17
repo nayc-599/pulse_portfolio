@@ -5,7 +5,7 @@ title: "Halfway through the break, a week and a half to go"
 description: "Both pain models trained, a fix to the CNN, a move off Streamlit, and a new teammate."
 category: "update"
 date: 2026-09-27
-week: 6
+week: 7
 author: "naychi"
 summary: "Both pain models trained, a fix to the CNN, a move off Streamlit, and a new teammate."
 linkedin_url: "TODO"

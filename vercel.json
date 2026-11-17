@@ -1,0 +1,34 @@
+{
+  "redirects": [
+    {
+      "source": "/journal/posts/week-one.html",
+      "destination": "/journal/posts/falls-to-pain.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/posts/week-six-streamlit.html",
+      "destination": "/journal/posts/moving-off-streamlit.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/posts/week-six-hardware.html",
+      "destination": "/journal/posts/hardware-at-makerspace.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/posts/week-six-training.html",
+      "destination": "/journal/posts/training-the-cnn-and-lstm.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/posts/week-eight-showcase.html",
+      "destination": "/journal/posts/showcase-day.html",
+      "permanent": true
+    },
+    {
+      "source": "/journal/posts/week-six.html",
+      "destination": "/journal/posts/training-the-cnn-and-lstm.html",
+      "permanent": true
+    }
+  ]
+}

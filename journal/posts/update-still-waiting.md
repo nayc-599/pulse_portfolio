@@ -5,7 +5,7 @@ title: "Still waiting, still building"
 description: "Face detection on GitHub, the CNN ready to train, a first dashboard, and a first version of this site."
 category: "update"
 date: 2026-09-09
-week: 4
+week: 5
 author: "naychi"
 summary: "Face detection on GitHub, the CNN ready to train, a first dashboard, and a first version of this site."
 images: []

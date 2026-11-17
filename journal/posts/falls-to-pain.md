@@ -1,7 +1,7 @@
 ---
 layout: post.njk
-permalink: "journal/posts/week-one.html"
-title: "Week 1: we argued our way from falls to pain"
+permalink: "journal/posts/falls-to-pain.html"
+title: "We argued our way from falls to pain"
 description: "Falls detection was the obvious project. Two hours of arguing got us somewhere less crowded and more useful."
 ogDescription: "Pulse journal · Build log · 12 August 2026 · Nay Chi"
 category: "build-log"

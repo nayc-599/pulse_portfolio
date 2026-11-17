@@ -26,7 +26,7 @@ const ENABLE_HEARTBEAT = true;
 const BPM = 120;                         // heartbeat: one lub-dub every 60/120 = 0.5s, so 3 beats take 1.5s
 const HOLD_BEATS = 3;                    // the cube thinks at screen centre for exactly this many
                                           // complete lub-dub cycles, back to back, then moves on
-const MOVE_SECONDS = 0.7;                // then glides up into the face's place over this long
+const MOVE_SECONDS = 0.8;                // then glides up into the face's place over this long
 // --------------------
 
 const N = 24;
@@ -65,17 +65,17 @@ const bloom = (a) => (a > 0.004 ? 'drop-shadow(0 0 4px rgba(' + AMBER_RGB + ',' 
 /* ---------------------------------------------------------------------
    Timeline, in seconds from the first frame (defaults in brackets):
      0 .. AP             the shutter opens at screen centre [0 - 0.9]
-     AP .. H             the cube thinks at screen centre: exactly HOLD_BEATS
-                         lub-dubs, one every BEAT seconds [0.9 - 2.4: 3 beats in 1.5s]
-     H                   the heart stops; the glide starts [2.4]
-     H .. TURN           the glide into the face's place [2.4 - 3.1]
-     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.1 - 5.3]
-                         No heartbeat after H.
+     AP .. H             the cube thinks at screen centre: HOLD_BEATS lub-dubs,
+                         one every BEAT seconds [0.9 - 2.4: 3 beats]
+     H .. TURN           the glide into the face's place; the heart keeps the
+                         same rhythm [2.4 - 3.2: 2 more beats, at 2.4 and 2.9]
+     TURN .. SETTLE      the Turn, in place; the hero content fades in [3.2 - 5.4]
+                         No heartbeat from the Turn on.
 
    The heart's phase is linear in t and anchored at AP, so the first lub
-   lands the moment the cube appears (t = AP) and each later one exactly
-   BEAT seconds after the last. beatAmp() is 1 up to H and 0 from H on, so
-   the lub that would land on H never fires: exactly HOLD_BEATS beats.
+   lands the moment the cube appears and each later one exactly BEAT
+   seconds after the last. beatAmp() is 1 from AP up to TURN and 0 outside,
+   and the last lub before TURN has died away before TURN arrives.
    --------------------------------------------------------------------- */
 const H = AP + (ENABLE_HEARTBEAT ? HOLD_BEATS * BEAT : 0);
 const TURN = H + MOVE_SECONDS;
@@ -103,12 +103,15 @@ function sinceLub(t) {
   const ph = heartPhase(t);
   return (ph - Math.floor(ph)) * BEAT;
 }
-// Exactly HOLD_BEATS beats, at AP, AP + BEAT, ... and none before or after: the
-// heart stops at H, the moment the glide starts (the next lub would land
-// exactly there), so nothing beats during the glide, the Turn or after.
+// One continuous heartbeat from the cube's appearance (AP) to the Turn:
+// HOLD_BEATS beats at screen centre, then the same 0.5s rhythm carries on
+// through the glide. MOVE_SECONDS is chosen so the glide's last lub (at
+// H + 0.5) has fully decayed (about 0.25s) before the Turn at H + 0.8, and
+// the next lub (H + 1.0) falls after it, so no beat is ever cut off.
+// Nothing beats while the shutter opens or after the Turn.
 function beatAmp(t) {
   if (!ENABLE_HEARTBEAT) return 0;
-  return t >= AP && t < H ? 1 : 0;   // none while the shutter opens, none from H on
+  return t >= AP && t < TURN ? 1 : 0;
 }
 
 /* Heartbeat envelopes, both zero before their onset (times at 40bpm,

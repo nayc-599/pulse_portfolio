@@ -5,7 +5,7 @@ title: "Writing the code before the data arrives"
 description: "No dataset yet, so we wrote skeletons, researched augmentation and set up the repo."
 category: "update"
 date: 2026-08-27
-week: 2
+week: 3
 author: "naychi"
 summary: "No dataset yet, so we wrote skeletons, researched augmentation and set up the repo."
 images: []

@@ -63,15 +63,33 @@ export default function (eleventyConfig) {
   );
 
   // Journal categories: only "build-log" and "update".
-  const CATEGORY_LABELS = { "build-log": "Build log", "update": "Update" };
+  const CATEGORY_LABELS = { "build-log": "Build log", "update": "Weekly update" };
   eleventyConfig.addFilter("categoryLabel", (c) => CATEGORY_LABELS[c] || "Build log");
   eleventyConfig.addFilter("byCategory", (arr, c) => (arr || []).filter((p) => p.data.category === c));
-  // The meta line on cards: "Build log · 27 Sep 2026", or for an Update
-  // "Update · Week 6 · 27 Sep 2026". Build log posts carry no week.
+  // The meta line on cards: "Build log · 27 Sep 2026", or for a weekly update
+  // "Weekly update · Week 3 · 27 Aug 2026" (week = the team-meeting count).
   eleventyConfig.addFilter("postMeta", (d) =>
     d.category === "update"
-      ? ["Update", d.week ? "Week " + d.week : null, compactDate(d.date)].filter(Boolean).join(" · ")
+      ? ["Weekly update", d.week ? "Week " + d.week : null, compactDate(d.date)].filter(Boolean).join(" · ")
       : "Build log · " + compactDate(d.date));
+  // Month heading for the Journal list: "October 2026".
+  const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  eleventyConfig.addFilter("monthLabel", (value) => {
+    const d = value instanceof Date ? value : new Date(value + "T00:00:00Z");
+    return MONTHS_LONG[d.getUTCMonth()] + " " + d.getUTCFullYear();
+  });
+  eleventyConfig.addFilter("without", (arr, item) => (arr || []).filter((x) => x !== item));
+  // Journal list grouped by month, newest first: [{ label, posts }].
+  eleventyConfig.addFilter("byMonth", (arr) => {
+    const groups = [];
+    for (const p of arr || []) {
+      const d = p.date;
+      const label = MONTHS_LONG[d.getUTCMonth()] + " " + d.getUTCFullYear();
+      const g = groups[groups.length - 1];
+      if (g && g.label === label) g.posts.push(p); else groups.push({ label, posts: [p] });
+    }
+    return groups;
+  });
 
   // People: posts name an author (and optional `featuring`) by id from
   // _data/people.json. Returns the people objects, author first.

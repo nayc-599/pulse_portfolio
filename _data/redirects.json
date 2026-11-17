@@ -1,0 +1,29 @@
+{
+  "_readme": "Old post URLs and where they moved. Built into forwarding pages (journal/redirects.njk) and mirrored in vercel.json.",
+  "redirects": [
+    {
+      "from": "/journal/posts/week-one.html",
+      "to": "/journal/posts/falls-to-pain.html"
+    },
+    {
+      "from": "/journal/posts/week-six-streamlit.html",
+      "to": "/journal/posts/moving-off-streamlit.html"
+    },
+    {
+      "from": "/journal/posts/week-six-hardware.html",
+      "to": "/journal/posts/hardware-at-makerspace.html"
+    },
+    {
+      "from": "/journal/posts/week-six-training.html",
+      "to": "/journal/posts/training-the-cnn-and-lstm.html"
+    },
+    {
+      "from": "/journal/posts/week-eight-showcase.html",
+      "to": "/journal/posts/showcase-day.html"
+    },
+    {
+      "from": "/journal/posts/week-six.html",
+      "to": "/journal/posts/training-the-cnn-and-lstm.html"
+    }
+  ]
+}

@@ -2,15 +2,57 @@
   "_readme": [
     "Journal authors. Posts set `author` (and optionally `featuring`) to an id below.",
     "role: the Team page wording; for people no longer on the team, the role they had at the time.",
-    "avatar: a stripped copy in media/ (no metadata). Ai Lin and Kate have no stripped copy yet, so avatar is null; photos are not shown anywhere until every author has one."
+    "avatar: a stripped 216px copy in media/ (no metadata). Ai Lin's was restored from git history and re-encoded; Kate's was cropped from uploads/originals/kate_lin.png."
   ],
   "people": [
-    { "id": "naychi", "name": "Nay Chi", "role": "Project lead · sequence modelling · web", "avatar": "/media/naychi-avatar.jpg", "on_team": true },
-    { "id": "amelie", "name": "Amelie", "role": "Deep learning · feature extraction", "avatar": "/media/amelie-avatar.jpg", "on_team": true },
-    { "id": "aaron", "name": "Aaron", "role": "Computer vision · pose & alerts", "avatar": "/media/aaron-avatar.jpg", "on_team": true },
-    { "id": "christopher", "name": "Christopher", "role": "Computer vision · face & data", "avatar": "/media/chris-avatar.jpg", "on_team": true },
-    { "id": "nageeb", "name": "Nageeb", "role": "Electrical engineer", "avatar": "/media/nageeb-avatar.jpg", "on_team": true },
-    { "id": "ailin", "name": "Ai Lin", "role": "Product design · dashboard", "avatar": null, "on_team": false },
-    { "id": "kate", "name": "Kate", "role": "Hardware design (CAD)", "avatar": null, "on_team": false }
+    {
+      "id": "naychi",
+      "name": "Nay Chi",
+      "role": "Project lead · sequence modelling · web",
+      "avatar": "/media/naychi-avatar.jpg",
+      "on_team": true
+    },
+    {
+      "id": "amelie",
+      "name": "Amelie",
+      "role": "Deep learning · feature extraction",
+      "avatar": "/media/amelie-avatar.jpg",
+      "on_team": true
+    },
+    {
+      "id": "aaron",
+      "name": "Aaron",
+      "role": "Computer vision · pose & alerts",
+      "avatar": "/media/aaron-avatar.jpg",
+      "on_team": true
+    },
+    {
+      "id": "christopher",
+      "name": "Christopher",
+      "role": "Computer vision · face & data",
+      "avatar": "/media/chris-avatar.jpg",
+      "on_team": true
+    },
+    {
+      "id": "nageeb",
+      "name": "Nageeb",
+      "role": "Electrical engineer",
+      "avatar": "/media/nageeb-avatar.jpg",
+      "on_team": true
+    },
+    {
+      "id": "ailin",
+      "name": "Ai Lin",
+      "role": "Product design · dashboard",
+      "avatar": "/media/ailin-avatar.jpg",
+      "on_team": false
+    },
+    {
+      "id": "kate",
+      "name": "Kate",
+      "role": "Hardware designer",
+      "avatar": "/media/kate-avatar.jpg",
+      "on_team": false
+    }
   ]
 }

@@ -5,7 +5,7 @@ title: "Splitting the work three ways"
 description: "Modelling, hardware and the dashboard, each with an owner."
 category: "update"
 date: 2026-08-19
-week: 1
+week: 2
 author: "naychi"
 summary: "Modelling, hardware and the dashboard, each with an owner."
 images: []

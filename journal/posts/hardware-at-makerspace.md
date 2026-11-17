@@ -1,7 +1,7 @@
 ---
 layout: post.njk
-permalink: "journal/posts/week-six-hardware.html"
-title: "Week 6: hardware at Makerspace, and a new teammate"
+permalink: "journal/posts/hardware-at-makerspace.html"
+title: "Hardware at Makerspace, and a new teammate"
 description: "Kate's CAD design for the cube is nearly done, the hardware has arrived at Makerspace, and Nageeb has joined to lead hardware integration, ten days before the showcase."
 ogDescription: "Pulse journal · Build log · 27 September 2026 · Nay Chi"
 category: "build-log"

@@ -37,44 +37,74 @@ extraScripts:
 </section>
 
 <main>
+  {% from "journal-card.njk" import journalCard %}
+  {% from "journal-thumb.njk" import journalThumb %}
+  {% from "byline.njk" import byline %}
+  {% set all = collections.posts %}
+  {% set builds = all | byCategory("build-log") %}
+  {% set updates = all | byCategory("update") %}
+  {#- Featured: the newest build log post, shown only on the Build log tab and
+      not repeated in its list. Weekly updates read oldest first, as a timeline. -#}
+  {% set featured = builds | first %}
+
   <div class="wrap" style="padding:32px 24px 0">
-    <div role="group" aria-label="Filter by category" class="filter-bar">
-      <button type="button" class="filter-chip" data-filter="all" aria-pressed="true"><span class="filter-chip__dot"></span><span>All</span></button>
-      <button type="button" class="filter-chip" data-filter="build-log" aria-pressed="false"><span class="filter-chip__dot"></span><span>Build log</span></button>
-      <button type="button" class="filter-chip" data-filter="update" aria-pressed="false"><span class="filter-chip__dot"></span><span>Updates</span></button>
+    <div role="tablist" aria-label="Journal" class="filter-bar journal-tabs">
+      <button type="button" role="tab" id="tab-build-log" class="filter-chip" data-tab="build-log" aria-selected="true" aria-controls="panel-build-log" tabindex="0"><span class="filter-chip__dot"></span><span>Build log <span class="filter-chip__count">{{ builds | length }}</span></span></button>
+      <button type="button" role="tab" id="tab-weekly-updates" class="filter-chip" data-tab="weekly-updates" aria-selected="false" aria-controls="panel-weekly-updates" tabindex="-1"><span class="filter-chip__dot"></span><span>Weekly updates <span class="filter-chip__count">{{ updates | length }}</span></span></button>
     </div>
   </div>
-  {% from "journal-thumb.njk" import journalThumb %}
-  {% from "journal-card.njk" import journalCard %}
-  {#- Featured: the newest build log post. -#}
-  {% set featured = collections.posts | byCategory("build-log") | first %}
-  <section class="journal-featured" data-category="{{ featured.data.category }}" aria-label="Featured entry" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14)">
-    <div class="wrap" style="padding:56px 24px">
-      <a href="{{ featured.url }}" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:var(--ink-primary)">
-        {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
-        <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
-          <span class="metadata" style="color:var(--ink-eyebrow)"><span class="is-plain">Featured · {{ featured.data | postMeta }}</span></span>
-          <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
-          <span style="font:400 17px/1.7 var(--font-sans);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
-          <span class="metadata is-plain">{{ featured.data | postPeople | names }} · {{ featured.data.readTime }} min read</span>
-          <span class="link-action" style="margin-top:6px">
-            <span>Read the entry</span>
-            <span aria-hidden="true" class="link-action__arrow">→</span>
-          </span>
-        </span>
-      </a>
-    </div>
-  </section>
+  <noscript><style>.journal-panel[hidden] { display: block; }</style></noscript>
 
-  <section aria-label="All entries" class="wrap" style="padding:88px 24px 24px">
-    <span data-entry-count class="metadata is-plain" style="display:block;margin-bottom:26px"></span>
-    <ul style="list-style:none;margin:0;padding:0">
-      {% for post in collections.posts %}
-      {{ journalCard(post, 23) }}
-      {% endfor %}
-    </ul>
-    <div class="rule-top--list"></div>
-  </section>
+  <div role="tabpanel" id="panel-build-log" class="journal-panel" aria-labelledby="tab-build-log" data-panel="build-log">
+    <div class="wrap" style="padding:14px 24px 0"><p class="journal-tab-desc">Longer posts on how we built each part of Pulse.</p></div>
+    <section class="journal-featured" aria-label="Featured entry" style="background:var(--bone-2);border-bottom:1px solid var(--rule-bone-14);margin-top:28px">
+      <div class="wrap" style="padding:56px 24px">
+        <a href="{{ featured.url }}" style="display:flex;gap:44px;flex-wrap:wrap;align-items:center;text-decoration:none;color:var(--ink-primary)">
+          {{ journalThumb(featured, 14, 9, 3, "journal-featured__thumb") }}
+          <span style="display:flex;flex-direction:column;gap:14px;flex:1 1 400px;min-width:0">
+            <span class="metadata is-plain" style="color:var(--ink-eyebrow)">Featured · {{ featured.data | postMeta }}</span>
+            <span style="font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">{{ featured.data.title }}</span>
+            <span style="font:400 17px/1.7 var(--font-sans);color:var(--ink-body);max-width:62ch">{{ featured.data.excerpt }}</span>
+            {{ byline(featured.data, 24, featured.data.readTime) }}
+            <span class="link-action" style="margin-top:6px">
+              <span>Read the entry</span>
+              <span aria-hidden="true" class="link-action__arrow">→</span>
+            </span>
+          </span>
+        </a>
+      </div>
+    </section>
+    <section aria-label="Build log entries" class="wrap journal-list" style="padding:72px 24px 24px">
+      {%- for group in builds | without(featured) | byMonth %}
+      <div class="journal-month">
+        <h2 class="journal-month__title">{{ group.label }}</h2>
+        <ul class="journal-month__list">
+          {%- for post in group.posts %}
+          {{ journalCard(post, 23) }}
+          {%- endfor %}
+        </ul>
+        <div class="rule-top--list"></div>
+      </div>
+      {%- endfor %}
+    </section>
+  </div>
+
+  <div role="tabpanel" id="panel-weekly-updates" class="journal-panel" aria-labelledby="tab-weekly-updates" data-panel="weekly-updates" hidden>
+    <div class="wrap" style="padding:14px 24px 0"><p class="journal-tab-desc">Short notes on what the team got done each week.</p></div>
+    <section aria-label="Weekly updates, oldest first" class="wrap journal-list" style="padding:40px 24px 24px">
+      {%- for group in updates | reverse | byMonth %}
+      <div class="journal-month">
+        <h2 class="journal-month__title">{{ group.label }}</h2>
+        <ul class="journal-month__list">
+          {%- for post in group.posts %}
+          {{ journalCard(post, 23) }}
+          {%- endfor %}
+        </ul>
+        <div class="rule-top--list"></div>
+      </div>
+      {%- endfor %}
+    </section>
+  </div>
 
   <nav aria-label="Pagination" class="wrap" style="padding:12px 24px 88px;display:flex;gap:10px;align-items:center">
     <span aria-current="page" style="display:inline-flex;align-items:center;gap:9px;font:400 14px/1.2 var(--font-sans);color:var(--ink-primary)">
@@ -85,6 +115,6 @@ extraScripts:
       <span aria-hidden="true" style="display:block;width:8px;height:8px;border-radius:1px;background:rgba(var(--amber-dim-rgb),0.55)"></span>
       <span>2</span>
     </span>
-    <span class="metadata is-plain" style="margin-left:24px">{{ collections.posts | length }} entries so far. We post most Wednesdays.</span>
+    <span class="metadata is-plain" style="margin-left:24px">{{ collections.posts | length }} entries so far.</span>
   </nav>
 </main>

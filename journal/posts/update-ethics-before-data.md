@@ -5,7 +5,7 @@ title: "Ethics before data"
 description: "A camera pointed at a patient raises questions. We worked through some of them, and saw the first movement demo."
 category: "update"
 date: 2026-09-02
-week: 3
+week: 4
 author: "naychi"
 summary: "A camera pointed at a patient raises questions. We worked through some of them, and saw the first movement demo."
 images: []

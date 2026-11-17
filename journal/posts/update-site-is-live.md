@@ -1,11 +1,11 @@
 ---
 layout: post.njk
 permalink: "journal/posts/update-site-is-live.html"
-title: "Four weeks in, and the site is live"
+title: "The dataset arrived, and the site went live"
 description: "The dataset arrived, the CNN produced its first features, and we put this site online."
 category: "update"
 date: 2026-09-18
-week: 5
+week: 6
 author: "naychi"
 summary: "The dataset arrived, the CNN produced its first features, and we put this site online."
 linkedin_url: "TODO"

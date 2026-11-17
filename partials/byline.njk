@@ -1,0 +1,17 @@
+{#- Author byline: overlapping round headshots, all names, and an optional
+    read time. size is the avatar diameter in px (24 on cards, 40 in a post
+    header). Avatars come from _data/people.json; alt is the person's name. -#}
+{% macro byline(data, size, readTime, withRoles) %}
+{%- set ppl = data | postPeople -%}
+<span class="byline byline--{{ size }}">
+  <span class="byline__faces">
+    {%- for p in ppl %}<img class="byline__face" src="{{ p.avatar }}" alt="{{ p.name }}" width="{{ size }}" height="{{ size }}" loading="lazy" decoding="async" />{% endfor -%}
+  </span>
+  <span class="byline__text">
+    <span class="byline__names">{{ ppl | names }}{% if readTime %}<span class="byline__time"> · {{ readTime }} min read</span>{% endif %}</span>
+    {%- if withRoles %}
+    {% for p in ppl %}<span class="byline__role">{% if ppl | length > 1 %}{{ p.name }} · {% endif %}{{ p.role }}</span>{% endfor %}
+    {%- endif %}
+  </span>
+</span>
+{% endmacro %}

@@ -1,7 +1,7 @@
 ---
 layout: post.njk
-permalink: "journal/posts/week-six-streamlit.html"
-title: "Week 6: moving the dashboard off Streamlit"
+permalink: "journal/posts/moving-off-streamlit.html"
+title: "Moving the dashboard off Streamlit"
 description: "Streamlit can't handle the latency and alert timing a hospital needs, so the carer dashboard is moving to a proper frontend and a backend API."
 ogDescription: "Pulse journal · Build log · 26 September 2026 · Nay Chi"
 category: "build-log"
@@ -17,6 +17,6 @@ We are moving the carer dashboard off Streamlit.
 
 The reason is timing. Streamlit can't handle the latency and alert timing a hospital setting needs, and in that setting an alert that arrives late, or on an unpredictable schedule, is worse than no alert at all: a carer learns not to trust it.
 
-So the dashboard is being rebuilt as a proper frontend talking to a backend API. That is stage 05 in [the pipeline diagram](/journal/posts/week-six-training.html).
+So the dashboard is being rebuilt as a proper frontend talking to a backend API. That is stage 05 in [the pipeline diagram](/journal/posts/training-the-cnn-and-lstm.html).
 
 That's the whole decision. What the new stack looks like is a post for when it exists.

@@ -1,35 +1,37 @@
-// Journal index: category filter chips. Entries are rendered server-side
-// from the posts collection; this only toggles visibility + the count label.
+// Journal index: two tabs, Build log and Weekly updates (real tab
+// semantics: arrow keys, Home and End move between them). Build log is the
+// default. The choice is kept in the URL (#build-log, #weekly-updates) so
+// either tab can be linked; old #updates links open Weekly updates.
 
-const chips = document.querySelectorAll('.filter-chip[data-filter]');
-const entries = document.querySelectorAll('.journal-entry');
-const featured = document.querySelector('.journal-featured');
-const countEl = document.querySelector('[data-entry-count]');
-const total = entries.length;
+const tabs = [...document.querySelectorAll('.journal-tabs [role="tab"]')];
+const panels = [...document.querySelectorAll('.journal-panel[role="tabpanel"]')];
+const FROM_HASH = { '#build-log': 'build-log', '#weekly-updates': 'weekly-updates', '#updates': 'weekly-updates' };
 
-function applyFilter(type) {
-  entries.forEach((li) => {
-    li.hidden = type !== 'all' && li.dataset.category !== type;
+function select(name, { focus = false, updateHash = false } = {}) {
+  if (!tabs.some((t) => t.dataset.tab === name)) name = 'build-log';
+  tabs.forEach((t) => {
+    const on = t.dataset.tab === name;
+    t.setAttribute('aria-selected', String(on));
+    t.tabIndex = on ? 0 : -1;
+    if (on && focus) t.focus();
   });
-  if (featured) {
-    featured.hidden = type !== 'all' && featured.dataset.category !== type;
-  }
-  if (countEl) {
-    if (type === 'all') {
-      countEl.textContent = 'All entries · ' + total;
-    } else {
-      const visible = Array.from(entries).filter((li) => !li.hidden).length;
-      const name = type === 'update' ? 'Updates' : 'Build log';
-      countEl.textContent = name + ' · ' + visible + (visible === 1 ? ' entry' : ' entries');
-    }
-  }
+  panels.forEach((p) => { p.hidden = p.dataset.panel !== name; });
+  if (updateHash) history.replaceState(null, '', '#' + name);
 }
 
-chips.forEach((chip) => {
-  chip.addEventListener('click', () => {
-    chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
-    applyFilter(chip.dataset.filter);
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => select(t.dataset.tab, { updateHash: true }));
+  t.addEventListener('keydown', (e) => {
+    let j = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') j = 0;
+    else if (e.key === 'End') j = tabs.length - 1;
+    if (j === null) return;
+    e.preventDefault();
+    select(tabs[j].dataset.tab, { focus: true, updateHash: true });
   });
 });
-
-applyFilter('all');
+window.addEventListener('hashchange', () => select(FROM_HASH[location.hash] || 'build-log'));
+select(FROM_HASH[location.hash] || 'build-log');
+if (location.hash === '#updates') history.replaceState(null, '', '#weekly-updates');
