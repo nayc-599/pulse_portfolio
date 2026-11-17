@@ -74,34 +74,35 @@ extraScripts:
   <section class="media-section" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-title">
     <div class="media-section__head">
       <h2 id="{{ g.id }}-title" class="media-section__title">{{ g.label }}</h2>
-      <span class="metadata is-plain">{{ items | length }} {{ "item" if items | length == 1 else "items" }}</span>
+      <span class="media-section__count">{{ items | length }} {{ "item" if items | length == 1 else "items" }}</span>
     </div>
     <ul class="media-gallery" id="{{ g.id }}-items">
       {% for it in items %}
       {% set thumb = it.poster if it.type == "video" else it.src %}
       {% set label = "Play video: " if it.type == "video" else "Open full size: " %}
       {% set who = (" Shows " + (it.people | join(" and ")) + ".") if (it.type == "video" and it.people | length) else "" %}
-      <li class="media-tile{% if it.frame %} media-tile--framed{% endif %}{% if it.height > it.width * 1.2 %} media-tile--tall{% endif %}{% if loop.index > 6 %} media-tile--extra{% elif loop.index > 3 %} media-tile--extra-sm{% endif %}" data-group="{{ g.id }}">
+      {% if it.meta %}{% set meta = it.meta %}{% elif it.type == "video" %}{% set meta = "Video · " + it.duration + " · Week " + it.week %}{% elif it.type == "pdf" %}{% set meta = "Poster · PDF · Week " + it.week %}{% else %}{% set meta = "Week " + it.week %}{% endif %}
+      <li class="media-tile{% if loop.index > 6 %} media-tile--extra{% elif loop.index > 3 %} media-tile--extra-sm{% endif %}" data-group="{{ g.id }}" style="--focus:{{ it.focus or '50% 50%' }}">
         <button type="button" class="media-tile__open" data-viewer-item="{{ it.id }}" aria-label="{{ label }}{{ it.caption }}{{ who }}">
           <span class="media-tile__media">
             {% if it.svg %}
-            <img class="media-tile__img media-tile__img--contain" src="{{ it.src }}" width="{{ it.width }}" height="{{ it.height }}" alt="{{ it.alt }}" loading="lazy" decoding="async" />
+            <img class="media-tile__img" src="{{ it.src }}" width="{{ it.width }}" height="{{ it.height }}" alt="{{ it.alt }}" loading="lazy" decoding="async" />
             {% else %}
-            {{ picture(thumb, it.width, it.height, it.alt, "media-tile__img media-tile__img--contain" if it.fit == "contain" else "media-tile__img", "(min-width: 1024px) 380px, (min-width: 600px) 50vw, 100vw", false) }}
+            {{ picture(thumb, it.width, it.height, it.alt, "media-tile__img", "(min-width: 1024px) 380px, (min-width: 600px) 50vw, 100vw", false) }}
             {% endif %}
-            {% if it.type == "video" %}<span class="media-tile__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>{% endif %}
+            {% if it.type == "video" %}<span class="media-tile__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg></span>{% endif %}
           </span>
         </button>
         <span class="media-tile__meta">
-          <span class="media-tile__caption" title="{{ it.caption }}">{{ it.caption }}</span>
-          <span class="media-tile__label">{% if it.type == "video" %}VIDEO · {{ it.duration }} · {% endif %}WK {{ it.week }}</span>
+          <span class="media-tile__caption" data-caption="{{ it.caption }}">{{ it.caption }}</span>
+          <span class="media-tile__label">{{ meta }}</span>
         </span>
       </li>
       {% endfor %}
     </ul>
     {#- Cap: 6 visible (3 on phones); the rest behind this button. Hidden when a filter chip is on. -#}
     {% if items | length > 3 %}
-    <button type="button" class="media-section__more{% if items | length <= 6 %} media-section__more--sm-only{% endif %}" aria-expanded="false" aria-controls="{{ g.id }}-items" data-count="{{ items | length }}">Show all ({{ items | length }})</button>
+    <button type="button" class="text-link media-section__more{% if items | length <= 6 %} media-section__more--sm-only{% endif %}" aria-expanded="false" aria-controls="{{ g.id }}-items" data-count="{{ items | length }}">Show all ({{ items | length }})</button>
     {% endif %}
   </section>
   {% endif %}

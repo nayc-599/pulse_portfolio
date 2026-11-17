@@ -18,6 +18,7 @@ function applyFilter(filter, { updateHash = false } = {}) {
     s.hidden = current !== 'all' && s.dataset.group !== current;
     s.classList.toggle('is-uncapped', current !== 'all');   // a filtered group shows in full
   });
+  if (typeof fitCaptions === 'function') fitCaptions();
   if (updateHash) {
     const url = current === 'all' ? location.pathname + location.search : '#' + current;
     history.replaceState(null, '', url);
@@ -33,6 +34,7 @@ document.querySelectorAll('.media-section__more').forEach((btn) => {
     const open = section.classList.toggle('is-expanded');
     btn.setAttribute('aria-expanded', String(open));
     btn.textContent = open ? 'Show fewer' : 'Show all (' + btn.dataset.count + ')';
+    fitCaptions();
   });
 });
 window.addEventListener('hashchange', () => applyFilter(location.hash.slice(1)));
@@ -67,6 +69,38 @@ function visibleButtons() {
 const curly = (t) => t.replace(/(^|[\s(\[])'/g, '$1\u2018').replace(/'/g, '\u2019')
   .replace(/(^|[\s(\[])"/g, '$1\u201C').replace(/"/g, '\u201D');
 
+// The meta line, as the tiles show it: "Video · 1:03 · Week 5".
+function metaText(it) {
+  if (it.meta) return it.meta;
+  if (it.type === 'video') return 'Video · ' + it.duration + ' · Week ' + it.week;
+  if (it.type === 'pdf') return 'Poster · PDF · Week ' + it.week;
+  return 'Week ' + it.week;
+}
+
+// Tile captions wrap to at most two lines. A longer one is cut at the last
+// whole word that fits, with an ellipsis; the full caption is in the
+// viewer and the tile's accessible name.
+function fitCaptions() {
+  document.querySelectorAll('.media-tile__caption[data-caption]').forEach((c) => {
+    const full = c.dataset.caption;
+    c.textContent = full;
+    const lh = parseFloat(getComputedStyle(c).lineHeight) || 22;
+    if (c.scrollHeight <= lh * 2 + 2 || !c.offsetParent) return;
+    const words = full.split(' ');
+    let lo = 1, hi = words.length;
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      c.textContent = words.slice(0, mid).join(' ').replace(/[,;:·]$/, '') + '…';
+      if (c.scrollHeight <= lh * 2 + 2) lo = mid; else hi = mid - 1;
+    }
+    c.textContent = words.slice(0, lo).join(' ').replace(/[,;:·]$/, '') + '…';
+  });
+}
+fitCaptions();
+let fitTimer = null;
+window.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(fitCaptions, 120); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCaptions);
+
 function el(tag, attrs = {}) {
   const node = document.createElement(tag);
   Object.entries(attrs).forEach(([k, v]) => { if (v !== undefined && v !== null) node.setAttribute(k, v); });
@@ -76,7 +110,6 @@ function el(tag, attrs = {}) {
 function render() {
   const it = byId[list[index].dataset.viewerItem];
   stage.replaceChildren();
-  stage.classList.toggle('is-framed', !!it.frame);
   if (it.type === 'video') {
     const video = el('video', {
       controls: '', playsinline: '', muted: '', preload: 'metadata',
@@ -98,7 +131,7 @@ function render() {
   }
   const people = it.type === 'video' && it.people && it.people.length ? ' Shows ' + it.people.join(' and ') + '.' : '';
   captionEl.textContent = curly(it.caption + people);
-  weekEl.textContent = (it.type === 'video' ? 'VIDEO · ' + it.duration + ' · ' : '') + 'WK ' + it.week;
+  weekEl.textContent = metaText(it);
   countEl.textContent = list.length > 1 ? index + 1 + ' / ' + list.length : '';
   pdfEl.hidden = !it.pdf;
   if (it.pdf) {

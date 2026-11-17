@@ -364,3 +364,75 @@ main a:not([class]), article a:not([class]) { color: var(--ink-primary); }
 main a:not([class]):hover, article a:not([class]):hover { color: var(--ink-eyebrow); }
 html.theme-device main a:not([class]), html.theme-device article a:not([class]) { color: var(--paper); }
 html.theme-device main a:not([class]):hover, html.theme-device article a:not([class]):hover { color: var(--amber); }
+
+/* ---------------------------------------------------------------- media gallery
+   Tiles are just the image: every item fills a 4:3 tile edge to edge
+   (object-fit: cover) at its own focal point (media.json "focus"); the
+   viewer always shows the whole image. Captions and meta sit under the
+   tile in General Sans: the caption on up to two lines, then the meta. */
+.media-section__head { border-bottom: 0 !important; padding-bottom: 0 !important; margin-bottom: 20px !important; }
+.media-section__count { font: 400 15px/1 var(--font-sans); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.media-section__more { margin-top: 10px; padding: 4px 0; border-bottom: 0 !important; font: 500 16px/1.4 var(--font-sans); }
+.media-tile .media-tile__media { aspect-ratio: 4 / 3 !important; border: 0 !important; background: var(--bone-2); }
+.media-tile .media-tile__media picture { inset: 0 !important; width: 100% !important; height: 100% !important; }
+.media-tile .media-tile__img { object-fit: cover !important; object-position: var(--focus, 50% 50%); padding: 0 !important; border: 0 !important; background: none !important; }
+.media-tile--tall { grid-row: auto !important; }
+.media-tile__play {
+  left: 12px;
+  bottom: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(var(--charcoal-rgb), 0.62);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.media-tile__play svg { margin-left: 2px; }
+.media-tile .media-tile__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 10px 0 18px;
+}
+.media-tile .media-tile__caption {
+  font: 400 15px/1.45 var(--font-sans);
+  color: var(--ink-body);
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  min-height: calc(2 * 1.45em);        /* two lines reserved, so every row lines up */
+}
+.media-tile .media-tile__label {
+  font: 400 13px/1.4 var(--font-sans);
+  color: var(--ink-muted);
+  white-space: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Viewer: caption in the heading colour, meta muted, both General Sans. */
+.media-viewer .lightbox__caption { font: 400 16px/1.5 var(--font-sans); color: var(--heading, var(--ink-on-charcoal)); }
+.media-viewer [data-viewer-week],
+.media-viewer [data-viewer-count] { font: 400 13px/1.4 var(--font-sans) !important; letter-spacing: 0 !important; color: var(--ink-on-charcoal-62) !important; font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------- project: the dashboard
+   Screenshots edge to edge (no frame, border or shadow): one large, then a
+   row of three that stacks on phones. Each opens in the full-size viewer
+   (js/figure-viewer.js). */
+.dash-gallery { display: flex; flex-direction: column; gap: 28px; margin-top: 8px; }
+.dash-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 767px) { .dash-row { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+.dash-shot { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.dash-shot__open { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.dash-shot__open:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.dash-shot__img { display: block; width: 100%; height: auto; border: 0 !important; padding: 0 !important; background: none !important; transition: filter var(--dur-hover) var(--ease); }
+.dash-shot__open:hover .dash-shot__img { filter: brightness(1.06); }
+.dash-shot figcaption { display: flex; flex-direction: column; gap: 4px; }
+.dash-shot__caption { font: 400 15px/1.5 var(--font-sans); color: var(--ink-body); }
+.dash-shot--large .dash-shot__caption { font-size: 16px; }
+.dash-shot__meta { font: 400 13px/1.4 var(--font-sans); color: var(--ink-muted); }
+.dash-links { margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 14px 32px; }
+.figure-viewer .lightbox__footer { flex-direction: column; align-items: center; gap: 6px; }
+.figure-viewer .lightbox__caption { font: 400 16px/1.5 var(--font-sans); color: var(--heading, var(--ink-on-charcoal)); }
+.figure-viewer__meta { font: 400 13px/1.4 var(--font-sans); color: var(--ink-on-charcoal-62); }

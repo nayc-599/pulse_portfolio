@@ -63,7 +63,26 @@ ASSETS = {
     "pspi-info": {"src": "media/pspi_info.png", "quality": 90},
     "class-balance": {"src": "media/class_balance.png", "quality": 90},
     "training-curves": {"src": "media/training_curves.png", "quality": 90},
+    # Dashboard screenshots (dark UI, simulated data, 1440 x 900, so never
+    # enlarged). A teammate's first name appears as the carer who
+    # acknowledged an alarm; it is blurred in the published copies.
+    "ward-calm": {"src": "uploads/originals/ward-calm-dark.png", "quality": 90},
+    "ward-alarm": {"src": "uploads/originals/ward-alarm-dark.png", "quality": 90,
+                   "blur": [(1224, 783, 1270, 801)]},
+    "bed-view": {"src": "uploads/originals/bed-view-dark.png", "quality": 90,
+                 "blur": [(1224, 806, 1270, 824)]},
+    "events": {"src": "uploads/originals/events-dark.png", "quality": 90,
+               "blur": [(933, 638, 981, 656), (1224, 704, 1270, 722)]},
+    "trends": {"src": "uploads/originals/trends-dark.png", "quality": 90,
+               "blur": [(1224, 704, 1270, 722)]},
+    "setup": {"src": "uploads/originals/setup-dark.png", "quality": 90},
 }
+
+# Build only these ids when given on the command line, e.g.
+#   python3 tools/make_media_assets.py ward-calm ward-alarm
+import sys as _sys
+if len(_sys.argv) > 1:
+    ASSETS = {k: v for k, v in ASSETS.items() if k in _sys.argv[1:]}
 
 
 def grade(im: Image.Image) -> Image.Image:

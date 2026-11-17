@@ -7,9 +7,9 @@
     "type: image | video | pdf. week: the week whose journal post the item belongs to (not strict calendar date).",
     "featured: shown in the Showcase night block instead of the gallery. mosaic: a number gives its slice order in the banner (one per group where possible).",
     "people: team members shown, used in captions and labels. Nobody outside the team, no UNBC-McMaster content, no QR codes except our own poster's.",
-    "fit: \"contain\" shows the whole image inside the 4:3 tile (charts, documents, diagrams) instead of cropping it.",
     "order: lower comes first within a group (ties fall back to week). Current scheme: videos and photos of people or hardware (10s-20s), then screenshots, then charts and diagrams. The first 6 in a group show by default (3 on phones); the rest sit behind Show all.",
-    "frame: true puts a chart or document with a white background in a 1px frame with 12px padding on the raised surface colour, in the tile and the viewer, so it doesn't glare in dark mode."
+    "focus: object-position for the tile crop, e.g. \"50% 0%\" for the top. Tiles are all 4:3 and cropped to fill; the viewer always shows the whole image.",
+    "meta: optional line under the caption, replacing the default (\"Video · 1:03 · Week 5\" or \"Week 6\")."
   ],
   "groups": [
     {
@@ -47,7 +47,8 @@
       ],
       "featured": true,
       "mosaic": 4,
-      "order": 10
+      "order": 10,
+      "focus": "50% 50%"
     },
     {
       "id": "makerspace-box",
@@ -62,7 +63,8 @@
       "people": [],
       "featured": false,
       "mosaic": 1,
-      "order": 20
+      "order": 20,
+      "focus": "50% 50%"
     },
     {
       "id": "cad-render",
@@ -78,7 +80,7 @@
       "featured": false,
       "mosaic": false,
       "order": 30,
-      "frame": true
+      "focus": "50% 50%"
     },
     {
       "id": "pose-demo",
@@ -97,7 +99,8 @@
       ],
       "featured": false,
       "mosaic": 2,
-      "order": 10
+      "order": 10,
+      "focus": "50% 40%"
     },
     {
       "id": "frame-extract-demo",
@@ -116,7 +119,8 @@
       ],
       "featured": false,
       "mosaic": 5,
-      "order": 20
+      "order": 20,
+      "focus": "50% 50%"
     },
     {
       "id": "dashboard-demo",
@@ -133,7 +137,8 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 10
+      "order": 10,
+      "focus": "50% 50%"
     },
     {
       "id": "dashboard-redesign",
@@ -149,7 +154,109 @@
       "featured": false,
       "mosaic": false,
       "order": 30,
-      "frame": true
+      "focus": "50% 0%"
+    },
+    {
+      "id": "ward-calm",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/ward-calm",
+      "width": 1440,
+      "height": 900,
+      "caption": "The ward view with every bed settled: no active alarms in the last 8 hours.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse carer dashboard ward view, dark theme, with simulated data: four bed tiles for Patients A to D. Bed 01 has no camera assigned; beds 02 to 04 are simulated with low pain scores, low movement and lying posture. The side panel shows no active alarms and an empty 8-hour timeline.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 11,
+      "focus": "50% 50%"
+    },
+    {
+      "id": "ward-alarm",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/ward-alarm",
+      "width": 1440,
+      "height": 900,
+      "caption": "The ward view with three alarms: a possible fall at Bed 04 and high movement at Bed 03 wait for a carer, and Bed 02's high pain is acknowledged but still active.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse ward view with simulated data and three alarms. Bed 02 is outlined in red with high pain, acknowledged and still active; Bed 03 is outlined in yellow for high movement; Bed 04 is outlined in red for a possible fall. The side panel lists the alarms with Acknowledge buttons and a timeline of the last 8 hours. The name of the carer who acknowledged is blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 12,
+      "focus": "50% 50%"
+    },
+    {
+      "id": "bed-view",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/bed-view",
+      "width": 1440,
+      "height": 900,
+      "caption": "One bed up close: the camera view (simulated here), pain score, movement and posture, with the last 30 minutes underneath.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse bed view for Bed 03, Patient C, with simulated data: an empty video area with a high-movement check, a pain score of 0.5 out of 16, movement Low, posture Lying, a care note, and history charts of pain, movement and posture for the last 30 minutes. The name of the carer who acknowledged an alarm is blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 13,
+      "focus": "50% 50%"
+    },
+    {
+      "id": "events",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/events",
+      "width": 1440,
+      "height": 900,
+      "caption": "Every alarm and action, with who responded and how fast.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse events page with simulated data: filters for time range, bed, type and priority, a timeline of alarms across four beds, and a list of today's events such as pain rising above thresholds, posture changes, a possible fall and an acknowledgement. The name in the By column is blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 14,
+      "focus": "50% 50%"
+    },
+    {
+      "id": "trends",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/trends",
+      "width": 1440,
+      "height": 900,
+      "caption": "Pain, movement and posture for one bed over the last hour, with the alarm and response numbers underneath.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse trends page for Bed 02 over the last hour, with simulated data: a pain chart crossing the check and urgent lines, movement and posture strips, and summary numbers including peak PSPI 7.3, one urgent alarm and a median time to acknowledge of 29 seconds. The name of the carer who acknowledged is blurred.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 15,
+      "focus": "50% 50%"
+    },
+    {
+      "id": "setup",
+      "group": "dashboard",
+      "type": "image",
+      "src": "/media/gallery/setup",
+      "width": 1440,
+      "height": 900,
+      "caption": "Setup: choosing where each bed's video comes from.",
+      "week": 10,
+      "meta": "Screenshot · simulated data · Week 10",
+      "alt": "The Pulse setup page: for each of four beds a Video from menu, set to the camera on this computer for Bed 01 and to a simulated demo loop for beds 02 to 04, with Reset to defaults and Save changes buttons.",
+      "people": [],
+      "featured": false,
+      "mosaic": false,
+      "order": 16,
+      "focus": "50% 50%"
     },
     {
       "id": "ward-view",
@@ -167,7 +274,7 @@
       "featured": false,
       "mosaic": 3,
       "order": 20,
-      "frame": true
+      "focus": "50% 50%"
     },
     {
       "id": "poster",
@@ -186,7 +293,8 @@
       ],
       "featured": false,
       "mosaic": false,
-      "order": 10
+      "order": 10,
+      "focus": "50% 0%"
     },
     {
       "id": "makerspace-open",
@@ -201,13 +309,13 @@
       "people": [],
       "featured": false,
       "mosaic": false,
-      "order": 10
+      "order": 10,
+      "focus": "50% 45%"
     },
     {
       "id": "workflow",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/workflow",
       "width": 1870,
       "height": 1780,
@@ -218,13 +326,12 @@
       "featured": false,
       "mosaic": false,
       "order": 60,
-      "frame": true
+      "focus": "50% 50%"
     },
     {
       "id": "contract",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/contract",
       "width": 1316,
       "height": 920,
@@ -235,13 +342,12 @@
       "featured": false,
       "mosaic": false,
       "order": 40,
-      "frame": true
+      "focus": "50% 0%"
     },
     {
       "id": "skeletal-code",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/skeletal-code",
       "width": 1162,
       "height": 892,
@@ -252,13 +358,12 @@
       "featured": false,
       "mosaic": false,
       "order": 50,
-      "frame": true
+      "focus": "0% 0%"
     },
     {
       "id": "pspi-info",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/pspi-info",
       "width": 1289,
       "height": 390,
@@ -269,13 +374,12 @@
       "featured": false,
       "mosaic": false,
       "order": 70,
-      "frame": true
+      "focus": "50% 50%"
     },
     {
       "id": "class-balance",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/class-balance",
       "width": 790,
       "height": 390,
@@ -286,13 +390,12 @@
       "featured": false,
       "mosaic": false,
       "order": 80,
-      "frame": true
+      "focus": "50% 50%"
     },
     {
       "id": "training-curves",
       "group": "models-and-training",
       "type": "image",
-      "fit": "contain",
       "src": "/media/gallery/training-curves",
       "width": 2000,
       "height": 806,
@@ -303,7 +406,7 @@
       "featured": false,
       "mosaic": false,
       "order": 30,
-      "frame": true
+      "focus": "50% 50%"
     }
   ],
   "postsTodo": "TODO: add our LinkedIn showcase post here, e.g. { \"date\": \"2026-10-08\", \"title\": \"...\", \"source\": \"LinkedIn\", \"url\": \"https://www.linkedin.com/...\" }. The section stays hidden while this list is empty.",

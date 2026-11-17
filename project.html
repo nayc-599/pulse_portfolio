@@ -17,6 +17,7 @@ banner:
   pos: "100% 0%"
   posSm: "86% 0%"
 extraScripts:
+  - /js/figure-viewer.js
   - /js/device-cube.js
   - /js/project.js
   - /js/roadmap-timeline.js
@@ -46,10 +47,11 @@ extraScripts:
       <a href="#building" class="is-plain link-ghost page-index__link">02 What we're building</a>
       <a href="#how" class="is-plain link-ghost page-index__link">03 How it works</a>
       <a href="#threshold" class="is-plain link-ghost page-index__link">04 Deciding when to alert</a>
-      <a href="#device" class="is-plain link-ghost page-index__link">05 The device</a>
-      <a href="#data" class="is-plain link-ghost page-index__link">06 The data</a>
-      <a href="#limits" class="is-plain link-ghost page-index__link">07 What it isn't</a>
-      <a href="#roadmap" class="is-plain link-ghost page-index__link">08 Roadmap</a>
+      <a href="#dashboard" class="is-plain link-ghost page-index__link">05 The dashboard</a>
+      <a href="#device" class="is-plain link-ghost page-index__link">06 The device</a>
+      <a href="#data" class="is-plain link-ghost page-index__link">07 The data</a>
+      <a href="#limits" class="is-plain link-ghost page-index__link">08 What it isn't</a>
+      <a href="#roadmap" class="is-plain link-ghost page-index__link">09 Roadmap</a>
     </nav>
 
     <div style="display:flex;flex-direction:column;gap:80px;flex:1 1 560px;min-width:0">
@@ -175,9 +177,9 @@ extraScripts:
         <ul style="list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--rule-bone-16)">
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-1" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">01</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">01</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Camera frame</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-1" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A wide-angle frame every 33 milliseconds. Nothing leaves the device: frames are processed and discarded, and no video is stored or streamed.</p>
@@ -186,9 +188,9 @@ extraScripts:
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-2" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">02</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">02</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Face detection</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-2" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">A lightweight detector finds the face, aligns it and crops it out. If there is a face, the patient is in bed, which is the case the CNN and LSTM below are built for. If there is no face, that usually means the patient is out of bed, which is the pose model's case. We connected both detectors into one live pipeline that feeds the carer dashboard, including the handoff between them, and the alert engine downstream acts on what each one finds.</p>
@@ -197,9 +199,9 @@ extraScripts:
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-3" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">03</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">03</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">CNN</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-3" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A convolutional network with a ResNet18 backbone turns each aligned face crop into 512 numbers describing the shape of the expression, not a picture of it: brow tension, eye closure, mouth shape, compressed into a vector. Training surfaced a class imbalance issue, which is resolved.</p>
@@ -208,9 +210,9 @@ extraScripts:
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-4" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">04</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">04</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Feature vector</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-4" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">The CNN generates these vectors, one per frame. We built the step that stores them frame by frame for the live pipeline, and each one goes into a rolling buffer, because a single frame is a bad witness: people grimace when they sneeze, and a still face can hide sustained pain.</p>
@@ -219,9 +221,9 @@ extraScripts:
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-5" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">05</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">05</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">LSTM</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-5" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Trained, and running live in the dashboard. A recurrent model reads 30-frame windows of feature vectors, about one second of video, and predicts a PSPI pain score from 0 to 16: change over time, not a snapshot. While the window is still filling, the CNN's score is used on its own as a fallback.</p>
@@ -230,9 +232,9 @@ extraScripts:
           </li>
           <li class="rule-bottom--charcoal" style="border-bottom:1px solid var(--rule-bone-16)">
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-6" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">06</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">06</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Patient detection (pose)</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-6" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">This one runs live in the dashboard, with a demo video on the media page. For the out-of-bed case the model finds a body and maps it to 33 keypoints, tracked frame to frame, and the dashboard shows posture and movement from them. The pose team has also built a prototype fall detector. It scores evidence such as downward motion, a change in orientation and a transition into lying. It is integrated behind a Settings toggle that is off by default, and it is not clinically validated.</p>
@@ -241,9 +243,9 @@ extraScripts:
           </li>
           <li>
             <button type="button" class="pipeline-toggle" aria-expanded="false" aria-controls="stage-7" style="width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;background:none;border:0;padding:20px 4px;cursor:pointer;text-align:left;font:inherit;color:var(--ink-primary)">
-              <span style="font:400 10px/1 var(--font-mono);letter-spacing:0.14em;color:var(--ink-eyebrow)">07</span>
+              <span style="font-variant-numeric:tabular-nums;font: 400 12px/1 var(--font-sans);letter-spacing:0;color:var(--ink-eyebrow)">07</span>
               <span style="font:500 19px/1.3 var(--font-sans);letter-spacing:-0.015em">Alert decision</span>
-              <span class="pipeline-toggle__sign" style="font:400 16px/1 var(--font-mono);color:var(--ink-muted)">+</span>
+              <span class="pipeline-toggle__sign" style="font-variant-numeric:tabular-nums;font:400 16px/1 var(--font-sans);color:var(--ink-muted)">+</span>
             </button>
             <div id="stage-7" class="pipeline-panel" hidden style="padding:0 4px 24px 44px">
               <p style="margin:0;max-width:64ch;font:400 16px/1.7 var(--font-sans);color:var(--ink-body)">Done, and running live. The alert engine turns pain, movement, posture and camera status into OK, CHECK and URGENT patient alarms, plus technical alarms for when the camera is lost or the light is too low. An alert stays on screen until a carer acknowledges it, the audio pauses once they do, and the alert clears once readings stay back in range. The thresholds are demo defaults set through a calibration step, not clinical thresholds.</p>
@@ -289,7 +291,7 @@ extraScripts:
             </div>
             <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--rule-charcoal-18);padding-top:14px">
               <span class="is-plain metadata metadata--on-charcoal">Lit bars fire an alert · outlined bars are labelled pain events</span>
-              <span data-threshold-label style="font:400 10px/1.6 var(--font-mono);letter-spacing:0.14em;color:var(--ink-on-charcoal-62)">THRESHOLD 0.65</span>
+              <span data-threshold-label style="font-variant-numeric:tabular-nums;font: 400 12px/1.6 var(--font-sans);letter-spacing:0;color:var(--ink-on-charcoal-62)">Threshold 0.65</span>
             </div>
           </div>
 
@@ -303,7 +305,7 @@ extraScripts:
               </span>
               <span style="display:flex;flex-direction:column;gap:6px">
                 <span class="is-plain metadata">Pain events missed</span>
-                <span style="font:500 30px/1 var(--font-sans)"><span data-missed>0</span> <span style="font:400 13px/1 var(--font-mono);color:var(--ink-muted)">/ 7</span></span>
+                <span style="font:500 30px/1 var(--font-sans)"><span data-missed>0</span> <span style="font-variant-numeric:tabular-nums;font:400 13px/1 var(--font-sans);color:var(--ink-muted)">/ 7</span></span>
               </span>
               <span style="display:flex;flex-direction:column;gap:6px">
                 <span class="is-plain metadata" style="color:var(--ink-signal)">False alarms</span>
@@ -315,11 +317,61 @@ extraScripts:
         </figure>
       </section>
 
+      <section id="dashboard" aria-labelledby="dash-h" style="display:flex;flex-direction:column;gap:18px">
+        <span class="eyebrow">
+          <span class="pixel-mark" aria-hidden="true"></span>
+          <span class="is-plain eyebrow__label">05 · The dashboard</span>
+        </span>
+        <h2 id="dash-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">What the carer sees.</h2>
+        <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">These screenshots run on simulated data: four beds, three of them simulated and one with no camera assigned. Every alarm stays on screen until a carer acknowledges it.</p>
+        <div class="dash-gallery" data-figure-group>
+          <figure class="dash-shot dash-shot--large">
+            <button type="button" class="dash-shot__open" data-figure-full="/media/gallery/ward-alarm-full" data-figure-caption="The ward view with three alarms: a possible fall at Bed 04 and high movement at Bed 03 wait for a carer, and Bed 02's high pain is acknowledged but still active." data-figure-meta="Simulated data" aria-label="Open full size: The ward view with three alarms: a possible fall at Bed 04 and high movement at Bed 03 wait for a carer, and Bed 02's high pain is acknowledged but still active.">
+            <picture>
+              <source type="image/webp" srcset="/media/gallery/ward-alarm-800.webp 800w, /media/gallery/ward-alarm-full.webp 1440w" sizes="(min-width: 1024px) 760px, 100vw" />
+              <img class="dash-shot__img" src="/media/gallery/ward-alarm-800.jpg" srcset="/media/gallery/ward-alarm-800.jpg 800w, /media/gallery/ward-alarm-full.jpg 1440w" sizes="(min-width: 1024px) 760px, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt="The Pulse ward view with simulated data and three alarms. Bed 02 is outlined in red with high pain, acknowledged and still active; Bed 03 is outlined in yellow for high movement; Bed 04 is outlined in red for a possible fall. The side panel lists the alarms with Acknowledge buttons and a timeline of the last 8 hours. The name of the carer who acknowledged is blurred." />
+            </picture>
+            </button>
+            <figcaption><span class="dash-shot__caption">The ward view with three alarms: a possible fall at Bed 04 and high movement at Bed 03 wait for a carer, and Bed 02's high pain is acknowledged but still active.</span><span class="dash-shot__meta">Simulated data</span></figcaption>
+          </figure>
+          <div class="dash-row">
+          <figure class="dash-shot">
+            <button type="button" class="dash-shot__open" data-figure-full="/media/gallery/bed-view-full" data-figure-caption="One bed up close: the camera view (simulated here), pain score, movement and posture, with the last 30 minutes underneath." data-figure-meta="Simulated data" aria-label="Open full size: One bed up close: the camera view (simulated here), pain score, movement and posture, with the last 30 minutes underneath.">
+            <picture>
+              <source type="image/webp" srcset="/media/gallery/bed-view-800.webp 800w, /media/gallery/bed-view-full.webp 1440w" sizes="(min-width: 768px) 250px, 100vw" />
+              <img class="dash-shot__img" src="/media/gallery/bed-view-800.jpg" srcset="/media/gallery/bed-view-800.jpg 800w, /media/gallery/bed-view-full.jpg 1440w" sizes="(min-width: 768px) 250px, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt="The Pulse bed view for Bed 03 with simulated data: an empty video area with a high-movement check, a pain score of 0.5 out of 16, movement Low, posture Lying, and history charts of pain, movement and posture for the last 30 minutes. The name of the carer who acknowledged an alarm is blurred." />
+            </picture>
+            </button>
+            <figcaption><span class="dash-shot__caption">One bed up close: the camera view (simulated here), pain score, movement and posture, with the last 30 minutes underneath.</span><span class="dash-shot__meta">Simulated data</span></figcaption>
+          </figure>
+          <figure class="dash-shot">
+            <button type="button" class="dash-shot__open" data-figure-full="/media/gallery/events-full" data-figure-caption="Every alarm and action, with who responded and how fast." data-figure-meta="Simulated data" aria-label="Open full size: Every alarm and action, with who responded and how fast.">
+            <picture>
+              <source type="image/webp" srcset="/media/gallery/events-800.webp 800w, /media/gallery/events-full.webp 1440w" sizes="(min-width: 768px) 250px, 100vw" />
+              <img class="dash-shot__img" src="/media/gallery/events-800.jpg" srcset="/media/gallery/events-800.jpg 800w, /media/gallery/events-full.jpg 1440w" sizes="(min-width: 768px) 250px, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt="The Pulse events page with simulated data: filters, a timeline of alarms across four beds, and a list of today's events with who acknowledged each one; the name in the By column is blurred." />
+            </picture>
+            </button>
+            <figcaption><span class="dash-shot__caption">Every alarm and action, with who responded and how fast.</span><span class="dash-shot__meta">Simulated data</span></figcaption>
+          </figure>
+          <figure class="dash-shot">
+            <button type="button" class="dash-shot__open" data-figure-full="/media/gallery/trends-full" data-figure-caption="Pain, movement and posture for one bed over the last hour, with the alarm and response numbers underneath." data-figure-meta="Simulated data" aria-label="Open full size: Pain, movement and posture for one bed over the last hour, with the alarm and response numbers underneath.">
+            <picture>
+              <source type="image/webp" srcset="/media/gallery/trends-800.webp 800w, /media/gallery/trends-full.webp 1440w" sizes="(min-width: 768px) 250px, 100vw" />
+              <img class="dash-shot__img" src="/media/gallery/trends-800.jpg" srcset="/media/gallery/trends-800.jpg 800w, /media/gallery/trends-full.jpg 1440w" sizes="(min-width: 768px) 250px, 100vw" width="1440" height="900" loading="lazy" decoding="async" alt="The Pulse trends page for Bed 02 over the last hour with simulated data: a pain chart crossing the check and urgent lines, movement and posture strips, and summary numbers including peak PSPI 7.3 and a median time to acknowledge of 29 seconds. The name of the carer who acknowledged is blurred." />
+            </picture>
+            </button>
+            <figcaption><span class="dash-shot__caption">Pain, movement and posture for one bed over the last hour, with the alarm and response numbers underneath.</span><span class="dash-shot__meta">Simulated data</span></figcaption>
+          </figure>
+          </div>
+        </div>
+        <p class="dash-links"><a class="text-link" href="https://github.com/MonashDeepNeuron/pulse-ai">See the code on GitHub</a></p>
+      </section>
+
       <section id="device" aria-labelledby="dev-h" style="display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start">
         <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
           <span class="eyebrow">
             <span class="pixel-mark" aria-hidden="true"></span>
-            <span class="is-plain eyebrow__label">05 · The device</span>
+            <span class="is-plain eyebrow__label">06 · The device</span>
           </span>
           <h2 id="dev-h" style="margin:0;max-width:24ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A concept, not a product. We should say that plainly.</h2>
           <p style="margin:0;max-width:60ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Right now Pulse is software running on a laptop with a webcam. The camera cube is in progress, and it is where we're heading: a Raspberry Pi 5, a wide camera, and a round display, in about 8 cm of warm plastic on a bedside table. Nothing clipped to the patient, no wires across the bed.</p>
@@ -354,21 +406,21 @@ extraScripts:
                   <span style="display:block;width:66px;height:66px;border:1px solid var(--ink-primary);border-radius:6px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-primary);text-align:center;margin-top:10px">Pulse · 8 cm</span>
+                <span style="font-variant-numeric:tabular-nums;font: 400 12px/1.4 var(--font-sans);letter-spacing:0;color:var(--ink-primary);text-align:center;margin-top:10px">Pulse · 8 cm</span>
               </span>
               <span style="display:flex;flex-direction:column;align-items:center;gap:0;width:118px">
                 <span style="display:flex;align-items:flex-end;height:122px">
                   <span style="display:block;width:62px;height:79px;border:1px solid var(--ink-muted);border-radius:3px 3px 8px 8px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">Mug · 9.5 cm</span>
+                <span style="font-variant-numeric:tabular-nums;font: 400 12px/1.4 var(--font-sans);letter-spacing:0;color:var(--ink-muted);text-align:center;margin-top:10px">Mug · 9.5 cm</span>
               </span>
               <span style="display:flex;flex-direction:column;align-items:center;gap:0;width:118px">
                 <span style="display:flex;align-items:flex-end;height:122px">
                   <span style="display:block;width:58px;height:122px;border:1px solid var(--ink-muted);border-radius:8px;background:transparent"></span>
                 </span>
                 <span style="display:block;width:100%;height:1px;background:var(--rule-bone-30)"></span>
-                <span style="font:400 10px/1.4 var(--font-mono);letter-spacing:0.14em;color:var(--ink-muted);text-align:center;margin-top:10px">Phone · 14.7 cm</span>
+                <span style="font-variant-numeric:tabular-nums;font: 400 12px/1.4 var(--font-sans);letter-spacing:0;color:var(--ink-muted);text-align:center;margin-top:10px">Phone · 14.7 cm</span>
               </span>
             </div>
             <span style="font:400 13px/1.5 var(--font-sans);color:var(--ink-muted)">Shared baseline: the cube is shorter than a coffee mug.</span>
@@ -379,7 +431,7 @@ extraScripts:
       <section id="data" aria-labelledby="data-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
           <span class="pixel-mark" aria-hidden="true"></span>
-          <span class="is-plain eyebrow__label">06 · The data</span>
+          <span class="is-plain eyebrow__label">07 · The data</span>
         </span>
         <h2 id="data-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">We train on a physiotherapy clinic and aim at a bedroom.</h2>
         <p style="margin:0;max-width:68ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">Our models are trained on a published clinical pain-expression dataset: video of adult patients in a clinical setting, with pain intensity coded frame by frame. It is licensed for non-commercial research and teaching only, and we use it under those terms.</p>
@@ -403,7 +455,7 @@ extraScripts:
       <section id="limits" aria-labelledby="lim-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
           <span class="pixel-mark" aria-hidden="true"></span>
-          <span class="is-plain eyebrow__label">07 · What it isn't</span>
+          <span class="is-plain eyebrow__label">08 · What it isn't</span>
         </span>
         <h2 id="lim-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">A concept, not a product. We should say that plainly.</h2>
         <ul style="list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:0;max-width:68ch">
@@ -419,7 +471,7 @@ extraScripts:
       <section id="roadmap" aria-labelledby="road-h" style="display:flex;flex-direction:column;gap:18px">
         <span class="eyebrow">
           <span class="pixel-mark" aria-hidden="true"></span>
-          <span class="is-plain eyebrow__label">08 · Roadmap</span>
+          <span class="is-plain eyebrow__label">09 · Roadmap</span>
         </span>
         <h2 id="road-h" style="margin:0;max-width:26ch;font:500 clamp(28px,3.6vw,38px)/1.15 var(--font-sans);letter-spacing:-0.02em">Ten weeks, counted from when we actually started.</h2>
         <p style="margin:0;max-width:62ch;font:400 17px/1.7 var(--font-sans);color:var(--ink-body)">The first ten-week phase ended with the showcase in Week 8. We're now working on the camera cube hardware and the next version of the dashboard.</p>

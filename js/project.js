@@ -32,7 +32,7 @@ if (slider && bars.length) {
       s.fill.style.borderTop = '2px solid ' + (s.pain ? (fires ? 'var(--amber)' : 'var(--amber-dim)') : 'transparent');
     });
 
-    if (labelEl) labelEl.textContent = 'THRESHOLD ' + thr.toFixed(2);
+    if (labelEl) labelEl.textContent = 'Threshold ' + thr.toFixed(2);
     if (firedEl) firedEl.textContent = String(fired);
     if (missedEl) missedEl.textContent = String(missed);
     if (falsesEl) falsesEl.textContent = String(falses);

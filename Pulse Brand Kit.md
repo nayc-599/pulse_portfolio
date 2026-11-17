@@ -63,14 +63,14 @@ Rules:
 |---|---|
 | Pixelify Sans 600 | The "Pulse" wordmark only. Never headings, never body. |
 | General Sans 400 / 500 | Headings, body, labels, buttons, navigation. Headings at 500, never heavier. |
-| Space Mono 400 | Real data only: figure numbers, week labels, timestamps, live dashboard values, code. |
+| (no monospace) | There is no monospace on the site or the dashboard. Data (figure numbers, weeks, times, values) uses General Sans with tabular figures (`font-variant-numeric: tabular-nums`). |
 
-- Mono is data, not decoration. Section labels, eyebrows, status words and subheadings are General Sans in sentence case.
-- Figure captions are one line of General Sans, muted, sentence case: `Figure 1 · Two branches · both run live, end to end`. No spaced mono for the figure number.
+- Everything is General Sans in sentence case: section labels, eyebrows, status words, subheadings, meta lines, figure numbers and code.
+- Figure captions are one line of General Sans, muted, sentence case: `Figure 1 · Two branches · both run live, end to end`.
 - Use ` · ` between parts of a label or metadata line (`Build log · 7 Oct 2026 · 5 min read`). Use normal punctuation in sentences.
 - Eyebrows are short page or section names only ("The project", "Build log", "Team", "Media"), never an organisation name. Same style everywhere: 8px marker, 14px General Sans 500, sentence case, heading colour, 9px gap, 18px above the heading.
 - Dates: "7 October 2026" in prose and headings; "7 Oct 2026" in compact meta lines, cards and labels (three-letter months, so "Sep").
-- Weeks: "Week 8" in text and labels; "WK 8" only on Media tiles.
+- Weeks: "Week 8" everywhere, including Media meta lines ("Video · 1:03 · Week 5").
 - Units: a space before the unit, lower case: "8 cm", "30 fps", "400 ms".
 - Quotes: curly ’ “ ” in visible text. The build converts them (`eleventy.config.js`, smartQuotes), leaving code, scripts and attributes alone.
 - Names: "Monash DeepNeuron" in full in visible text (never "MDN" or "Deep Neuron"); "Pulse"; page names Home, Project, Journal, Media, Team everywhere.
@@ -212,13 +212,25 @@ Write the way a student would explain the project to a friend.
 
 ---
 
-## 10. Don'ts
+## 10. Dashboard
+
+The carer dashboard (pulse-ai, `dashboard/frontend`) uses this kit's two palettes and General Sans, with one difference in how colour is used.
+
+- **Dashboard UI is neutral; honey only for the wordmark, empty states and video overlays; alarm colours only for alarms.**
+- Navigation, buttons, switches, links, focus rings and selections use the heading, body and muted colours. Primary button: heading-colour fill (`#e6e0d4`) with background-colour text in dark mode; `#2b2925` with cream text in light mode. Focus ring: 2px in the heading colour, 2px offset.
+- Honey (`#e9bb63` dark, `#6b5528` light) appears only on the "Pulse" wordmark (optional), the pixel face in empty and loading states, and the face box and tracking lines drawn over video (always `#e9bb63`, since they sit on the camera picture).
+- Alarm colours: Urgent `#ff4d5e`, Check `#f2d14b`, Technical `#5ccfe6` in dark mode; `#b4142c`, `#735700`, `#08687c` in light mode. Every alarm also has its own icon shape, so colour is never the only signal.
+- Info bar over video: each bed's readings sit in a solid translucent bar along the bottom of its video (`#1b1a17` at 83%), no fade, border, corners or blur. It is always dark, so it uses the dark-mode text and alarm colours in both themes. 83% is the lowest that keeps everything at AA over a white picture: labels 4.58:1, body text 6.80:1, Urgent red 3.15:1.
+- Privacy view is a setting, off by default: when on, every video is blurred so patients can't be identified, carers can still tap View camera (60 s, logged), and the face mesh (honey dots) shows over the blur at 60%; over the real picture at 35%.
+- No borders or divider lines: areas are separated by space and surface colour. Lines only where they carry meaning: the 2px gaps between videos, the alarm outline around a video, chart axes and threshold lines, and the bottom edge of form fields.
+
+## 11. Don'ts
 
 - Don't use purple. Don't recolour the Monash DeepNeuron mark.
 - Don't add a second accent colour. Amber is the only one.
 - Don't use alarm colours (red, orange, green status colours) outside the dashboard.
 - Don't use Pixelify Sans for anything but the "Pulse" wordmark.
-- Don't use uppercase letter-spaced mono for labels that aren't data.
+- Don't use monospace, or uppercase letter-spaced labels, anywhere.
 - Don't put a pixel grid straight on the background (except the footer face); use the Surface plate.
 - Don't style links as buttons. Only real form buttons get a box.
 - Don't round frames or cards.
@@ -228,3 +240,10 @@ Write the way a student would explain the project to a friend.
 - Don't change page layouts for the theme; it is colours and type only.
 - Don't call Pulse a medical device, imply it has been tested with patients, or overstate what runs live.
 - Don't write em-dashes.
+
+### Media gallery
+
+- Every tile is just the image, 4:3, filled edge to edge (`object-fit: cover`) with no frame, border or background. Each item's focal point is `focus` in `_data/media.json`. The full uncropped image shows in the viewer.
+- Under each tile: the caption in General Sans 15px body colour, up to two lines (cut at a whole word with an ellipsis if longer), then the meta line in 13px muted ("Video · 1:03 · Week 5", "Screenshot · simulated data · Week 10").
+- Video tiles carry a small round play button, bottom left, 12px in.
+- Screenshots of the dashboard (a dark UI) are used as they are in both modes, edge to edge, with no frame or shadow.
